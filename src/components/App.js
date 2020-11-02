@@ -8,9 +8,11 @@ import Login from "./Login"
 import PrivateRoute from "./PrivateRoute"
 import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile"
-// import Home from './Home'
+import Home from './Home'
+// import Detail from './Detail'
 
 function App() {
+
   return (
     <Container
       className="d-flex align-items-center justify-content-center"
@@ -20,8 +22,9 @@ function App() {
         <Router>
           <AuthProvider>
             <Switch>
-              {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
-              <PrivateRoute exact path="/" component={Dashboard} />
+              <PrivateRoute exact path="/" component={Home} />
+              {/* <PrivateRoute path="/detail" component={Detail} /> */}
+              <PrivateRoute path="/dashboard" component={Dashboard} />
               <PrivateRoute path="/update-profile" component={UpdateProfile} />
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
