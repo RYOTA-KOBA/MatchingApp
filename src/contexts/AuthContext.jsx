@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react"
-import { auth } from "../firebase"
+import { auth, db } from "../firebase"
 
 const AuthContext = React.createContext()
 
@@ -11,8 +11,23 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
   const [loading, setLoading] = useState(true)
 
-  function signup(email, password) {
+  function signup(username, email, password) {
     return auth.createUserWithEmailAndPassword(email, password)
+      .then(result => {
+        const user = result.user
+
+        if(user) {
+          const uid = user.uid
+          const userInitialData = {
+            email: email,
+            uid: uid,
+            username: username
+          }
+
+          db.collection('users').doc(uid).set(userInitialData)
+            .then('ユーザーが作成されました!')
+        }
+      })
   }
 
   function login(email, password) {
@@ -36,11 +51,19 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      setCurrentUser(user)
-      setLoading(false)
+    const unsubscribe = auth.onAuthStateChanged(async(user) => {
+      if (user) {
+        const uid = user.uid
+        
+        await db.collection('users').doc(uid).get()
+          .then(snapshot => {
+            const data = snapshot.data()
+            setCurrentUser(data)
+            setLoading(false)
+          })
+      }
     })
-
+    
     return unsubscribe
   }, [])
 
