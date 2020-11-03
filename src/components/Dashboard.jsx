@@ -27,7 +27,7 @@ export default function Dashboard() {
           {error && <Alert variant="danger">{error}</Alert>}
           <strong>Email:</strong> {currentUser.email}
           <br />
-          <strong>名前:</strong> {}
+          <strong>名前:</strong> {currentUser.username}
           <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
             プロフィールの編集
           </Link>
