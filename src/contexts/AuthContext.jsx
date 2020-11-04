@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react"
 import { auth, db } from "../firebase"
+import { useHistory } from "react-router-dom"
 
 const AuthContext = React.createContext()
 
@@ -10,12 +11,12 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
   const [loading, setLoading] = useState(true)
+  const history = useHistory()
 
   function signup(username, email, password) {
     return auth.createUserWithEmailAndPassword(email, password)
       .then(result => {
         const user = result.user
-
         if(user) {
           const uid = user.uid
           const userInitialData = {
@@ -42,6 +43,15 @@ export function AuthProvider({ children }) {
     return auth.sendPasswordResetEmail(email)
   }
 
+  function updateUser(username, email, data) {
+      const uid = data.uid
+      db.collection('users').doc(uid).set({
+        email: email,
+        username: username,
+      }, {merge: true})
+      .then(history.push("/"))
+  }
+
   function updateEmail(email) {
     return currentUser.updateEmail(email)
   }
@@ -50,12 +60,13 @@ export function AuthProvider({ children }) {
     return currentUser.updatePassword(password)
   }
 
+
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async(user) => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         const uid = user.uid
         
-        await db.collection('users').doc(uid).get()
+        db.collection('users').doc(uid).get()
           .then(snapshot => {
             const data = snapshot.data()
             setCurrentUser(data)
@@ -74,7 +85,8 @@ export function AuthProvider({ children }) {
     logout,
     resetPassword,
     updateEmail,
-    updatePassword
+    updatePassword,
+    updateUser
   }
 
   return (
