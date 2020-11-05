@@ -22,12 +22,14 @@ export default function Dashboard() {
   return (
     <>
       <Card>
-        <Card.Body>
+        <Card.Body style={{ padding: "2rem 3.25rem" }}>
           <h2 className="text-center mb-4">プロフィール</h2>
           {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Email:</strong> {currentUser.email}
-          <br />
-          <strong>名前:</strong> {currentUser.username}
+          <div>
+            <strong>Email:</strong> {currentUser.email}
+            <br />
+            <strong>名前:</strong> {currentUser.username}
+          </div>
           <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
             プロフィールの編集
           </Link>
