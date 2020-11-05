@@ -9,9 +9,9 @@ export default function Home() {
 
     return (
         <>
-            <Link to="/dashboard" className="btn btn-sm btn-primary ">
+            {/* <Link to="/dashboard" className="btn btn-sm btn-primary ">
                 プロフィールを表示
-            </Link>
+            </Link> */}
             <h1>ここにJob一覧を表示</h1>
             <Card className="mb-3" style={{ width: '30rem' }} href="#">
                 <Card.Body>

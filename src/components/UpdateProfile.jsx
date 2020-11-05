@@ -14,7 +14,7 @@ export default function UpdateProfile() {
   const [loading, setLoading] = useState(false)
   const history = useHistory()
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault()
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("パスワードが一致しません")
