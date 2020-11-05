@@ -43,14 +43,16 @@ export function AuthProvider({ children }) {
     return auth.sendPasswordResetEmail(email)
   }
 
+  //リダイレクトされた時は編集前の値のまま。先にリダイレクトされてる？？
   function updateUser(username, email, data) {
-      const uid = data.uid
-      db.collection('users').doc(uid).set({
-        email: email,
-        username: username,
-      }, {merge: true})
-      .then(history.push("/"))
+    const uid = data.uid
+    db.collection('users').doc(uid).set({
+      email: email,
+      username: username,
+    }, {merge: true})
+    .then(history.push("/"))
   }
+
 
   function updateEmail(email) {
     return currentUser.updateEmail(email)
