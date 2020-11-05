@@ -43,6 +43,7 @@ export function AuthProvider({ children }) {
     return auth.sendPasswordResetEmail(email)
   }
 
+
   //リダイレクトされた時は編集前の値のまま。先にリダイレクトされてる？？
   function updateUser(username, email, data) {
     const uid = data.uid
