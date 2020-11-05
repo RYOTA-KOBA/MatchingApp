@@ -20,14 +20,8 @@ export default function UpdateProfile() {
       return setError("パスワードが一致しません")
     }
 
-    const promises = []
-
-    // if (emailRef.current.value !== currentUser.email) {
-    //   promises.push(updateEmail(emailRef.current.value))
-    // }
-
     if (passwordRef.current.value) {
-      promises.push(updatePassword(passwordRef.current.value))
+      updatePassword(passwordRef.current.value)
     }
 
       const uid = currentUser.uid
@@ -44,20 +38,6 @@ export default function UpdateProfile() {
         }
         setLoading(false)
       })
-
-
-
-      // Promise.all(promises)
-      // .then(() => {
-      //   updateUser(emailRef.current.value, usernameRef.current.value)
-      //   history.push("/")
-      // })
-      // .catch(() => {
-      //   setError("アカウント情報の編集に失敗しました")
-      // })
-      // .finally(() => {
-      //   setLoading(false)
-      // })
 
   }
 
