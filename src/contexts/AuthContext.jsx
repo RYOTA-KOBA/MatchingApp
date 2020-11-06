@@ -60,11 +60,11 @@ export function AuthProvider({ children }) {
 
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
+    const unsubscribe = auth.onAuthStateChanged(async(user) => {
       if (user) {
         const uid = user.uid
         
-        db.collection('users').doc(uid).get()
+        await db.collection('users').doc(uid).get()
           .then(snapshot => {
             const data = snapshot.data()
             setCurrentUser(data)
