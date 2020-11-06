@@ -24,17 +24,19 @@ export default function Header() {
         <Container style={{ margin: "0", padding: "0", minWidth: "100vw" }} >
             <Navbar expand="lg" variant="light" bg="light" fixed="top" style={{ justifyContent: "space-between", padding: "1% 8%" }}>
                 <Navbar.Brand href="/" style={{ fontSize: "1.5rem" }}>Start</Navbar.Brand>
-                <Link to="/dashboard" className={classes.headerRightButton}>
+                
                 {
                     history.location.pathname === '/dashboard' ? (
-                        <Button></Button> 
-                        ) : ( 
-                        <Button size="large" color="primary" variant="contained">
-                            プロフィールを表示
-                        </Button>
-                        )
+                        <p></p> 
+                    ) : ( 
+                        <Link to="/dashboard" className={classes.headerRightButton}>
+                            <Button size="large" color="primary" variant="contained">
+                                プロフィールを表示
+                            </Button>
+                        </Link>
+                    )
                 }
-                </Link>
+                
             </Navbar>
         </Container>
     )

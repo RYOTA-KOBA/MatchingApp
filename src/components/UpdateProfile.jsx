@@ -41,22 +41,20 @@ export default function UpdateProfile() {
       updatePassword(passwordRef.current.value)
     }
 
-      const uid = currentUser.uid
-      db.collection('users').doc(uid).get()
-      .then(snapshot => {
-        const data = snapshot.data()
-        // console.log(data)
-        console.log(usernameRef.current.value)
-        try {
-          setLoading(true)
-          setError("")
-          updateUser(usernameRef.current.value, emailRef.current.value, data)
-        } catch {
-          setError("アカウント情報の編集に失敗しました")
-        }
-        setLoading(false)
-      })
-
+    const uid = currentUser.uid
+    db.collection('users').doc(uid).get()
+    .then(snapshot => {
+      const data = snapshot.data() 
+      try {
+        setLoading(true)
+        setError("")
+        updateUser(usernameRef.current.value, emailRef.current.value, data)
+        history.push("/dashboard")
+      } catch {
+        setError("アカウント情報の編集に失敗しました")
+      }
+      setLoading(false)
+    })
   }
 
   return (
