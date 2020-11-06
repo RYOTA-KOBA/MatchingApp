@@ -27,6 +27,11 @@ const useStyles = makeStyles({
   pos: {
       marginBottom: 12,
       marginTop: 30
+  },
+  edit_btn: {
+    "&:hover": {
+      textDecoration: "none"
+    }
   }
 });
 
@@ -49,40 +54,26 @@ export default function Dashboard() {
 
   return (
     <>
-      {/* <Card>
-        <Card.Body style={{ padding: "2rem 3.25rem" }}>
-          <h2 className="text-center mb-4">プロフィール</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <div>
-            <strong>Email:</strong> {currentUser.email}
-            <br />
-            <strong>名前:</strong> {currentUser.username}
-          </div>
-          <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
-            プロフィールの編集
-          </Link>
-        </Card.Body>
-      </Card> */}
       <Card className={classes.root}>
           <CardContent>
             <h2 className="text-center mb-4">プロフィール</h2>
             {error && <Alert variant="danger">{error}</Alert>}
               <Typography className={classes.pos} color="textSecondary">
-                <div>
-                  <strong>Email:</strong> {currentUser.email}
-                  <br />
-                  <strong>名前:</strong> {currentUser.username}
-                </div>                  
+                <strong>Email:</strong> {currentUser.email}
+                <br />
+                <strong>名前:</strong> {currentUser.username}
               </Typography>
           </CardContent>
           <CardActions>
-            <Link to="/update-profile" className="w-100 mt-3">
-              プロフィールの編集
+            <Link to="/update-profile"  className={classes.edit_btn}>
+              <Button variant="contained" >
+                プロフィールの編集
+              </Button>
             </Link>
           </CardActions>
       </Card>
       <div className="w-100 text-center mt-2">
-        <Button variant="link" onClick={handleLogout}>
+        <Button size="small" variant="contained" color="secondary" onClick={handleLogout}>
           ログアウト
         </Button>
       </div>

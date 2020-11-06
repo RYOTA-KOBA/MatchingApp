@@ -4,15 +4,32 @@ import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 import { db } from "../firebase"
 
+//material ui
+// import { makeStyles } from '@material-ui/core/styles';
+// import TextField from '@material-ui/core/TextField';
+// import Button from "@material-ui/core/Button";
+// import Card from '@material-ui/core/Card';
+// import CardContent from '@material-ui/core/CardContent';
+
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     '& > *': {
+//       margin: theme.spacing(1),
+//       width: '95%',
+//     },
+//   },
+// }));
+
 export default function UpdateProfile() {
   const usernameRef = useRef()
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
-  const { updateUser, currentUser, updatePassword, updateEmail } = useAuth()
+  const { updateUser, currentUser, updatePassword } = useAuth()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
+  // const classes = useStyles();
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -29,6 +46,7 @@ export default function UpdateProfile() {
       .then(snapshot => {
         const data = snapshot.data()
         // console.log(data)
+        console.log(usernameRef.current.value)
         try {
           setLoading(true)
           setError("")
