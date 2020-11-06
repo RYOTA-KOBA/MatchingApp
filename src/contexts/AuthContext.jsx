@@ -50,7 +50,7 @@ export function AuthProvider({ children }) {
       email: email,
       username: username,
     }, {merge: true})
-    .then(history.push("/"))
+    .then(console.log("更新が成功しました"))
   }
 
 
@@ -60,11 +60,11 @@ export function AuthProvider({ children }) {
 
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async(user) => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         const uid = user.uid
         
-        await db.collection('users').doc(uid).get()
+        db.collection('users').doc(uid).get()
           .then(snapshot => {
             const data = snapshot.data()
             setCurrentUser(data)
