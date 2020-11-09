@@ -45,19 +45,21 @@ export default function UpdateProfile() {
     const uid = currentUser.uid
     db.collection('users').doc(uid).get()
     .then(snapshot => {
-      const data = snapshot.data() 
-      try {
-        setLoading(true)
-        setError("")
-        updateUser(usernameRef.current.value, emailRef.current.value, data)
-        .then(() => {
-          history.push('/dashboard')
-        })
-      } catch {
-        setError("アカウント情報の編集に失敗しました")
-      }
-      setLoading(false)
+      const data = snapshot.data()
+      setLoading(true)
+      setError("")
+      return updateUser(usernameRef.current.value, emailRef.current.value, data);
     })
+    .then(() => {
+        // Success
+        history.push('/dashboard')
+    })
+    .catch((error) => {
+        setError("failed!!")
+    })
+    .finally(() => {
+        setLoading(false)
+    });
   }
 
   return (

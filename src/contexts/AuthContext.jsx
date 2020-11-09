@@ -45,12 +45,12 @@ export function AuthProvider({ children }) {
 
   function updateUser(username, email, data) {
     const uid = data.uid
-    db.collection('users').doc(uid).set({
+    return db.collection('users').doc(uid).set({
       email: email,
       username: username,
-    }, {merge: true})
-    .then(console.log("更新が成功しました"))
-  }
+    }, { merge: true })
+    .then(() => console.log("success!!"))
+}
 
 
   function updatePassword(password) {
