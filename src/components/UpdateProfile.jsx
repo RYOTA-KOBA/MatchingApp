@@ -1,8 +1,9 @@
 import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import { Link, useHistory } from "react-router-dom"
+import { Link, useHistory, Redirect, Route } from "react-router-dom"
 import { db } from "../firebase"
+import Dashboard from "../components/Dashboard"
 
 //material ui
 // import { makeStyles } from '@material-ui/core/styles';
@@ -49,7 +50,9 @@ export default function UpdateProfile() {
         setLoading(true)
         setError("")
         updateUser(usernameRef.current.value, emailRef.current.value, data)
-        history.push("/dashboard")
+        .then(() => {
+          history.push('/dashboard')
+        })
       } catch {
         setError("アカウント情報の編集に失敗しました")
       }

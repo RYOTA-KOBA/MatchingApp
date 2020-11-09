@@ -43,7 +43,6 @@ export function AuthProvider({ children }) {
   }
 
 
-  //リダイレクトされた時は編集前の値のまま。先にリダイレクトされてる？？
   function updateUser(username, email, data) {
     const uid = data.uid
     db.collection('users').doc(uid).set({
@@ -60,11 +59,11 @@ export function AuthProvider({ children }) {
 
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
+    const unsubscribe = auth.onAuthStateChanged(async(user) => {
       if (user) {
         const uid = user.uid
-        
-        db.collection('users').doc(uid).get()
+        console.log(uid)
+        await db.collection('users').doc(uid).get()
           .then(snapshot => {
             const data = snapshot.data()
             setCurrentUser(data)
@@ -92,3 +91,5 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   )
 }
+
+//コンポーネントが表示されなくなったら、loadingの!を外してログイン→!つけて再度ログイン
