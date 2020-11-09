@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 // import { Card, Button } from 'react-bootstrap'
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from 'react-router-dom'
+import { auth, db } from "../firebase"
 
 //materialUI
 import { makeStyles } from "@material-ui/core/styles";
@@ -32,7 +33,22 @@ const useStyles = makeStyles({
 
 export default function Home() {
     const { currentUser, logout } = useAuth()
+    const [currentPost, setCurrentPost] = useState({
+        authorName: "",
+        content: "",
+        createdAt: {},
+        title: "",
+        authorId: {}
+    })
     const classes = useStyles();
+
+    useEffect(() => {
+        db.collection('posts').doc("2I5LpQq6vjWp6TmW4YNz").get()
+        .then(snapshot => {
+            const data = snapshot.data()
+            setCurrentPost(data)
+        })
+    }, [])
 
     return (
         <>
@@ -57,13 +73,13 @@ export default function Home() {
                     color="textSecondary"
                     gutterBottom
                     >
-                    Card Title
+                    {currentPost.title}
                     </Typography>
                     <Typography className={classes.pos} color="textSecondary">
-                    <strong>名前:</strong>{currentUser.username}
+                    <strong>名前:</strong>{currentPost.authorName}
                     </Typography>
                     <Typography variant="body2" component="p">
-                    ここに投稿者からのメッセージを表示
+                    {currentPost.content}
                     </Typography>
                 </CardContent>
                 <CardActions>

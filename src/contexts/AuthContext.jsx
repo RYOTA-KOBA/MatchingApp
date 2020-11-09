@@ -11,6 +11,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
+  const [currentPost, setCurrentPost] = useState()
   const [loading, setLoading] = useState(true)
   const history = useHistory()
 
@@ -56,7 +57,6 @@ export function AuthProvider({ children }) {
   function updatePassword(password) {
     return firebase.auth().currentUser.updatePassword(password)
   }
-
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async(user) => {
