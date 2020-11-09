@@ -10,6 +10,7 @@ import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile"
 import Home from './Home'
 import Header from './Header'
+import Detail from "./Detail"
 // import Detail from './Detail'
 
 function App() {
@@ -23,12 +24,13 @@ function App() {
         className="d-flex align-items-center justify-content-center"
         style={{ minHeight: "100vh" }}
       >
-        <div className="w-100" style={{ maxWidth: "600px" }}>
+        <div className="w-100" style={{ maxWidth: "600px", marginTop: "100px" }}>
             <AuthProvider>
               <Switch>
                 <PrivateRoute exact path="/" component={Home} />
                 {/* <PrivateRoute path="/detail" component={Detail} /> */}
                 <PrivateRoute path="/dashboard" component={Dashboard} />
+                <PrivateRoute path="/detail" component={Detail} />
                 <PrivateRoute path="/update-profile" component={UpdateProfile} />
                 <Route path="/signup" component={Signup} />
                 <Route path="/login" component={Login} />
