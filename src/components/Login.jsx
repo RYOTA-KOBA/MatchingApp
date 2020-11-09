@@ -14,15 +14,18 @@ export default function Login() {
   async function handleSubmit(e) {
     e.preventDefault()
 
-    try {
-      setError("")
-      setLoading(true)
-      await login(emailRef.current.value, passwordRef.current.value)
-      return <Redirect to="/dashboard" />
-    } catch {
-      setError("ログインに失敗しました")
-    }
-    setLoading(false)
+    setError("")
+    setLoading(true)
+    return login(emailRef.current.value, passwordRef.current.value)
+    .then(() => {
+      history.push("/")
+    })
+    .catch((error) => {
+      setError("failed!!")
+    })
+    .finally(() => {
+        setLoading(false)
+    });
   }
 
   return (
