@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import { Link, useHistory, Redirect } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 
 export default function Login() {
   const emailRef = useRef()
@@ -14,15 +14,19 @@ export default function Login() {
   async function handleSubmit(e) {
     e.preventDefault()
 
-    try {
+    
       setError("")
       setLoading(true)
-      await login(emailRef.current.value, passwordRef.current.value)
-      return <Redirect to="/dashboard" />
-    } catch {
-      setError("ログインに失敗しました")
-    }
-    setLoading(false)
+      return login(emailRef.current.value, passwordRef.current.value)
+      .then(() => {
+        history.push("/")
+      })
+      .catch((error) => {
+        setError("failed!!")
+      })
+      .finally(() => {
+          setLoading(false)
+      });
   }
 
   return (
