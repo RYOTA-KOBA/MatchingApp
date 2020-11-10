@@ -1,4 +1,4 @@
-Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！
+Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！
 
 
 [![RYOTA-KOBA](https://circleci.com/gh/RYOTA-KOBA/MatchingApp.svg?style=svg)](https://app.circleci.com/pipelines/github/RYOTA-KOBA/MatchingApp)
