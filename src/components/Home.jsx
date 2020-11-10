@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from 'react-router-dom'
 import { auth, db } from "../firebase"
+import Post from './Post'
 
 //materialUI
 import { makeStyles } from "@material-ui/core/styles";
@@ -31,185 +32,51 @@ const useStyles = makeStyles({
     }
 });
 
-export default function Home() {
+const Home = () => {
     const { currentUser, logout } = useAuth()
-    const [currentPost, setCurrentPost] = useState({
-        authorName: "",
-        content: "",
-        createdAt: {},
-        title: "",
-        authorId: {}
-    })
+    const [currentPost, setCurrentPost] = useState([])
     const classes = useStyles();
 
     useEffect(() => {
-        db.collection('posts').doc("2I5LpQq6vjWp6TmW4YNz").get()
-        .then(snapshot => {
-            const data = snapshot.data()
-            setCurrentPost(data)
-        })
+        getPosts();
     }, [])
+
+    const getPosts = async() => {
+        let posts = []
+        await db.collection('posts').get()
+        .then(snapshot => {
+            snapshot.docs.forEach(doc => {
+                // console.log(doc.data())
+                const data = doc.data()
+                posts.push({
+                    authorName: data.authorName,
+                    content: data.content,
+                    createdAt: data.createdAt,
+                    title: data.title,
+                    authorId: data.authorId,
+                    id: doc.id               
+                })
+                // console.log(doc.id)
+            })
+            
+            // const data = snapshot.data()
+            setCurrentPost(posts)
+        })
+    }
 
     return (
         <>
-            {/* <Link to="/dashboard" className="btn btn-sm btn-primary ">
-                プロフィールを表示
-            </Link> */}
-            <h3 className="mb-3">Posts</h3>
-            {/* <Card className="mb-3" style={{ width: '100%' }} href="#">
-                <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted"><strong>名前:</strong>{currentUser.username}</Card.Subtitle>
-                    <Card.Text>
-                        ここに投稿者からのメッセージを表示
-                    </Card.Text>
-                    <Card.Link className="btn btn-primary" href="#">詳細を表示</Card.Link>
-                </Card.Body>
-            </Card> */}
-            <Card className={classes.root}>
-                <CardContent>
-                    <Typography
-                    className={classes.title}
-                    color="textSecondary"
-                    gutterBottom
-                    >
-                    {currentPost.title}
-                    </Typography>
-                    <Typography className={classes.pos} color="textSecondary">
-                    <strong>名前:</strong>{currentPost.authorName}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                    {currentPost.content}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="large">
-                        <Link to="/detail">
-                            詳細を表示
-                        </Link>
-                    </Button>
-                </CardActions>
-            </Card>
-            <Card className={classes.root}>
-                <CardContent>
-                    <Typography
-                    className={classes.title}
-                    color="textSecondary"
-                    gutterBottom
-                    >
-                    Card Title
-                    </Typography>
-                    <Typography className={classes.pos} color="textSecondary">
-                    <strong>名前:</strong>{currentUser.username}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                    ここに投稿者からのメッセージを表示
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Link to="/detail">
-                        <Button size="large">
-                            詳細を表示
-                        </Button>
-                    </Link>
-                </CardActions>
-            </Card>
-            <Card className={classes.root}>
-                <CardContent>
-                    <Typography
-                    className={classes.title}
-                    color="textSecondary"
-                    gutterBottom
-                    >
-                    Card Title
-                    </Typography>
-                    <Typography className={classes.pos} color="textSecondary">
-                    <strong>名前:</strong>{currentUser.username}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                    ここに投稿者からのメッセージを表示
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="large">
-                        <Link to="/detail">
-                            詳細を表示
-                        </Link>
-                    </Button>
-                </CardActions>
-            </Card>
-            <Card className={classes.root}>
-                <CardContent>
-                    <Typography
-                    className={classes.title}
-                    color="textSecondary"
-                    gutterBottom
-                    >
-                    Card Title
-                    </Typography>
-                    <Typography className={classes.pos} color="textSecondary">
-                    <strong>名前:</strong>{currentUser.username}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                    ここに投稿者からのメッセージを表示
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="large">
-                        <Link to="/detail">
-                            詳細を表示
-                        </Link>
-                    </Button>
-                </CardActions>
-            </Card>
-            <Card className={classes.root}>
-                <CardContent>
-                    <Typography
-                    className={classes.title}
-                    color="textSecondary"
-                    gutterBottom
-                    >
-                    Card Title
-                    </Typography>
-                    <Typography className={classes.pos} color="textSecondary">
-                    <strong>名前:</strong>{currentUser.username}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                    ここに投稿者からのメッセージを表示
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="large">
-                        <Link to="/detail">
-                            詳細を表示
-                        </Link>
-                    </Button>
-                </CardActions>
-            </Card>
-            <Card className={classes.root}>
-                <CardContent>
-                    <Typography
-                    className={classes.title}
-                    color="textSecondary"
-                    gutterBottom
-                    >
-                    Card Title
-                    </Typography>
-                    <Typography className={classes.pos} color="textSecondary">
-                    <strong>名前:</strong>{currentUser.username}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                    ここに投稿者からのメッセージを表示
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="large">
-                        <Link to="/detail">
-                            詳細を表示
-                        </Link>
-                    </Button>
-                </CardActions>
-            </Card>
+            <h3>Posts</h3>
+            {currentPost.map(post => 
+                <Post 
+                    key={post.id}
+                    authorName={post.authorName}
+                    content={post.content}
+                    createdAt={post.createdAt}
+                    title={post.title}
+                />
+            )}
         </>
     )
 }
+export default Home
