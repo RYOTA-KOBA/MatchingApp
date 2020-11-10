@@ -1,7 +1,7 @@
-Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！
+Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！
 
 
-[![CircleCI](https://circleci.com/gh/RYOTA-KOBA/MatchingApp.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs)
+[![RYOTA-KOBA](https://circleci.com/gh/RYOTA-KOBA/MatchingApp.svg?style=svg)](https://app.circleci.com/pipelines/github/RYOTA-KOBA/MatchingApp)
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
