@@ -62,7 +62,7 @@ export function AuthProvider({ children }) {
     const unsubscribe = auth.onAuthStateChanged(async(user) => {
       if (user) {
         const uid = user.uid
-        console.log(uid)
+        // console.log(uid)
         await db.collection('users').doc(uid).get()
           .then(snapshot => {
             const data = snapshot.data()
