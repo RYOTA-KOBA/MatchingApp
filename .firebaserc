@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "auth-master-a43d2"
+    "default": "auth-master-a43d2",
+    "MatchingApp": "auth-master-a43d2"
   }
 }
