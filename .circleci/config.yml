@@ -18,7 +18,7 @@ workflows:
   version: 2
   deploy_dev: # ワークフローの名前
     jobs:
-      - deploy_dev: # 上で定義したジョブを指定します
+      - build: # 上で定義したジョブを指定します
           filters:
             branches:
               only: master            
