@@ -58,6 +58,16 @@ export function AuthProvider({ children }) {
     return firebase.auth().currentUser.updatePassword(password)
   }
 
+  const createPost = (title, content, authorName) => {
+    
+    db.collection('posts').add({
+      title: title,
+      content: content,
+      // authorName: authorName,
+      // createdAt: db.FieldValue.serverTimestamp()
+    })
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async(user) => {
       if (user) {
@@ -82,7 +92,8 @@ export function AuthProvider({ children }) {
     logout,
     resetPassword,
     updatePassword,
-    updateUser
+    updateUser,
+    createPost
   }
 
   return (

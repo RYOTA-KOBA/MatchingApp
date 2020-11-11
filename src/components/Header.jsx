@@ -18,6 +18,13 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         backgroundColor: red[500],
     },
+    headerRight: {
+        display: "flex",
+        alignItems: "center"
+    },
+    postFormButton: {
+        marginRight: "20px",
+    },
     postFormLink: {
         color: "#ffffff",
         "&:hover": {
@@ -53,7 +60,8 @@ export default function Header() {
                         </Link>
                     )
                 } */}
-                <Button variant="contained" color="primary">
+                <div className={classes.headerRight}>
+                <Button variant="contained" color="primary" className={classes.postFormButton}>
                     <Link to="/postform" className={classes.postFormLink}>新規投稿</Link>
                 </Button>
                 <Avatar aria-label="recipe" className={classes.avatar}>
@@ -61,6 +69,7 @@ export default function Header() {
                         T
                     </Link>
                 </Avatar>
+                </div>
             </Navbar>
         </Container>
     )
