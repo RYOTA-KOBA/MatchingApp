@@ -11,11 +11,4 @@ jobs:
         - run:
             name: deploy to Firebase Hosting
             command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN
-workflows:
-  version: 2
-  deploy_dev: # ワークフローの名前
-    jobs:
-      - build: # 上で定義したジョブを指定します
-          filters:
-            branches:
-              only: master            
+          
