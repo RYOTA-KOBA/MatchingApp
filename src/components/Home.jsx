@@ -46,7 +46,6 @@ const Home = () => {
         await db.collection('posts').get()
         .then(snapshot => {
             snapshot.docs.forEach(doc => {
-                // console.log(doc.data())
                 const data = doc.data()
                 posts.push({
                     authorName: data.authorName,
@@ -56,10 +55,8 @@ const Home = () => {
                     authorId: data.authorId,
                     id: doc.id               
                 })
-                // console.log(doc.id)
             })
             
-            // const data = snapshot.data()
             setCurrentPost(posts)
         })
     }
