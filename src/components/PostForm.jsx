@@ -2,6 +2,7 @@ import React from 'react'
 // materialUI
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +21,7 @@ export default function PostForm() {
             <form className={classes.root} noValidate autoComplete="off">
                 <TextField id="title" label="タイトル" />
                 <TextField id="content" label="内容" multiline rows={4}/>
+                <Button variant="contained" color="primary">投稿</Button>
             </form>            
         </>
     )
