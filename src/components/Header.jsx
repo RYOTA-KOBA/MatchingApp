@@ -1,6 +1,7 @@
 import React from 'react'
 import { Container, Navbar } from "react-bootstrap"
 import { Link, useHistory } from 'react-router-dom'
+import PostForm from './PostForm'
 
 //material ui
 import Button from '@material-ui/core/Button';
@@ -16,6 +17,13 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         backgroundColor: red[500],
+    },
+    postFormLink: {
+        color: "#ffffff",
+        "&:hover": {
+            textDecoration: "none",
+            color: "#ffffff"
+        }
     },
     avatarLink: {
         color: "white",
@@ -45,6 +53,9 @@ export default function Header() {
                         </Link>
                     )
                 } */}
+                <Button variant="contained" color="primary">
+                    <Link to="/postform" className={classes.postFormLink}>新規投稿</Link>
+                </Button>
                 <Avatar aria-label="recipe" className={classes.avatar}>
                     <Link to="/dashboard" className={classes.avatarLink}>
                         T

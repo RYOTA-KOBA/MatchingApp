@@ -11,6 +11,7 @@ import UpdateProfile from "./UpdateProfile"
 import Home from './Home'
 import Header from './Header'
 import Detail from "./Detail"
+import PostForm from './PostForm'
 // import Detail from './Detail'
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
                 {/* <PrivateRoute path="/detail" component={Detail} /> */}
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/detail" component={Detail} />
+                <PrivateRoute path="/postform" component={PostForm} />
                 <PrivateRoute path="/update-profile" component={UpdateProfile} />
                 <Route path="/signup" component={Signup} />
                 <Route path="/login" component={Login} />
