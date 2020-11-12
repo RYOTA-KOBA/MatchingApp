@@ -50,7 +50,6 @@ export default function PostForm() {
     const handleSubmit = async(e) => {
       e.preventDefault();
 
-      
       setError("")
       setLoading(true)
       setTitle("")
