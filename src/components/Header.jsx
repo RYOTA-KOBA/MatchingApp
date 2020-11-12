@@ -64,11 +64,11 @@ export default function Header() {
                 <Button variant="contained" color="primary" className={classes.postFormButton}>
                     <Link to="/postform" className={classes.postFormLink}>新規投稿</Link>
                 </Button>
-                <Avatar aria-label="recipe" className={classes.avatar}>
-                    <Link to="/dashboard" className={classes.avatarLink}>
+                <Link to="/dashboard" className={classes.avatarLink}>
+                    <Avatar aria-label="recipe" className={classes.avatar}>
                         T
-                    </Link>
-                </Avatar>
+                    </Avatar>
+                </Link>
                 </div>
             </Navbar>
         </Container>
