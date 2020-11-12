@@ -43,7 +43,7 @@ const Home = () => {
 
     const getPosts = async() => {
         let posts = []
-        await db.collection('posts').get()
+        await db.collection('posts').orderBy('createdAt', 'desc').get()
         .then(snapshot => {
             snapshot.docs.forEach(doc => {
                 const data = doc.data()
