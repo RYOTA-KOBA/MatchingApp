@@ -7,24 +7,37 @@ import { Alert } from "react-bootstrap"
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 
 const useStyles = makeStyles((theme) => ({
+  card: {
+    width: "600px",
+    padding: "30px"
+  },
   root: {
     margin: "0 auto",
     width: '500px',
+    display: "flex",
+    justifyContent: "center"
   },
   header: {
     textAlign: "center",
     marginBottom: "30px"
   },
   postFormBox: {
-    margin: "0 auto",
-    width: '500px',
+    width: '90%',
   },
   postFormTextField: {
-    width: '500px',
+    width: '100%',
     marginBottom: "15px"
+  },
+  cancel: {
+    textAlign: "center",
+    marginTop: "30px",
+    display: "flex",
+    justifyContent: "center"
   }
 }));
 
@@ -66,43 +79,50 @@ export default function PostForm() {
     return (
         <>
           {error && <Alert variant="danger">{error}</Alert>}
-          <h2 className={classes.header}>新規投稿を行う</h2>
-          <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
-              <div className={classes.postFormBox}>
-                <TextField 
-                  type="text" 
-                  label="タイトル" 
-                  ref={titleRef} 
-                  className={classes.postFormTextField} 
-                  multiline={true}
-                  required
-                  value={title}
-                  onChange={inputTitle}
-                />
-                <br/>
-                <TextField 
-                  type="text" 
-                  label="内容" 
-                  ref={contentRef} 
-                  className={classes.postFormTextField} 
-                  multiline={true}
-                  rows={4} 
-                  required 
-                  value={content}
-                  onChange={inputContent}
-                />
-                <br/>
-                <Button 
-                  variant="contained" 
-                  type="submit" 
-                  color="primary" 
-                  style={{ width: "100%" }}
-                  disabled={loading}
-                >
-                  投稿
-                </Button>
-              </div>
-          </form>            
+          <Card className={classes.card}>
+            <CardContent>
+              <h2 className={classes.header}>新規投稿を作成</h2>
+              <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
+                  <div className={classes.postFormBox}>
+                    <TextField 
+                      type="text" 
+                      label="タイトル" 
+                      ref={titleRef} 
+                      className={classes.postFormTextField} 
+                      multiline={true}
+                      required
+                      value={title}
+                      onChange={inputTitle}
+                    />
+                    <br/>
+                    <TextField 
+                      type="text" 
+                      label="内容" 
+                      ref={contentRef} 
+                      className={classes.postFormTextField} 
+                      multiline={true}
+                      rows={4} 
+                      required 
+                      value={content}
+                      onChange={inputContent}
+                    />
+                    <br/>
+                    <Button 
+                      variant="contained" 
+                      type="submit" 
+                      color="primary" 
+                      style={{ width: "100%", marginTop: "15px" }}
+                      disabled={loading}
+                    >
+                      投稿
+                    </Button>
+                  </div>
+              </form>  
+            </CardContent>
+          </Card> 
+          <Link to="/" className={classes.cancel}>
+            キャンセル
+          </Link>          
         </>
     )
 }
