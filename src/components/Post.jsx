@@ -1,4 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import Detail from './Detail'
+
 //material ui
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -23,9 +26,18 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
+  detailLink: {
+    "&:hover": {
+      textDecoration: "none"
+    }
+  },
+  detailButton: {
+    backgroundColor: "#d2d6db",
+    color: "#363d44",
+  }
 });
 
-const Post = ({ authorName, content, createdAt, title, authorId}) => {
+const Post = ({ authorName, content, createdAt, title, id}) => {
   const classes = useStyles();
 
     // const handleClick = () => {
@@ -34,6 +46,7 @@ const Post = ({ authorName, content, createdAt, title, authorId}) => {
 
     return (
         <>
+        
         <Card className={classes.root} variant="outlined">
             <CardContent>
                 <Typography variant="h5" component="h3">
@@ -47,8 +60,9 @@ const Post = ({ authorName, content, createdAt, title, authorId}) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                {/* onClick={handleClick}で詳細ページへ遷移 */}
-                <Button size="small">詳細を表示</Button>
+              <Link to={'/detail/' + id} className={classes.detailLink}>
+                <Button variant="contained" className={classes.detailButton} size="small">詳細を表示</Button>
+              </Link>
             </CardActions>
         </Card>
         </>
