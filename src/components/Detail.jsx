@@ -5,10 +5,13 @@ import { Link } from 'react-router-dom'
 //materialUI
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
+import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { db } from '../firebase'
+import IconButton from '@material-ui/core/IconButton';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles({
     backLink: {
@@ -25,6 +28,12 @@ const useStyles = makeStyles({
         width: "100%",
         marginTop: "15px"
     },
+    threeDots: {
+        float: "right",
+        "&:focus": {
+            outline: "none"
+        }
+    },
     bullet: {
         display: "inline-block",
         margin: "0 2px",
@@ -32,7 +41,8 @@ const useStyles = makeStyles({
     },
     title: {
         fontSize: 20,
-        color: "#000"
+        color: "#000",
+        marginTop: "8px"
     },
     pos: {
         marginBottom: 12
@@ -40,6 +50,7 @@ const useStyles = makeStyles({
     time: {
         fontSize: "14px",
         marginTop: "15px",
+        marginRight: "8px",
         textAlign: "right"
     }
 });
@@ -89,6 +100,10 @@ export default function Detail() {
             {postDetail.map(post => 
             <Card className={classes.root} key={post.id}>
                 <CardContent>
+                    <IconButton className={classes.threeDots}>
+                        <MoreVertIcon />
+                    </IconButton>
+                    
                     <Typography
                     className={classes.title}
                     color="textSecondary"
