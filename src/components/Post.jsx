@@ -34,6 +34,9 @@ const useStyles = makeStyles({
   detailButton: {
     backgroundColor: "#d2d6db",
     color: "#363d44",
+    "&:focus": {
+      outline: "none"
+    }
   }
 });
 
