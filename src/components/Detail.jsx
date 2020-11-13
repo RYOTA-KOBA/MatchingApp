@@ -45,15 +45,19 @@ export default function Detail() {
         await db.collection('posts').doc(id).get()
         .then(doc => {
             const data = doc.data()
-            
-            
+            console.log(data)
+            let month = data.createdAt.getMonth() + 1;
+            let date = data.createdAt.getDate()
+            let hours = data.createdAt.getHours();
+            let minutes = "0" + data.createAt.getMinutes();
+            let Today = {month} + "月"
 
             post.push({
                 authorName: data.authorName,
                 content: data.content,
                 createdAt: data.createdAt,
                 title: data.title,
-                createdAt: data.createdAt,
+                createdAt: Today,
                 id: doc.id
             })
         })

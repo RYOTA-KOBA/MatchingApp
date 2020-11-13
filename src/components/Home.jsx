@@ -43,7 +43,7 @@ const Home = () => {
 
     const getPosts = async() => {
         let posts = []
-        await db.collection('posts').get()
+        await db.collection('posts').orderBy('createdAt', 'desc').get()
         .then(snapshot => {
             snapshot.docs.forEach(doc => {
                 const data = doc.data()
@@ -52,8 +52,7 @@ const Home = () => {
                     content: data.content,
                     createdAt: data.createdAt,
                     title: data.title,
-                    authorId: data.authorId,
-                    id: doc.id               
+                    id: doc.id
                 })
             })
             
@@ -71,6 +70,7 @@ const Home = () => {
                     content={post.content}
                     createdAt={post.createdAt}
                     title={post.title}
+                    id={post.id}
                 />
             )}
         </>

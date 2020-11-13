@@ -59,12 +59,11 @@ export function AuthProvider({ children }) {
   }
 
   const createPost = (title, content, authorName) => {
-    
     db.collection('posts').add({
       title: title,
       content: content,
-      // authorName: authorName,
-      // createdAt: db.FieldValue.serverTimestamp()
+      authorName: authorName,
+      createdAt: new Date()
     })
   }
 
@@ -72,7 +71,6 @@ export function AuthProvider({ children }) {
     const unsubscribe = auth.onAuthStateChanged(async(user) => {
       if (user) {
         const uid = user.uid
-        // console.log(uid)
         await db.collection('users').doc(uid).get()
           .then(snapshot => {
             const data = snapshot.data()
