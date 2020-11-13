@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect, useCallback} from 'react'
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from 'react-router-dom'
 
@@ -8,6 +8,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import { db } from '../firebase'
 
 const useStyles = makeStyles({
     root: {
@@ -29,8 +30,34 @@ const useStyles = makeStyles({
 });
 
 export default function Detail() {
-    const { currentUser, logout } = useAuth()
     const classes = useStyles();
+    const path = window.location.href;
+    const id = path.split('/detail/')[1];
+
+    const [postDetail, setPostDetail] = useState([])
+
+    useEffect(() => {
+        getPost();
+    }, [])
+
+    const getPost = async() => {
+        let post = []
+        await db.collection('posts').doc(id).get()
+        .then(doc => {
+            const data = doc.data()
+            console.log(data)
+            post.push({
+                authorName: data.authorName,
+                content: data.content,
+                createdAt: data.createdAt,
+                title: data.title,
+                createdAt: data.createdAt.toLocaleString(),
+                id: doc.id
+            })
+        })
+        setPostDetail(post)
+    }
+    
     
     return (
         <>
@@ -39,64 +66,26 @@ export default function Detail() {
                     一覧に戻る
                 </Button>
             </Link>
-            <Card className={classes.root}>
+            {postDetail.map(post => 
+            <Card className={classes.root} key={post.id}>
                 <CardContent>
                     <Typography
                     className={classes.title}
                     color="textSecondary"
                     gutterBottom
                     >
-                    エンジニア募集してます！！！
+                        {post.title}
                     </Typography>
                     <Typography className={classes.pos} color="textSecondary">
-                    <strong>名前:</strong>{currentUser.username}
+                        {post.authorName}
                     </Typography>
                     <Typography variant="body2" component="p">
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
-                    ここに投稿者からのメッセージを表示
+                        {post.content}
                     </Typography>
+            <h5>{post.createdAt}</h5>
                 </CardContent>
-            </Card>            
+            </Card>   
+            )}         
         </>
     )
 }

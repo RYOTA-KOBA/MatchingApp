@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Signup from "./Signup"
 import { Container } from "react-bootstrap"
 import { AuthProvider } from "../contexts/AuthContext"
@@ -12,9 +12,17 @@ import Home from './Home'
 import Header from './Header'
 import Detail from "./Detail"
 import PostForm from './PostForm'
-// import Detail from './Detail'
+import { db } from '../firebase'
+
 
 function App() {
+  // const [posts, setPosts] = useState([])
+
+  // useEffect(() => {
+  //   db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
+  //     setPosts(snapshot.docs.map(doc => ({id: doc.authorId, post: doc.data().content})))
+  //   })
+  // }, [])
 
   return (
     //force refresh??
@@ -29,7 +37,7 @@ function App() {
             <AuthProvider>
               <Switch>
                 <PrivateRoute exact path="/" component={Home} />
-                {/* <PrivateRoute path="/detail" component={Detail} /> */}
+                <PrivateRoute exact path="/detail/:id" component={Detail} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/detail" component={Detail} />
                 <PrivateRoute path="/postform" component={PostForm} />
