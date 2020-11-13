@@ -11,6 +11,16 @@ import Button from "@material-ui/core/Button";
 import { db } from '../firebase'
 
 const useStyles = makeStyles({
+    backLink: {
+        "&:hover": {
+            textDecoration: "none"
+        }
+    },
+    backButton: {
+        "&:focus": {
+            outline: "none"
+        }
+    },
     root: {
         width: "100%",
         marginTop: "15px"
@@ -71,8 +81,8 @@ export default function Detail() {
     
     return (
         <>
-            <Link to="/">
-                <Button>
+            <Link to="/" className={classes.backLink}>
+                <Button className={classes.backButton}>
                     一覧に戻る
                 </Button>
             </Link>
