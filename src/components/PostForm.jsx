@@ -1,7 +1,7 @@
 import React, { useRef, useState, useCallback } from 'react'
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
-import { Alert } from "react-bootstrap"
+// import { Alert } from "react-bootstrap"
 
 // materialUI
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,9 +9,13 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Alert from '@material-ui/lab/Alert';
 
 
 const useStyles = makeStyles((theme) => ({
+  alert: {
+    marginBottom: "15px"
+  },
   card: {
     width: "600px",
     padding: "30px"
@@ -63,6 +67,13 @@ export default function PostForm() {
     const handleSubmit = async(e) => {
       e.preventDefault();
 
+      if (title === "") {
+        return setError("必須の入力項目が空です。")
+      }
+      if (content === "") {
+        return setError("必須の入力項目が空です。")
+      }
+
       setError("")
       setLoading(true)
       setTitle("")
@@ -78,7 +89,7 @@ export default function PostForm() {
     
     return (
         <>
-          {error && <Alert variant="danger">{error}</Alert>}
+          {error && <Alert className={classes.alert} severity="error">{error}</Alert>}
           <Card className={classes.card}>
             <CardContent>
               <h2 className={classes.header}>新規投稿を作成</h2>
