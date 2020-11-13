@@ -26,6 +26,11 @@ const useStyles = makeStyles({
     },
     pos: {
         marginBottom: 12
+    },
+    time: {
+        fontSize: "14px",
+        marginTop: "15px",
+        textAlign: "right"
     }
 });
 
@@ -46,18 +51,17 @@ export default function Detail() {
         .then(doc => {
             const data = doc.data()
             console.log(data)
-            let month = data.createdAt.getMonth() + 1;
-            let date = data.createdAt.getDate()
-            let hours = data.createdAt.getHours();
-            let minutes = "0" + data.createAt.getMinutes();
-            let Today = {month} + "月"
+
+            const date = new Date(data.createdAt.seconds*1000);
+            const Day = date.toLocaleDateString("ja-JP")
+            const Time = date.toLocaleTimeString("ja-JP")
 
             post.push({
                 authorName: data.authorName,
                 content: data.content,
                 createdAt: data.createdAt,
                 title: data.title,
-                createdAt: Today,
+                createdAt: Day + " " + Time,
                 id: doc.id
             })
         })
@@ -88,7 +92,9 @@ export default function Detail() {
                     <Typography variant="body2" component="p">
                         {post.content}
                     </Typography>
-            <h5>{post.createdAt}</h5>
+                    <Typography className={classes.time} color="textSecondary">
+                        {post.createdAt}
+                    </Typography>
                 </CardContent>
             </Card>   
             )}         
