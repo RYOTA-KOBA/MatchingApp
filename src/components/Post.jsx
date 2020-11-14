@@ -43,9 +43,6 @@ const useStyles = makeStyles({
 const Post = ({ authorName, content, createdAt, title, id}) => {
   const classes = useStyles();
 
-    // const handleClick = () => {
-    //     history.push('/detail')
-    // }
 
     return (
         <>
