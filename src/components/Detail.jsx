@@ -90,10 +90,6 @@ export default function Detail() {
         .catch(() => console.log('削除失敗!!'))
     }
 
-    useEffect(() => {
-        getPost();
-    }, [])
-
     const getPost = async() => {
         let post = []
         await db.collection('posts').doc(id).get()
@@ -116,7 +112,10 @@ export default function Detail() {
         })
         setPostDetail(post)
     }
-    
+
+    useEffect(() => {
+        getPost();
+    }, [])
     
     return (
         <>
@@ -144,7 +143,7 @@ export default function Detail() {
                     >
                         <MenuItem 
                             onClick={() => {
-                                // history.push('/edit_post')
+                                history.push('/postedit')
                                 handleClose()
                             }}
                         >
