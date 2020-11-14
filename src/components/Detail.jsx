@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback} from 'react'
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 //materialUI
 import { makeStyles } from "@material-ui/core/styles";
@@ -56,11 +57,6 @@ const useStyles = makeStyles({
     }
 });
 
-const options = [
-  '編集',
-  '削除'
-];
-
 //パフォーマンステスト用
 // if (process.env.NODE_ENV !== 'production') {
 //     const {whyDidYouUpdate} = require('why-did-you-update');
@@ -70,9 +66,10 @@ const options = [
 export default function Detail() {
     const classes = useStyles();
     const path = window.location.href;
+    const history = useHistory()
     const id = path.split('/detail/')[1];
     const [postDetail, setPostDetail] = useState([])
-    
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
   
@@ -83,6 +80,15 @@ export default function Detail() {
     const handleClose = () => {
       setAnchorEl(null);
     };
+
+    const deletePost = () => {
+        db.collection('posts').doc(id).delete()
+        .then(() => {
+            console.log('削除成功！！')
+            history.push('/')
+        })
+        .catch(() => console.log('削除失敗!!'))
+    }
 
     useEffect(() => {
         getPost();
@@ -122,26 +128,36 @@ export default function Detail() {
             {postDetail.map(post => 
             <Card className={classes.root} key={post.id}>
                 <CardContent>
-                    <IconButton className={classes.threeDots} aria-haspopup="true" onClick={handleClick}>
+                    <IconButton className={classes.threeDots} onClick={handleClick}>
                         <MoreVertIcon />
                     </IconButton>
                     <Menu
-                        id="long-menu"
                         anchorEl={anchorEl}
                         keepMounted
                         open={open}
                         onClose={handleClose}
                         PaperProps={{
                         style: {
-                            width: '20ch',
+                            width: '150px',
                         },
                         }}
                     >
-                        {options.map((option) => (
-                        <MenuItem key={option} onClick={handleClose}>
-                            {option}
+                        <MenuItem 
+                            onClick={() => {
+                                // history.push('/edit_post')
+                                handleClose()
+                            }}
+                        >
+                            編集する
                         </MenuItem>
-                        ))}
+                        <MenuItem 
+                            onClick={() => {
+                                deletePost(id)
+                                handleClose()
+                            }}
+                        >
+                            削除する
+                        </MenuItem>
                     </Menu>
                     <Typography
                     className={classes.title}
