@@ -13,6 +13,7 @@ import Header from './Header'
 import Detail from "./Detail"
 import PostForm from './PostForm'
 import { db } from '../firebase'
+import PostEdit from "./PostEdit"
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
                 <PrivateRoute exact path="/detail/:id" component={Detail} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/detail" component={Detail} />
+                <PrivateRoute path="/postedit" component={PostEdit} />
                 <PrivateRoute path="/postform" component={PostForm} />
                 <PrivateRoute path="/update-profile" component={UpdateProfile} />
                 <Route path="/signup" component={Signup} />
