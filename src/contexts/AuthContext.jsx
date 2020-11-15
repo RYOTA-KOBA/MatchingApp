@@ -12,6 +12,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
   const [currentPost, setCurrentPost] = useState()
+  const [currentId, setCurrentId] = useState()
   const [loading, setLoading] = useState(true)
   const history = useHistory()
 
@@ -67,6 +68,20 @@ export function AuthProvider({ children }) {
     })
   }
 
+  const setNowId = id => {
+    return setCurrentId(id)
+  }
+
+  const editPost = (title, content, authorName) => {
+    db.collection('posts').set({
+      title: title,
+      content: content,
+      authorName: authorName,
+      updatedAt: new Date()
+    }, { merge: true })
+    .then("更新成功!")
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async(user) => {
       if (user) {
@@ -91,7 +106,10 @@ export function AuthProvider({ children }) {
     resetPassword,
     updatePassword,
     updateUser,
-    createPost
+    createPost,
+    editPost,
+    setNowId,
+    currentId
   }
 
   return (

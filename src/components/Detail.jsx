@@ -14,6 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import PostEdit from './PostEdit';
 
 const useStyles = makeStyles({
     backLink: {
@@ -69,7 +70,9 @@ export default function Detail() {
     const history = useHistory()
     const id = path.split('/detail/')[1];
     const [postDetail, setPostDetail] = useState([])
+    const {setNowId} = useAuth()
 
+    
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
   
@@ -113,6 +116,11 @@ export default function Detail() {
         setPostDetail(post)
     }
 
+    const setId = () => {
+        setNowId(id)
+        // console.log(id)
+    }
+
     useEffect(() => {
         getPost();
     }, [])
@@ -141,8 +149,9 @@ export default function Detail() {
                         },
                         }}
                     >
-                        <MenuItem 
+                        <MenuItem
                             onClick={() => {
+                                setId()
                                 history.push('/postedit')
                                 handleClose()
                             }}
