@@ -139,6 +139,7 @@ export default function Detail() {
             <Card className={classes.root} key={post.id}>
                 <CardContent>
                     <IconButton className={classes.threeDots} onClick={handleClick}>
+                        {/* バリデーションかけて、現在のuserとpostのuidが等しい場合のみ表示 */}
                         <MoreVertIcon />
                     </IconButton>
                     <Menu
