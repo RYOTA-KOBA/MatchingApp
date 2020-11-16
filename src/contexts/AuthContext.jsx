@@ -65,7 +65,15 @@ export function AuthProvider({ children }) {
       content: content,
       authorName: authorName,
       createdAt: new Date(),
-      uid: uid
+      uid: uid,
+    })
+    .then(result => {
+      const id = result.id
+      db.collection('posts').doc(id).set({id}, {merge: true})
+      .then(() => {
+        console.log("投稿成功！！")
+        history.push("/")
+      })
     })
   }
 
@@ -86,11 +94,11 @@ export function AuthProvider({ children }) {
     setCurrentPost(post[0])
   }
 
-  const editPost = (title, content, authorName) => {
-    db.collection('posts').set({
+  const editPost = (title, content, data) => {
+    const id = data.id
+    db.collection('posts').doc(id).set({
       title: title,
       content: content,
-      authorName: authorName,
       updatedAt: new Date()
     }, { merge: true })
     .then("更新成功!")
