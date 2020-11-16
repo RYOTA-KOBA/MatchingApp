@@ -42,6 +42,13 @@ const useStyles = makeStyles({
         margin: "0 2px",
         transform: "scale(0.8)"
     },
+    editLink: {
+        color: "#000000DE",
+        "&:hover": {
+            textDecoration: "none",
+            color: "#000000DE"
+        }
+    },
     title: {
         fontSize: 20,
         color: "#000",
@@ -162,7 +169,7 @@ export default function Detail() {
                                 handleClose()
                             }}
                         >
-                            <Link to={'/postedit/' + id}>
+                            <Link to={'/postedit/' + id} className={classes.editLink}>
                                 編集する
                             </Link>
                         </MenuItem>
