@@ -54,7 +54,7 @@ export default function PostEdit() {
     const history = useHistory()
     const titleRef = useRef()
     const contentRef = useRef()
-    const { editPost, currentId } = useAuth()
+    const { editPost, currentId, currentPost } = useAuth()
 
         const inputTitle = useCallback((event) => {
       setTitle(event.target.value)
@@ -97,7 +97,7 @@ export default function PostEdit() {
 
     return (
         <>
-        {console.log(currentId)}
+        {console.log(currentPost)}
           {error && <Alert className={classes.alert} severity="error">{error}</Alert>}
           <Card className={classes.card}>
             <CardContent>
@@ -113,6 +113,7 @@ export default function PostEdit() {
                       required
                       value={title}
                       onChange={inputTitle}
+                      defaultValue={currentPost.title}
                     />
                     <br/>
                     <TextField 
@@ -125,6 +126,7 @@ export default function PostEdit() {
                       required 
                       value={content}
                       onChange={inputContent}
+                      defaultValue={currentPost.content}
                     />
                     <br/>
                     <Button 

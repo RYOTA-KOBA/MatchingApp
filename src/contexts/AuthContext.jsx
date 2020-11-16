@@ -11,7 +11,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
-  const [currentPost, setCurrentPost] = useState()
+  const [currentPost, setCurrentPost] = useState([])
   const [currentId, setCurrentId] = useState()
   const [loading, setLoading] = useState(true)
   const history = useHistory()
@@ -72,6 +72,19 @@ export function AuthProvider({ children }) {
     return setCurrentId(id)
   }
 
+  const setNowPost = async(id) => {
+    let post = [];
+    await  db.collection('posts').doc(id).get()
+    .then(snapshot => {
+      const data = snapshot.data()
+      post.push({
+        title: data.title,
+        content: data.content
+      })
+    })
+    setCurrentPost(post[0])
+  }
+
   const editPost = (title, content, authorName) => {
     db.collection('posts').set({
       title: title,
@@ -109,7 +122,9 @@ export function AuthProvider({ children }) {
     createPost,
     editPost,
     setNowId,
-    currentId
+    currentId,
+    setNowPost,
+    currentPost
   }
 
   return (

@@ -70,7 +70,7 @@ export default function Detail() {
     const history = useHistory()
     const id = path.split('/detail/')[1];
     const [postDetail, setPostDetail] = useState([])
-    const {setNowId} = useAuth()
+    const { setNowId, setNowPost } = useAuth()
 
     
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -98,7 +98,6 @@ export default function Detail() {
         await db.collection('posts').doc(id).get()
         .then(doc => {
             const data = doc.data()
-            console.log(data)
 
             const date = new Date(data.createdAt.seconds*1000);
             const Day = date.toLocaleDateString("ja-JP")
@@ -119,6 +118,10 @@ export default function Detail() {
     const setId = () => {
         setNowId(id)
         // console.log(id)
+    }
+
+    const setPost = () => {
+        setNowPost(id)
     }
 
     useEffect(() => {
@@ -152,6 +155,7 @@ export default function Detail() {
                         <MenuItem
                             onClick={() => {
                                 setId()
+                                setPost()
                                 history.push('/postedit')
                                 handleClose()
                             }}
