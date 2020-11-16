@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from 'react'
+import React, { useRef, useState, useCallback, useEffect } from 'react'
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 import { db } from '../firebase'
@@ -48,46 +48,40 @@ const useStyles = makeStyles((theme) => ({
 export default function PostEdit() {
     const classes = useStyles();
     const [error, setError] = useState("")
-    const [title, setTitle] = useState("")
     const [content, setContent] = useState("")
     const [loading, setLoading] = useState(false)
+    const [currentPost, setCurrentPost] = useState([])
     const history = useHistory()
     const titleRef = useRef()
     const contentRef = useRef()
-    const { editPost, currentId, currentPost } = useAuth()
-
-        const inputTitle = useCallback((event) => {
-      setTitle(event.target.value)
-    }, [setTitle]);
-    
-    const inputContent = useCallback((event) => {
-      setContent(event.target.value)
-    }, [setContent]);
+    const path = window.location.href;
+    const post_id = path.split('/postedit/')[1];
+    const { editPost, currentId } = useAuth()
 
     const handleSubmit = async(e) => {
       e.preventDefault();
 
-        if (title === "") {
+        if (titleRef.current.value === "") {
         return setError("必須の入力項目が空です。")
         }
-        if (content === "") {
+        if (contentRef.current.value === "") {
         return setError("必須の入力項目が空です。")
         }
 
-        
-
-        db.collection('posts').doc(currentId).get()
+        const id = post_id
+        await db.collection('posts').doc(id).get()
         .then(snapshot => {
-          const data = snapshot.data()
-          setLoading(true)
-          setError("")
-          return editPost(title, content, data);
+            const data = snapshot.data()
+            setLoading(true)
+            setError("")
+            return editPost(titleRef.current.value, contentRef.current.value, data)
         })
         .then(() => {
             // Success
             history.push('/')
         })
         .catch((error) => {
+            console.log(error)
             setError("failed!!")
         })
         .finally(() => {
@@ -95,11 +89,30 @@ export default function PostEdit() {
         });
     }
 
+    const getPost = async() => {
+        let post = [];
+        await db.collection('posts').doc(post_id).get()
+        .then(doc => {
+            const data = doc.data();
+            post.push({
+                title: data.title,
+                content: data.content,
+                id: post_id
+            })
+        })
+        setCurrentPost(post)
+    }
+
+    useEffect(() => {
+        getPost()
+    }, [])
+
     return (
         <>
-        {console.log(currentPost)}
+            
           {error && <Alert className={classes.alert} severity="error">{error}</Alert>}
-          <Card className={classes.card}>
+          {currentPost.map(post =>
+          <Card className={classes.card} key={post_id}>
             <CardContent>
               <h2 className={classes.header}>投稿を編集</h2>
               <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
@@ -107,26 +120,21 @@ export default function PostEdit() {
                     <TextField 
                       type="text" 
                       label="タイトル" 
-                      ref={titleRef} 
+                      inputRef={titleRef} 
                       className={classes.postFormTextField} 
-                      multiline={true}
                       required
-                      value={title}
-                      onChange={inputTitle}
-                      defaultValue={currentPost.title}
+                      defaultValue={post.title}
                     />
                     <br/>
                     <TextField 
                       type="text" 
                       label="内容" 
-                      ref={contentRef} 
+                      inputRef={contentRef} 
                       className={classes.postFormTextField} 
                       multiline={true}
                       rows={4} 
                       required 
-                      value={content}
-                      onChange={inputContent}
-                      defaultValue={currentPost.content}
+                      defaultValue={post.content}
                     />
                     <br/>
                     <Button 
@@ -140,8 +148,10 @@ export default function PostEdit() {
                     </Button>
                   </div>
               </form>  
+              
             </CardContent>
           </Card> 
+          )} 
           <Link to="/" className={classes.cancel}>
             キャンセル
           </Link>   
