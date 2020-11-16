@@ -70,7 +70,7 @@ export default function Detail() {
     const history = useHistory()
     const id = path.split('/detail/')[1];
     const [postDetail, setPostDetail] = useState([])
-    const { setNowId, setNowPost } = useAuth()
+    const { setNowId, setNowPost, currentUser } = useAuth()
 
     
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -98,7 +98,7 @@ export default function Detail() {
         await db.collection('posts').doc(id).get()
         .then(doc => {
             const data = doc.data()
-
+            
             const date = new Date(data.createdAt.seconds*1000);
             const Day = date.toLocaleDateString("ja-JP")
             const Time = date.toLocaleTimeString("ja-JP")
@@ -109,6 +109,7 @@ export default function Detail() {
                 createdAt: data.createdAt,
                 title: data.title,
                 createdAt: Day + " " + Time,
+                uid: data.uid,
                 id: doc.id
             })
         })
@@ -138,10 +139,11 @@ export default function Detail() {
             {postDetail.map(post => 
             <Card className={classes.root} key={post.id}>
                 <CardContent>
+                    {post.uid === currentUser.uid && (
                     <IconButton className={classes.threeDots} onClick={handleClick}>
-                        {/* バリデーションかけて、現在のuserとpostのuidが等しい場合のみ表示 */}
                         <MoreVertIcon />
                     </IconButton>
+                    )}
                     <Menu
                         anchorEl={anchorEl}
                         keepMounted
@@ -157,11 +159,12 @@ export default function Detail() {
                             onClick={() => {
                                 setId()
                                 setPost()
-                                history.push('/postedit')
                                 handleClose()
                             }}
                         >
-                            編集する
+                            <Link to={'/postedit/' + id}>
+                                編集する
+                            </Link>
                         </MenuItem>
                         <MenuItem 
                             onClick={() => {
@@ -172,6 +175,7 @@ export default function Detail() {
                             削除する
                         </MenuItem>
                     </Menu>
+                    
                     <Typography
                     className={classes.title}
                     color="textSecondary"

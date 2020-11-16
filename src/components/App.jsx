@@ -41,7 +41,7 @@ function App() {
                 <PrivateRoute exact path="/detail/:id" component={Detail} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/detail" component={Detail} />
-                <PrivateRoute path="/postedit" component={PostEdit} />
+                <PrivateRoute exact path="/postedit/:id" component={PostEdit} />
                 <PrivateRoute path="/postform" component={PostForm} />
                 <PrivateRoute path="/update-profile" component={UpdateProfile} />
                 <Route path="/signup" component={Signup} />
