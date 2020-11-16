@@ -1,7 +1,6 @@
 import React, { useRef, useState, useCallback } from 'react'
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
-// import { Alert } from "react-bootstrap"
 
 // materialUI
 import { makeStyles } from '@material-ui/core/styles';
@@ -64,7 +63,7 @@ export default function PostForm() {
       setContent(event.target.value)
     }, [setContent]);
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = (e) => {
       e.preventDefault();
 
       if (title === "") {
@@ -82,8 +81,7 @@ export default function PostForm() {
       console.log(content)
       const uid = currentUser.uid
       const authorName = currentUser.username
-      createPost(title, content, authorName, uid)
-      history.push("/")
+      return createPost(title, content, authorName, uid)
       setError("投稿に失敗しました")
       setLoading(false)
     }
