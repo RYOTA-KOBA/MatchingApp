@@ -80,8 +80,9 @@ export default function PostForm() {
       setContent("")
       console.log(title)
       console.log(content)
+      const uid = currentUser.uid
       const authorName = currentUser.username
-      createPost(title, content, authorName)
+      createPost(title, content, authorName, uid)
       history.push("/")
       setError("投稿に失敗しました")
       setLoading(false)

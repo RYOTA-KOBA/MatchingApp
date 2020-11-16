@@ -59,12 +59,13 @@ export function AuthProvider({ children }) {
     return firebase.auth().currentUser.updatePassword(password)
   }
 
-  const createPost = (title, content, authorName) => {
+  const createPost = (title, content, authorName, uid) => {
     db.collection('posts').add({
       title: title,
       content: content,
       authorName: authorName,
-      createdAt: new Date()
+      createdAt: new Date(),
+      uid: uid
     })
   }
 
