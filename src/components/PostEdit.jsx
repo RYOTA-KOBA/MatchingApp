@@ -76,10 +76,6 @@ export default function PostEdit() {
             setError("")
             return editPost(titleRef.current.value, contentRef.current.value, data)
         })
-        .then(() => {
-            // Success
-            history.push('/')
-        })
         .catch((error) => {
             console.log(error)
             setError("failed!!")
