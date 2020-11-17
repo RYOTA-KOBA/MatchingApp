@@ -1,6 +1,6 @@
 import React from "react"
 import Signup from "./Signup"
-import { Container } from "react-bootstrap"
+import { Container, Row, Col } from "react-bootstrap"
 import { AuthProvider } from "../contexts/AuthContext"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import Dashboard from "./Dashboard"
@@ -17,24 +17,14 @@ import Footer from "./Footer"
 
 
 function App() {
-  // const [posts, setPosts] = useState([])
-
-  // useEffect(() => {
-  //   db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
-  //     setPosts(snapshot.docs.map(doc => ({id: doc.authorId, post: doc.data().content})))
-  //   })
-  // }, [])
-
   return (
-    //force refresh??
-    
     <Router>
-      <Header />
       <Container
         className="d-flex align-items-center justify-content-center"
         style={{ minHeight: "100vh" }}
       >
-        <div className="w-100" style={{ maxWidth: "600px", marginTop: "100px" }}>
+        <div className="w-100" style={{ maxWidth: "600px" }}>
+            <Header />
             <AuthProvider>
               <Switch>
                 <PrivateRoute exact path="/" component={Home} />

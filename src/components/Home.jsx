@@ -30,6 +30,7 @@ const Home = () => {
 
     return (
         <>
+            <div style={{ marginTop: "100px" }}>
             <h3>Posts</h3>
             {currentPost.map(post => 
                 <Post 
@@ -41,6 +42,7 @@ const Home = () => {
                     id={post.id}
                 />
             )}
+            </div>
         </>
     )
 }
