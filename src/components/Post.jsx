@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Detail from './Detail'
 
 //material ui
 import { makeStyles } from '@material-ui/core/styles';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import Signup from "./Signup"
 import { Container } from "react-bootstrap"
 import { AuthProvider } from "../contexts/AuthContext"
@@ -12,8 +12,8 @@ import Home from './Home'
 import Header from './Header'
 import Detail from "./Detail"
 import PostForm from './PostForm'
-import { db } from '../firebase'
 import PostEdit from "./PostEdit"
+import Footer from "./Footer"
 
 
 function App() {
@@ -51,6 +51,7 @@ function App() {
             </AuthProvider>
         </div>
       </Container>
+      <Footer />
     </Router>
   )
 }
