@@ -137,6 +137,7 @@ export default function Detail() {
     
     return (
         <>
+            <div style={{ marginTop: "100px" }}>
             <Link to="/" className={classes.backLink}>
                 <Button className={classes.backButton}>
                     一覧に戻る
@@ -200,7 +201,8 @@ export default function Detail() {
                     </Typography>
                 </CardContent>
             </Card>   
-            )}         
+            )}  
+            </div>       
         </>
     )
 }

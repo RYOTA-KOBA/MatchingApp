@@ -44,7 +44,7 @@ export default function Header() {
     const classes = useStyles();
 
     return (
-        <Container style={{ margin: "0", padding: "0", minWidth: "100vw" }} >
+        <div style={{ margin: "0", padding: "0", minWidth: "100vw" }} >
             <Navbar expand="lg" variant="light" bg="light" fixed="top" style={{ justifyContent: "space-between", padding: "1% 8%" }}>
                 <Navbar.Brand href="/" style={{ fontSize: "1.5rem" }}>Start</Navbar.Brand>
                 {/* {
@@ -69,6 +69,6 @@ export default function Header() {
                 </Link>
                 </div>
             </Navbar>
-        </Container>
+        </div>
     )
 }
