@@ -101,7 +101,10 @@ export function AuthProvider({ children }) {
       content: content,
       updatedAt: new Date()
     }, { merge: true })
-    .then("更新成功!")
+    .then(() => {
+      history.push('/')
+      console.log("更新成功!")
+    })
   }
 
   useEffect(() => {
