@@ -1,6 +1,6 @@
 import React, { useRef, useState, useCallback } from 'react'
 import { useAuth } from "../contexts/AuthContext"
-import { Link, useHistory } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 // materialUI
 import { makeStyles } from '@material-ui/core/styles';
@@ -50,7 +50,6 @@ export default function PostForm() {
     const [title, setTitle] = useState("")
     const [content, setContent] = useState("")
     const [loading, setLoading] = useState(false)
-    const history = useHistory()
     const titleRef = useRef()
     const contentRef = useRef()
     const { createPost, currentUser } = useAuth()

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Container, Navbar } from "react-bootstrap"
-import { Link, useHistory } from 'react-router-dom'
-import PostForm from './PostForm'
+import { Link } from 'react-router-dom'
 
 //material ui
 import Button from '@material-ui/core/Button';
@@ -43,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
     const classes = useStyles();
-    const history = useHistory()
 
     return (
         <Container style={{ margin: "0", padding: "0", minWidth: "100vw" }} >

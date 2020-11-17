@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback, useEffect } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 import { db } from '../firebase'
@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
 export default function PostEdit() {
     const classes = useStyles();
     const [error, setError] = useState("")
-    const [content, setContent] = useState("")
     const [loading, setLoading] = useState(false)
     const [currentPost, setCurrentPost] = useState([])
     const history = useHistory()
@@ -56,7 +55,7 @@ export default function PostEdit() {
     const contentRef = useRef()
     const path = window.location.href;
     const post_id = path.split('/postedit/')[1];
-    const { editPost, currentId } = useAuth()
+    const { editPost } = useAuth()
 
     const handleSubmit = async(e) => {
       e.preventDefault();
