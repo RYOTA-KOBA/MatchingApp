@@ -19,12 +19,14 @@ import Footer from "./Footer"
 function App() {
   return (
     <Router>
+      <Container>
+        <Header />
+      </Container>
       <Container
-        className="d-flex align-items-center justify-content-center"
-        style={{ minHeight: "100vh" }}
+        className="d-flex justify-content-center"
+        style={{ height: "100%", marginBottom: "60px" }}
       >
         <div className="w-100" style={{ maxWidth: "600px" }}>
-            <Header />
             <AuthProvider>
               <Switch>
                 <PrivateRoute exact path="/" component={Home} />
@@ -40,8 +42,11 @@ function App() {
               </Switch>
             </AuthProvider>
         </div>
+        
       </Container>
-      <Footer />
+      {/* <Container style={{ padding: "0", margin: "0" }} >
+        <Footer />
+      </Container> */}
     </Router>
   )
 }

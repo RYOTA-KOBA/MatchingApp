@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     width: "600px",
-    padding: "30px"
+    padding: "30px",
+    marginTop: "130px"
   },
   root: {
     margin: "0 auto",
