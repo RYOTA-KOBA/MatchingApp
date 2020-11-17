@@ -1,6 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:ital@1&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+html {
+  height: 100%;
+}
 
 body {
   font-family: 'Noto Sans JP', 'Roboto', sans-serif;
+  margin: 0;
+  height: 100%;
 }  
+
+#root {
+  height: 100%;
+}
+
+.MuiCard-root:last-child {
+  margin-bottom: 50px;
+}
