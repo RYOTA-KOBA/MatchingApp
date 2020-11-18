@@ -34,7 +34,7 @@ export default function Signup() {
 
   return (
     <>
-      <Card>
+      <Card className="mt130">
         <Card.Body>
           <h2 className="text-center mb-4">サインアップ</h2>
           {error && <Alert variant="danger">{error}</Alert>}

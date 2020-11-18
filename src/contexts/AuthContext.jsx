@@ -60,9 +60,11 @@ export function AuthProvider({ children }) {
   }
 
   const createPost = (title, content, authorName, uid) => {
+    const enterToBr = content.replace(/\r?\n/g, '<br>');
+    // const brToBreak = enterToBr.replace(/(<br>|<br \/>)/gi, '\n');
     db.collection('posts').add({
       title: title,
-      content: content,
+      content: enterToBr,
       authorName: authorName,
       createdAt: new Date(),
       uid: uid,
