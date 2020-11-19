@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
+import { db } from "../firebase"
 
 //materialUI
 import { makeStyles } from "@material-ui/core/styles";
@@ -38,7 +39,7 @@ const useStyles = makeStyles({
 
 export default function Dashboard() {
   const [error, setError] = useState("")
-  const { currentUser, logout } = useAuth()
+  const { currentUser, setCurrentUser, logout } = useAuth()
   const history = useHistory()
   const classes = useStyles();
 
@@ -52,6 +53,15 @@ export default function Dashboard() {
       setError("Failed to log out")
     }
   }
+
+  useEffect(() => {
+    const uid = currentUser.uid
+    db.collection('users').doc(uid).get()
+    .then(snapshot => {
+      const data = snapshot.data()
+      setCurrentUser(data)
+    })
+  }, [])
 
   return (
     <>
