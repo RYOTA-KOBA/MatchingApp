@@ -19,6 +19,7 @@ import Footer from "./Footer"
 function App() {
   return (
     <Router>
+      <AuthProvider>
       <Container>
         <Header />
       </Container>
@@ -27,26 +28,24 @@ function App() {
         style={{ height: "100%", marginBottom: "60px" }}
       >
         <div className="w-100" style={{ maxWidth: "600px" }}>
-            <AuthProvider>
-              <Switch>
-                <PrivateRoute exact path="/" component={Home} />
-                <PrivateRoute exact path="/detail/:id" component={Detail} />
-                <PrivateRoute path="/dashboard" component={Dashboard} />
-                <PrivateRoute path="/detail" component={Detail} />
-                <PrivateRoute exact path="/postedit/:id" component={PostEdit} />
-                <PrivateRoute path="/postform" component={PostForm} />
-                <PrivateRoute path="/update-profile" component={UpdateProfile} />
-                <Route path="/signup" component={Signup} />
-                <Route path="/login" component={Login} />
-                <Route path="/forgot-password" component={ForgotPassword} />
-              </Switch>
-            </AuthProvider>
+          <Switch>
+            <Route path="/signup" component={Signup} />
+            <Route path="/login" component={Login} />
+            <Route path="/forgot-password" component={ForgotPassword} />
+            <PrivateRoute exact path="/" component={Home} />
+            <PrivateRoute exact path="/detail/:id" component={Detail} />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/detail" component={Detail} />
+            <PrivateRoute exact path="/postedit/:id" component={PostEdit} />
+            <PrivateRoute path="/postform" component={PostForm} />
+            <PrivateRoute path="/update-profile" component={UpdateProfile} />
+          </Switch>
         </div>
-        
       </Container>
       {/* <Container style={{ padding: "0", margin: "0" }} >
         <Footer />
       </Container> */}
+      </AuthProvider>
     </Router>
   )
 }

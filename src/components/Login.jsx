@@ -13,7 +13,7 @@ export default function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-
+    
     setError("")
     setLoading(true)
     return login(emailRef.current.value, passwordRef.current.value)

@@ -1,6 +1,8 @@
 import React, { useRef, useState, useCallback } from 'react'
 import { useAuth } from "../contexts/AuthContext"
 import { Link } from "react-router-dom"
+import { db } from "../firebase"
+import firebase from "../firebase"
 
 // materialUI
 import { makeStyles } from '@material-ui/core/styles';
@@ -63,7 +65,7 @@ export default function PostForm() {
       setContent(event.target.value)
     }, [setContent]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
       e.preventDefault();
 
       if (title === "") {
@@ -77,11 +79,15 @@ export default function PostForm() {
       setLoading(true)
       setTitle("")
       setContent("")
-      console.log(title)
-      console.log(content)
+
       const uid = currentUser.uid
-      const authorName = currentUser.username
-      return createPost(title, content, authorName, uid)
+      await db.collection('users').doc(uid).get()
+      .then(snapshot => {
+        const data = snapshot.data()
+        const authorName = data.username
+        return createPost(title, content, authorName, uid)
+      })
+
       setError("投稿に失敗しました")
       setLoading(false)
     }

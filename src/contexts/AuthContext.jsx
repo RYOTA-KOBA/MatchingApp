@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react"
 import { auth, db } from "../firebase"
 import firebase from "../firebase"
-import { useHistory } from "react-router-dom"
+import { useHistory, Redirect } from "react-router-dom"
 
 const AuthContext = React.createContext()
 
@@ -18,6 +18,7 @@ export function AuthProvider({ children }) {
 
   async function signup(username, email, password) {
     const result = await auth.createUserWithEmailAndPassword(email, password)
+    console.log(result)
     const user = result.user
     if (user) {
       const uid = user.uid
@@ -60,11 +61,11 @@ export function AuthProvider({ children }) {
   }
 
   const createPost = (title, content, authorName, uid) => {
-    const enterToBr = content.replace(/\r?\n/g, '<br>');
-    // const brToBreak = enterToBr.replace(/(<br>|<br \/>)/gi, '\n');
+    // const enterToBr = content.replace(/\r?\n/g, '<br>');
+    // const brToBreak = enterToBr.replace(/(<br>|<br \/>)/gi, '\r\n');
     db.collection('posts').add({
       title: title,
-      content: enterToBr,
+      content: content,
       authorName: authorName,
       createdAt: new Date(),
       uid: uid,
@@ -85,7 +86,7 @@ export function AuthProvider({ children }) {
 
   const setNowPost = async(id) => {
     let post = [];
-    await  db.collection('posts').doc(id).get()
+    await db.collection('posts').doc(id).get()
     .then(snapshot => {
       const data = snapshot.data()
       post.push({
@@ -109,24 +110,23 @@ export function AuthProvider({ children }) {
     })
   }
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async(user) => {
-      if (user) {
-        const uid = user.uid
-        await db.collection('users').doc(uid).get()
-          .then(snapshot => {
-            const data = snapshot.data()
-            setCurrentUser(data)
-            setLoading(false)
-          })
-      }
-    })
+  // const getUserData = () => {
     
+  // }
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      // console.log(user)
+      setCurrentUser(user)
+      setLoading(false)
+      history.push("/")
+    })
     return unsubscribe
   }, [])
 
   const value = {
     currentUser,
+    setCurrentUser,
     login,
     signup,
     logout,
