@@ -15,10 +15,15 @@ const Home = () => {
         .then(snapshot => {
             snapshot.docs.forEach(doc => {
                 const data = doc.data()
+                
+                const date = new Date(data.createdAt.seconds*1000)
+                const Day = date.toLocaleDateString("ja-JP")
+                const Time = date.toLocaleTimeString("ja-JP")                
+
                 posts.push({
                     authorName: data.authorName,
                     content: data.content,
-                    createdAt: data.createdAt,
+                    createdAt: Day + " " + Time,
                     title: data.title,
                     id: doc.id,
                     uid: data.uid

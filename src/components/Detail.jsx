@@ -182,7 +182,6 @@ export default function Detail() {
                             削除する
                         </MenuItem>
                     </Menu>
-                    
                     <Typography
                     className={classes.title}
                     color="textSecondary"
