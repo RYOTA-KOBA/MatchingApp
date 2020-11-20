@@ -20,7 +20,8 @@ const Home = () => {
                     content: data.content,
                     createdAt: data.createdAt,
                     title: data.title,
-                    id: doc.id
+                    id: doc.id,
+                    uid: data.uid
                 })
             })
             
@@ -40,6 +41,7 @@ const Home = () => {
                     createdAt={post.createdAt}
                     title={post.title}
                     id={post.id}
+                    uid={post.uid}
                 />
             )}
             </div>
