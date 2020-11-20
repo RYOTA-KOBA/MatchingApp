@@ -14,6 +14,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+
 
 const useStyles = makeStyles({
   root: {
@@ -44,12 +46,17 @@ const useStyles = makeStyles({
     fontSize: 14,
   },
   pos: {
-    marginBottom: 12,
+    fontSize: "14px",
+    marginTop: "8px",
   },
   contentText: {
     overflow: "hidden",
     lineHeight: "1.5",
-    maxHeight: "3em"
+    maxHeight: "3em",
+    marginTop: "8px"
+  },
+  detailBtnWrap: {
+    float: "left"
   },
   detailLink: {
     "&:hover": {
@@ -63,14 +70,13 @@ const useStyles = makeStyles({
       outline: "none"
     }
   },
-  time: {
-    fontSize: "14px",
-    display: "inline-block",
+  likeBtn: {
     float: "right",
-    position: "absolute",
-    bottom: "6%",
-    right: "3%"
-  }
+    marginRight: "16px",
+    "&:focus": {
+      outline: "none"
+    }
+  },
 });
 
 const Post = ({ authorName, content, createdAt, title, id, uid}) => {
@@ -99,7 +105,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
     return (
         <>
         <Card className={classes.root} variant="outlined">
-            <CardContent>
+            <CardContent style={{ paddingBottom: "0" }}>
               {uid === currentUser.uid && (
                 <IconButton className={classes.threeDots} onClick={handleClick}>
                     <MoreVertIcon />
@@ -138,20 +144,20 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
                   {title}
                 </Typography>
                 <Typography className={classes.pos} color="textSecondary">
-                  {authorName}
+                  {authorName+"・"+createdAt}
                 </Typography>
                 <Typography className={classes.contentText} variant="body2" component="p">
                   {content}
                 </Typography>
-                <Typography className={classes.time} color="textSecondary">
-                  {createdAt}
-                </Typography>
             </CardContent>
-            <CardActions>
+            <CardActions className={classes.detailBtnWrap}>
               <Link to={'/detail/' + id} className={classes.detailLink}>
                 <Button variant="contained" className={classes.detailButton} size="small">詳細を表示</Button>
               </Link>
             </CardActions>
+            <IconButton className={classes.likeBtn}>
+              <FavoriteBorderIcon />
+            </IconButton>
         </Card>
         </>
     )
