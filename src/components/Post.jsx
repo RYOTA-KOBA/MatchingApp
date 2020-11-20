@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useHistory } from 'react-router-dom'
 import { db } from '../firebase'
 import { useAuth } from '../contexts/AuthContext'
 
@@ -20,7 +19,8 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     marginTop: 15,
-    maxHeight: "200px"
+    maxHeight: "200px",
+    position: "relative"
   },
   threeDots: {
     float: "right",
@@ -62,12 +62,19 @@ const useStyles = makeStyles({
     "&:focus": {
       outline: "none"
     }
+  },
+  time: {
+    fontSize: "14px",
+    display: "inline-block",
+    float: "right",
+    position: "absolute",
+    bottom: "6%",
+    right: "3%"
   }
 });
 
 const Post = ({ authorName, content, createdAt, title, id, uid}) => {
   const classes = useStyles();
-  const history = useHistory();
   const { currentUser } = useAuth();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -128,13 +135,16 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
                   </MenuItem>
                 </Menu>              
                 <Typography variant="h5" component="h3">
-                    {title}
+                  {title}
                 </Typography>
                 <Typography className={classes.pos} color="textSecondary">
-                    {authorName}
+                  {authorName}
                 </Typography>
                 <Typography className={classes.contentText} variant="body2" component="p">
-                    {content}
+                  {content}
+                </Typography>
+                <Typography className={classes.time} color="textSecondary">
+                  {createdAt}
                 </Typography>
             </CardContent>
             <CardActions>
