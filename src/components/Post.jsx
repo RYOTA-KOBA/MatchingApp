@@ -85,6 +85,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
   const { currentUser } = useAuth();
   const [count, setCount] = useState(0)
   const [liked, setLiked] = useState(false)
+  const [likeId, setLikeId] = useState()
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -94,8 +95,8 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
   };
 
   const onClickLikeBtn = () => {
-
     if (!liked) {
+      setLiked(true)
       db.collection('likes').add({
         post_id: id,
         uid: currentUser.uid
@@ -104,20 +105,20 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
         const id = result.id
         db.collection('likes').doc(id).set({id}, {merge: true})
         setCount(count + 1)
+        setLikeId(id)
       })
     } else {
-      db.collection('likes').get()
+      setLiked(false)
+      db.collection('likes').doc(likeId).get()
       .then(snapshot => {
-        snapshot.forEach(doc => {
-          const id = doc.id
-          db.collection('likes').doc(id).delete()
-          setCount(count + 1)
-        })
+          const like_id = snapshot.id
+          db.collection('likes').doc(like_id).delete()
+          setCount(count - 1)
       })
     }
 
     // setCount(count + (liked ? -1 : 1))
-    setLiked(!liked)
+    
   }
 
   const handleClose = () => {
