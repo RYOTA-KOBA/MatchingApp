@@ -94,7 +94,29 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
   };
 
   const onClickLikeBtn = () => {
-    setCount(count + (liked ? -1 : 1))
+
+    if (!liked) {
+      db.collection('likes').add({
+        post_id: id,
+        uid: currentUser.uid
+      })
+      .then(result => {
+        const id = result.id
+        db.collection('likes').doc(id).set({id}, {merge: true})
+        setCount(count + 1)
+      })
+    } else {
+      db.collection('likes').get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          const id = doc.id
+          db.collection('likes').doc(id).delete()
+          setCount(count + 1)
+        })
+      })
+    }
+
+    // setCount(count + (liked ? -1 : 1))
     setLiked(!liked)
   }
 
