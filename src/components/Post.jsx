@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { db } from '../firebase'
 import { useAuth } from '../contexts/AuthContext'
@@ -15,6 +15,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 
 const useStyles = makeStyles({
@@ -82,12 +83,42 @@ const useStyles = makeStyles({
 const Post = ({ authorName, content, createdAt, title, id, uid}) => {
   const classes = useStyles();
   const { currentUser } = useAuth();
+  const [count, setCount] = useState(0)
+  const [liked, setLiked] = useState(false)
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const onClickLikeBtn = () => {
+
+    if (!liked) {
+      db.collection('likes').add({
+        post_id: id,
+        uid: currentUser.uid
+      })
+      .then(result => {
+        const id = result.id
+        db.collection('likes').doc(id).set({id}, {merge: true})
+        setCount(count + 1)
+      })
+    } else {
+      db.collection('likes').get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          const id = doc.id
+          db.collection('likes').doc(id).delete()
+          setCount(count + 1)
+        })
+      })
+    }
+
+    // setCount(count + (liked ? -1 : 1))
+    setLiked(!liked)
+  }
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -155,8 +186,8 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
                 <Button variant="contained" className={classes.detailButton} size="small">詳細を表示</Button>
               </Link>
             </CardActions>
-            <IconButton className={classes.likeBtn}>
-              <FavoriteBorderIcon />
+            <IconButton className={classes.likeBtn} onClick={onClickLikeBtn}>
+              {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             </IconButton>
         </Card>
         </>
