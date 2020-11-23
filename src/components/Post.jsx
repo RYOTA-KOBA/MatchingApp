@@ -14,8 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 
 const useStyles = makeStyles({
@@ -82,10 +81,8 @@ const useStyles = makeStyles({
 
 const Post = ({ authorName, content, createdAt, title, id, uid}) => {
   const classes = useStyles();
-  const { currentUser } = useAuth();
-  const [count, setCount] = useState(0)
-  const [liked, setLiked] = useState(false)
-  const [likeId, setLikeId] = useState()
+  const { currentUser, savePostToBookmark } = useAuth();
+  const [saved, setSaved] = useState(false)
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -94,31 +91,10 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const onClickLikeBtn = () => {
-    if (!liked) {
-      setLiked(true)
-      db.collection('likes').add({
-        post_id: id,
-        uid: currentUser.uid
-      })
-      .then(result => {
-        const id = result.id
-        db.collection('likes').doc(id).set({id}, {merge: true})
-        setCount(count + 1)
-        setLikeId(id)
-      })
-    } else {
-      setLiked(false)
-      db.collection('likes').doc(likeId).get()
-      .then(snapshot => {
-          const like_id = snapshot.id
-          db.collection('likes').doc(like_id).delete()
-          setCount(count - 1)
-      })
-    }
-
-    // setCount(count + (liked ? -1 : 1))
-    
+  const savePost = () => {
+    setSaved(!saved)
+    const savedPosts = ({ authorName, content, createdAt, title });
+    return savePostToBookmark(savedPosts)
   }
 
   const handleClose = () => {
@@ -187,9 +163,11 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
                 <Button variant="contained" className={classes.detailButton} size="small">詳細を表示</Button>
               </Link>
             </CardActions>
-            <IconButton className={classes.likeBtn} onClick={onClickLikeBtn}>
-              {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            {saved ? "" :
+            <IconButton className={classes.likeBtn} onClick={savePost}>
+               <AddCircleIcon />
             </IconButton>
+            }
         </Card>
         </>
     )

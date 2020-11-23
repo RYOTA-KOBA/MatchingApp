@@ -104,10 +104,11 @@ export default function Detail() {
         await db.collection('posts').doc(id).get()
         .then(doc => {
             const data = doc.data()
-            
+            console.log(data)
             const date = new Date(data.createdAt.seconds*1000);
             const Day = date.toLocaleDateString("ja-JP")
             const Time = date.toLocaleTimeString("ja-JP")
+            
 
             post.push({
                 authorName: data.authorName,
