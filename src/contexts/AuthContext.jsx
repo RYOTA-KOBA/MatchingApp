@@ -110,13 +110,15 @@ export function AuthProvider({ children }) {
     })
   }
 
-  // const getUserData = () => {
-    
-  // }
+  const savePostToBookmark = async(savedPosts) => {
+    const uid = currentUser.uid
+    const saveRef = db.collection('users').doc(uid).collection('bookmarks').doc();
+    savedPosts['saveId'] = saveRef.id;
+    await saveRef.set(savedPosts);
+  }
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
-      // console.log(user)
       setCurrentUser(user)
       setLoading(false)
       history.push("/")
@@ -138,7 +140,8 @@ export function AuthProvider({ children }) {
     setNowId,
     currentId,
     setNowPost,
-    currentPost
+    currentPost,
+    savePostToBookmark
   }
 
   return (

@@ -108,11 +108,10 @@ export default function Detail() {
             const date = new Date(data.createdAt.seconds*1000);
             const Day = date.toLocaleDateString("ja-JP")
             const Time = date.toLocaleTimeString("ja-JP")
-
+            
             post.push({
                 authorName: data.authorName,
                 content: data.content,
-                createdAt: data.createdAt,
                 title: data.title,
                 createdAt: Day + " " + Time,
                 uid: data.uid,
