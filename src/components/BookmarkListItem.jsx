@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { db } from '../firebase'
+import { useAuth } from '../contexts/AuthContext'
 
 //material ui
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,6 +10,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const useStyles = makeStyles({
   root: {
@@ -72,9 +75,17 @@ const useStyles = makeStyles({
   },
 });
 
-export default function BookmarkListItem({ authorName, content, createdAt, title, id, post_id}) {
+export default function BookmarkListItem({ authorName, content, createdAt, title, post_id, id}) {
     const classes = useStyles();
-    console.log(post_id)
+    const { currentUser } = useAuth()
+    const uid = currentUser.uid
+
+    const removePostFromBookmark = async () => {
+        await db.collection('users').doc(uid)
+            .collection('bookmarks').doc(id)
+            .delete();
+        window.location.reload();
+    };
 
     return (
         <>
@@ -95,11 +106,9 @@ export default function BookmarkListItem({ authorName, content, createdAt, title
                 <Button variant="contained" className={classes.detailButton} size="small">詳細を表示</Button>
               </Link>
             </CardActions>
-            {/* {saved ? "" :
-            <IconButton className={classes.likeBtn} onClick={savePost}>
-               <AddCircleIcon />
+            <IconButton className={classes.likeBtn} onClick={() => removePostFromBookmark(id)}>
+               <HighlightOffIcon />
             </IconButton>
-            } */}
         </Card>
         </>
     )
