@@ -15,6 +15,7 @@ import PostForm from './PostForm'
 import PostEdit from "./PostEdit"
 import Footer from "./Footer"
 import BookmarkList from "./BookmarkList"
+import BookmarkListItem from "./BookmarkList"
 
 
 function App() {
@@ -35,9 +36,9 @@ function App() {
             <Route path="/forgot-password" component={ForgotPassword} />
             <PrivateRoute exact path="/" component={Home} />
             <PrivateRoute exact path="/bookmarkList" component={BookmarkList} />
+            <PrivateRoute exact path="/bookmarkListItem" component={BookmarkListItem} />
             <PrivateRoute exact path="/detail/:id" component={Detail} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
-            <PrivateRoute path="/detail" component={Detail} />
             <PrivateRoute exact path="/postedit/:id" component={PostEdit} />
             <PrivateRoute path="/postform" component={PostForm} />
             <PrivateRoute path="/update-profile" component={UpdateProfile} />

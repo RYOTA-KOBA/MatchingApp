@@ -5,7 +5,7 @@ import BookmarkListItem from './BookmarkListItem'
 
 export default function BookmarkList() {
     const { currentUser } = useAuth()
-    const [bookmark, setBookmark] = useState([])
+    const [bookmarks, setBookmarks] = useState([])
 
     useEffect(() => {
         const uid = currentUser.uid;
@@ -20,12 +20,13 @@ export default function BookmarkList() {
                         content: data.content,
                         createdAt: data.createdAt,
                         title: data.title,
-                        id: doc.id,
-                        uid: data.uid
+                        saveId: doc.id,
+                        uid: data.uid,
+                        post_id: data.id
                     })
                     
                 })
-                setBookmark(posts)
+                setBookmarks(posts)
             })
     }, [])
 
@@ -33,15 +34,17 @@ export default function BookmarkList() {
         <>
             <div style={{ marginTop: "100px" }}>
             <h3>保存した投稿</h3>
-            {bookmark.map(post => 
+            {bookmarks.map(bookmark => 
                 <BookmarkListItem 
-                    key={post.id}
-                    authorName={post.authorName}
-                    content={post.content}
-                    createdAt={post.createdAt}
-                    title={post.title}
-                    id={post.id}
-                    uid={post.uid}
+                    key={bookmark.saveId}
+                    authorName={bookmark.authorName}
+                    content={bookmark.content}
+                    createdAt={bookmark.createdAt}
+                    title={bookmark.title}
+                    // bookmarkのid
+                    id={bookmark.saveId}
+                    uid={bookmark.uid}
+                    post_id={bookmark.post_id}
                 />
             )}
             </div>

@@ -1,5 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { db } from '../firebase'
 
 //material ui
 import { makeStyles } from '@material-ui/core/styles';
@@ -71,8 +72,9 @@ const useStyles = makeStyles({
   },
 });
 
-export default function BookmarkListItem({ authorName, content, createdAt, title, id, uid}) {
+export default function BookmarkListItem({ authorName, content, createdAt, title, id, post_id}) {
     const classes = useStyles();
+    console.log(post_id)
 
     return (
         <>
@@ -89,7 +91,7 @@ export default function BookmarkListItem({ authorName, content, createdAt, title
                 </Typography>
             </CardContent>
             <CardActions className={classes.detailBtnWrap}>
-              <Link to={'/detail/' + id} className={classes.detailLink}>
+              <Link to={'/detail/' + post_id} className={classes.detailLink}>
                 <Button variant="contained" className={classes.detailButton} size="small">詳細を表示</Button>
               </Link>
             </CardActions>

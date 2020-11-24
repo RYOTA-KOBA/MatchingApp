@@ -93,7 +93,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
 
   const savePost = () => {
     setSaved(!saved)
-    const savedPosts = ({ authorName, content, createdAt, title });
+    const savedPosts = ({ authorName, content, createdAt, title, id });
     return savePostToBookmark(savedPosts)
   }
 
