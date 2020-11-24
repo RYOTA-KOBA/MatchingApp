@@ -3,6 +3,8 @@ Readmeにはアプリのスクショを載せる！！Readmeにはアプリの�
 
 [![RYOTA-KOBA](https://circleci.com/gh/RYOTA-KOBA/MatchingApp.svg?style=svg)](https://app.circleci.com/pipelines/github/RYOTA-KOBA/MatchingApp)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## License
 MIT
 
