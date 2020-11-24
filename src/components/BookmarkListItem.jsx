@@ -80,11 +80,10 @@ export default function BookmarkListItem({ authorName, content, createdAt, title
     const { currentUser } = useAuth()
     const uid = currentUser.uid
 
-    const removePostFromBookmark = async () => {
-        await db.collection('users').doc(uid)
+    const removePostFromBookmark = () => {
+        return db.collection('users').doc(uid)
             .collection('bookmarks').doc(id)
             .delete();
-        window.location.reload();
     };
 
     return (

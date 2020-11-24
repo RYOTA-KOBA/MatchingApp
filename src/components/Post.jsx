@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { db } from '../firebase'
 import { useAuth } from '../contexts/AuthContext'
@@ -82,6 +82,7 @@ const useStyles = makeStyles({
 const Post = ({ authorName, content, createdAt, title, id, uid}) => {
   const classes = useStyles();
   const { currentUser, savePostToBookmark } = useAuth();
+  const [savedId, setSavedId] = useState()
   const [saved, setSaved] = useState(false)
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -109,6 +110,27 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
     })
     .catch(() => console.log('削除失敗!!'))
   }
+
+  useEffect(() => {
+    const uid = currentUser.uid
+    db.collection('users').doc(uid).get()
+    .then(doc => {
+      // console.log(doc.data())
+        if (doc.exists) {
+          db.collection('users').doc(uid).collection('bookmarks').get()
+          .then(snapshots => {
+            snapshots.docs.forEach(doc => {
+              const data = doc.data();
+              // saveIdはbookmarkしたpostのid
+              const saveId = data.id
+              console.log(saveId+" = "+id)
+              setSavedId(saveId)
+            })
+          })
+        }
+      })
+    
+  }, [])
 
     return (
         <>
@@ -163,7 +185,9 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
                 <Button variant="contained" className={classes.detailButton} size="small">詳細を表示</Button>
               </Link>
             </CardActions>
-            {saved ? "" :
+            {/* {console.log(savedId)} */}
+            {/* {console.log(id)} */}
+            {savedId === id ? "" :
             <IconButton className={classes.likeBtn} onClick={savePost}>
                <AddCircleIcon />
             </IconButton>
