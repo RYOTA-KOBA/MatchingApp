@@ -6,8 +6,6 @@ Readmeにはアプリのスクショを載せる！！Readmeにはアプリの�
 ## License
 The source code is licensed MIT. The website content is licensed CC BY 4.0,see LICENSE.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
 In the project directory, you can run:
