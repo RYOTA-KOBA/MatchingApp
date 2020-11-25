@@ -82,7 +82,7 @@ const useStyles = makeStyles({
 
 const Post = ({ authorName, content, createdAt, title, id, uid}) => {
   const classes = useStyles();
-  const { currentUser, savePostToBookmark } = useAuth();
+  const { currentUser, savePostToBookmark, removePostFromBookmark } = useAuth();
   const [savedId, setSavedId] = useState()
   const [saved, setSaved] = useState(false)
 
@@ -94,7 +94,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
   };
 
   const savePost = () => {
-    setSaved(!saved)
+    setSaved(true)
     const savedPosts = ({ authorName, content, createdAt, title, id});
     return savePostToBookmark(savedPosts)
   }
@@ -112,18 +112,15 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
     .catch(() => console.log('削除失敗!!'))
   }
 
-  const removePostFromBookmark = async () => {
-    await db.collection('users').doc(uid)
-        .collection('bookmarks').doc(id)
-        .delete();
-        setSaved(false)
+  const removeBookmark = async (id) => {
+    setSaved(false)
+    removePostFromBookmark(id)
   };
 
   useEffect(() => {
     const uid = currentUser.uid
     db.collection('users').doc(uid).get()
     .then(doc => {
-      // console.log(doc.data())
         if (doc.exists) {
           db.collection('users').doc(uid).collection('bookmarks').get()
           .then(snapshots => {
@@ -194,7 +191,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
               </Link>
             </CardActions>
             {saved === true ? 
-            <IconButton className={classes.likeBtn} onClick={removePostFromBookmark}>
+            <IconButton className={classes.likeBtn} onClick={removeBookmark}>
               <BookmarkIcon />
             </IconButton>
             :
