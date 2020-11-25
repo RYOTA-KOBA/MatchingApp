@@ -15,6 +15,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 
 
 const useStyles = makeStyles({
@@ -94,7 +96,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
 
   const savePost = () => {
     setSaved(!saved)
-    const savedPosts = ({ authorName, content, createdAt, title, id });
+    const savedPosts = ({ authorName, content, createdAt, title, id});
     return savePostToBookmark(savedPosts)
   }
 
@@ -123,7 +125,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
               const data = doc.data();
               // saveIdはbookmarkしたpostのid
               const saveId = data.id
-              console.log(saveId+" = "+id)
+              if (saveId === id) setSaved(true)
               setSavedId(saveId)
             })
           })
@@ -185,11 +187,13 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
                 <Button variant="contained" className={classes.detailButton} size="small">詳細を表示</Button>
               </Link>
             </CardActions>
-            {/* {console.log(savedId)} */}
-            {/* {console.log(id)} */}
-            {savedId === id ? "" :
+            {saved === true ? 
+            <IconButton className={classes.likeBtn}>
+              <BookmarkIcon />
+            </IconButton>
+            :
             <IconButton className={classes.likeBtn} onClick={savePost}>
-               <AddCircleIcon />
+               <BookmarkBorderIcon />
             </IconButton>
             }
         </Card>

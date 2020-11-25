@@ -77,13 +77,15 @@ const useStyles = makeStyles({
 
 export default function BookmarkListItem({ authorName, content, createdAt, title, post_id, id}) {
     const classes = useStyles();
+    const history = useHistory()
     const { currentUser } = useAuth()
     const uid = currentUser.uid
 
-    const removePostFromBookmark = () => {
-        return db.collection('users').doc(uid)
+    const removePostFromBookmark = async () => {
+        await db.collection('users').doc(uid)
             .collection('bookmarks').doc(id)
             .delete();
+        history.push('/bookmarkList')
     };
 
     return (
