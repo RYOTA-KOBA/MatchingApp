@@ -43,7 +43,6 @@ export default function BookmarkList() {
                     title={bookmark.title}
                     // bookmarkのid
                     id={bookmark.saveId}
-                    uid={bookmark.uid}
                     post_id={bookmark.post_id}
                 />
             )}

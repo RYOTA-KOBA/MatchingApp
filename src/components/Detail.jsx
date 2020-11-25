@@ -139,7 +139,7 @@ export default function Detail() {
             <div style={{ marginTop: "100px" }}>
             <Link to="/" className={classes.backLink}>
                 <Button className={classes.backButton}>
-                    一覧に戻る
+                    トップに戻る
                 </Button>
             </Link>
             {postDetail.map(post => 

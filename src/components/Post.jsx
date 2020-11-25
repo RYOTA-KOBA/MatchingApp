@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { db } from '../firebase'
 import { useAuth } from '../contexts/AuthContext'
@@ -15,6 +15,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 
 
 const useStyles = makeStyles({
@@ -82,6 +84,7 @@ const useStyles = makeStyles({
 const Post = ({ authorName, content, createdAt, title, id, uid}) => {
   const classes = useStyles();
   const { currentUser, savePostToBookmark } = useAuth();
+  const [savedId, setSavedId] = useState()
   const [saved, setSaved] = useState(false)
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -93,7 +96,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
 
   const savePost = () => {
     setSaved(!saved)
-    const savedPosts = ({ authorName, content, createdAt, title, id });
+    const savedPosts = ({ authorName, content, createdAt, title, id});
     return savePostToBookmark(savedPosts)
   }
 
@@ -109,6 +112,27 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
     })
     .catch(() => console.log('削除失敗!!'))
   }
+
+  useEffect(() => {
+    const uid = currentUser.uid
+    db.collection('users').doc(uid).get()
+    .then(doc => {
+      // console.log(doc.data())
+        if (doc.exists) {
+          db.collection('users').doc(uid).collection('bookmarks').get()
+          .then(snapshots => {
+            snapshots.docs.forEach(doc => {
+              const data = doc.data();
+              // saveIdはbookmarkしたpostのid
+              const saveId = data.id
+              if (saveId === id) setSaved(true)
+              setSavedId(saveId)
+            })
+          })
+        }
+      })
+    
+  }, [])
 
     return (
         <>
@@ -163,9 +187,13 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
                 <Button variant="contained" className={classes.detailButton} size="small">詳細を表示</Button>
               </Link>
             </CardActions>
-            {saved ? "" :
+            {saved === true ? 
+            <IconButton className={classes.likeBtn}>
+              <BookmarkIcon />
+            </IconButton>
+            :
             <IconButton className={classes.likeBtn} onClick={savePost}>
-               <AddCircleIcon />
+               <BookmarkBorderIcon />
             </IconButton>
             }
         </Card>
