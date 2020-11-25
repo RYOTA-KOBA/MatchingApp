@@ -14,7 +14,6 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 
@@ -113,6 +112,13 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
     .catch(() => console.log('削除失敗!!'))
   }
 
+  const removePostFromBookmark = async () => {
+    await db.collection('users').doc(uid)
+        .collection('bookmarks').doc(id)
+        .delete();
+        setSaved(false)
+  };
+
   useEffect(() => {
     const uid = currentUser.uid
     db.collection('users').doc(uid).get()
@@ -188,7 +194,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
               </Link>
             </CardActions>
             {saved === true ? 
-            <IconButton className={classes.likeBtn}>
+            <IconButton className={classes.likeBtn} onClick={removePostFromBookmark}>
               <BookmarkIcon />
             </IconButton>
             :

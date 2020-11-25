@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
-import { db } from '../firebase'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
 //material ui
@@ -11,7 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 
 const useStyles = makeStyles({
   root: {
@@ -77,19 +76,17 @@ const useStyles = makeStyles({
 
 export default function BookmarkListItem({ authorName, content, createdAt, title, post_id, id}) {
     const classes = useStyles();
-    const history = useHistory()
-    const { currentUser } = useAuth()
-    const uid = currentUser.uid
+    const { removePostFromBookmark } = useAuth()
+    const [saved, setSaved] = useState(true)
 
-    const removePostFromBookmark = async () => {
-        await db.collection('users').doc(uid)
-            .collection('bookmarks').doc(id)
-            .delete();
-        history.push('/bookmarkList')
+    const removeBookmark = async () => {
+        setSaved(false)
+        await removePostFromBookmark(id)
     };
 
     return (
         <>
+        {saved === true && 
         <Card className={classes.root} variant="outlined">
             <CardContent style={{ paddingBottom: "0" }}>
                 <Typography variant="h5" component="h3">
@@ -107,10 +104,11 @@ export default function BookmarkListItem({ authorName, content, createdAt, title
                 <Button variant="contained" className={classes.detailButton} size="small">詳細を表示</Button>
               </Link>
             </CardActions>
-            <IconButton className={classes.likeBtn} onClick={() => removePostFromBookmark(id)}>
-               <HighlightOffIcon />
+            <IconButton className={classes.likeBtn} onClick={() => removeBookmark(id)}>
+               <BookmarkIcon />
             </IconButton>
         </Card>
+        }
         </>
     )
 }
