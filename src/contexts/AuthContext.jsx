@@ -117,6 +117,13 @@ export function AuthProvider({ children }) {
     await saveRef.set(savedPosts);
   }
 
+  const removePostFromBookmark = async (id) => {
+    const uid = currentUser.uid
+    await db.collection('users').doc(uid)
+        .collection('bookmarks').doc(id)
+        .delete();
+  };
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser(user)
@@ -141,7 +148,8 @@ export function AuthProvider({ children }) {
     currentId,
     setNowPost,
     currentPost,
-    savePostToBookmark
+    savePostToBookmark,
+    removePostFromBookmark
   }
 
   return (
