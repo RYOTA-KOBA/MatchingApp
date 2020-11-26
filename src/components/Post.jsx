@@ -93,25 +93,26 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
     setAnchorEl(event.currentTarget);
   };
 
+  
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  
+  const deletePost = () => {
+    db.collection('posts').doc(id).delete()
+    .then(() => {
+      console.log('削除成功！！')
+      window.location.reload();
+    })
+    .catch(() => console.log('削除失敗!!'))
+  }
+  
   const savePost = () => {
     setSaved(true)
     const savedPosts = ({ authorName, content, createdAt, title, id});
     return savePostToBookmark(savedPosts)
   }
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const deletePost = () => {
-    db.collection('posts').doc(id).delete()
-    .then(() => {
-        console.log('削除成功！！')
-        window.location.reload();
-    })
-    .catch(() => console.log('削除失敗!!'))
-  }
-
+  
   const removeBookmark = async (id) => {
     setSaved(false)
     removePostFromBookmark(id)
