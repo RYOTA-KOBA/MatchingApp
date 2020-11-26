@@ -28,6 +28,21 @@ export default function Login() {
     });
   }
 
+  const onClickGuestButton = () => {
+    setError("")
+    setLoading(true)
+    return login("guest@example.com", "password")
+    .then(() => {
+      history.push("/")
+    })
+    .catch((error) => {
+      setError("failed!!")
+    })
+    .finally(() => {
+        setLoading(false)
+    });
+  }
+
   return (
     <>
       <Card className="mt130">
@@ -55,6 +70,9 @@ export default function Login() {
       <div className="w-100 text-center mt-2">
         アカウントがない場合は? <Link to="/signup">サインアップ</Link>
       </div>
+      <Button disabled={loading} onClick={onClickGuestButton}>
+        ゲストユーザーでログイン
+      </Button>
     </>
   )
 }
