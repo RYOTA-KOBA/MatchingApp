@@ -107,15 +107,15 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
     .catch(() => console.log('削除失敗!!'))
   }
   
-  const savePost = () => {
+  const savePost = async() => {
     setSaved(true)
     const savedPosts = ({ authorName, content, createdAt, title, id});
-    return savePostToBookmark(savedPosts)
+    await savePostToBookmark(savedPosts)
   }
   
-  const removeBookmark = async (id) => {
+  const removeBookmark = async (savedId) => {
     setSaved(false)
-    removePostFromBookmark(id)
+    await removePostFromBookmark(savedId)
   };
 
   useEffect(() => {
@@ -127,16 +127,19 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
           .then(snapshots => {
             snapshots.docs.forEach(doc => {
               const data = doc.data();
-              // saveIdはbookmarkしたpostのid
-              const saveId = data.id
-              if (saveId === id) setSaved(true)
-              setSavedId(saveId)
+              // post_idはbookmarkしたpostのid
+              const post_id = data.id
+              const saveId = data.saveId
+              if (post_id === id) {
+                setSaved(true)
+                setSavedId(saveId)
+              }
             })
           })
         }
       })
     
-  }, [])
+  }, [saved])
 
     return (
         <>
@@ -192,7 +195,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
               </Link>
             </CardActions>
             {saved === true ? 
-            <IconButton className={classes.likeBtn} onClick={removeBookmark}>
+            <IconButton className={classes.likeBtn} onClick={() => removeBookmark(savedId)}>
               <BookmarkIcon />
             </IconButton>
             :
