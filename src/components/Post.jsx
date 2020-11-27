@@ -143,7 +143,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid}) => {
 
     return (
         <>
-        <Card className={classes.root} variant="outlined">
+        <Card className={classes.root}>
             <CardContent style={{ paddingBottom: "0" }}>
               {uid === currentUser.uid && (
                 <IconButton className={classes.threeDots} onClick={handleClick}>

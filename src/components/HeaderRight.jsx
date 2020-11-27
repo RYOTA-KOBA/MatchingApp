@@ -24,9 +24,12 @@ const useStyles = makeStyles((theme) => ({
     },
     postFormButton: {
         marginRight: "15px",
+        backgroundColor: "#1976d2",
     },
     postFormLink: {
         color: "#ffffff",
+        fontWeight: "bold",
+        letterSpacing: "0.6px",
         "&:hover": {
             textDecoration: "none",
             color: "#ffffff"
@@ -34,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     },
     bookMark: {
         marginRight: "15px",
+        color: "#fff",
         "&:focus": {
             outline: "none"
         }
@@ -52,7 +56,7 @@ export default function HeaderRight() {
 
     return (
         <div className={classes.headerRight}>
-            <Button variant="contained" color="primary" className={classes.postFormButton}>
+            <Button className={classes.postFormButton}>
                 <Link to="/postform" className={classes.postFormLink}>新規投稿</Link>
             </Button>
             <Link to="/bookmarkList">

@@ -16,12 +16,14 @@ import PostEdit from "./PostEdit"
 import Footer from "./Footer"
 import BookmarkList from "./BookmarkList"
 import BookmarkListItem from "./BookmarkList"
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 
 function App() {
   return (
     <Router>
       <AuthProvider>
+      <CssBaseline />
       <Container>
         <Header />
       </Container>
