@@ -23,12 +23,15 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center"
     },
     postFormButton: {
-        marginRight: "15px",
         backgroundColor: "#1976d2",
+        fontWeight: "bold",
+        color: "#ffffff",
+        "&:focus": {
+            outline: "none"
+        }
     },
     postFormLink: {
-        color: "#ffffff",
-        fontWeight: "bold",
+        marginRight: "15px",
         letterSpacing: "0.6px",
         "&:hover": {
             textDecoration: "none",
@@ -56,9 +59,11 @@ export default function HeaderRight() {
 
     return (
         <div className={classes.headerRight}>
-            <Button className={classes.postFormButton}>
-                <Link to="/postform" className={classes.postFormLink}>新規投稿</Link>
-            </Button>
+            <Link to="/postform" className={classes.postFormLink}>
+                <Button className={classes.postFormButton}>
+                新規投稿
+                </Button>
+            </Link>
             <Link to="/bookmarkList">
                 <IconButton className={classes.bookMark}>
                     <LibraryBooksIcon />
