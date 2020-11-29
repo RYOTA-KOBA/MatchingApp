@@ -46,11 +46,10 @@ service cloud.firestore {
     }
 
     function isValidPostCreate(post) {
-      return post.size() == 6
+      return post.size() == 5
       && 'authorName' in post && post.authorName is string && post.authorName.size() > 0
       && 'content' in post && post.content is string && post.content.size() > 0
       && 'createdAt' in post && post.createdAt is timestamp
-      && 'id' in post && post.id is string
       && 'uid' in post && post.uid is string
       && 'title' in post && post.title is string && post.title.size() > 0
     }
@@ -60,7 +59,6 @@ service cloud.firestore {
       && 'authorName' in post && post.authorName is string && post.authorName.size() > 0
       && 'content' in post && post.content is string && post.content.size() > 0
       && 'createdAt' in post && post.createdAt is timestamp
-      && 'updatedAt' in post && post.updatedAt is timestamp
       && 'id' in post && post.id is string
       && 'uid' in post && post.uid is string
       && 'title' in post && post.title is string && post.title.size() > 0
