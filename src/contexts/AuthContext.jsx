@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react"
-import { auth, db } from "../firebase"
+import { auth, db, timestamp } from "../firebase"
 import firebase from "../firebase"
 import { useHistory, Redirect } from "react-router-dom"
 
@@ -67,11 +67,12 @@ export function AuthProvider({ children }) {
       title: title,
       content: content,
       authorName: authorName,
-      createdAt: new Date(),
+      createdAt: timestamp,
       uid: uid,
     })
     .then(result => {
       const id = result.id
+      console.log(result.id)
       db.collection('posts').doc(id).set({id}, {merge: true})
       .then(() => {
         console.log("投稿成功！！")
@@ -101,8 +102,7 @@ export function AuthProvider({ children }) {
     const id = data.id
     db.collection('posts').doc(id).set({
       title: title,
-      content: content,
-      updatedAt: new Date()
+      content: content
     }, { merge: true })
     .then(() => {
       history.push('/')
