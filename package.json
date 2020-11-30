@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "homepage": "./",
   "private": true,
+  "jest": {
+    "testEnvironment": "jest-environment-jsdom-sixteen"
+  },
   "dependencies": {
     "@babel/preset-env": "^7.12.7",
     "@babel/preset-react": "^7.12.7",
@@ -50,6 +53,7 @@
     "@babel/plugin-transform-react-jsx": "^7.12.7",
     "@firebase/testing": "^0.20.11",
     "babel-jest": "^26.6.3",
+    "enzyme": "^3.11.0",
     "firebase-tools": "^8.15.1",
     "jest": "^26.6.3",
     "jest-environment-jsdom-sixteen": "^1.0.3",
