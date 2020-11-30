@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 
-export const sample = () => {
+export const Sample = () => {
   return (
     <>
-      <p>Learn React</p>
+      <p data-testid="text">Learn React</p>
+      <p data-testid="text2">Learn JS</p>
     </>
   );
 };
