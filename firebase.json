@@ -5,16 +5,12 @@
   },
   "emulators": {
     "firestore": {
-        "port": "8080"
+      "port": "8080"
     }
   },
   "hosting": {
     "public": "build",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
