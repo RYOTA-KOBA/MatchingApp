@@ -1,5 +1,5 @@
 import React from "react";
-import { multiple, add, sample } from "./sample";
+import { multiple, add, Sample } from "./Sample";
 import { render, screen } from "@testing-library/react";
 
 describe("Jest動作チェック", () => {
@@ -13,14 +13,27 @@ describe("Jest動作チェック", () => {
   });
 });
 describe("import check", () => {
-  test("サンプルテスト", async () => {
+  it("サンプルテスト", async () => {
     expect(multiple(2, 2)).toBe(4);
   });
-  test("サンプルテスト", async () => {
+  it("サンプルテスト", async () => {
     expect(add(3, 2)).toBe(5);
   });
-  test("サンプルテスト", async () => {
-    render(<sample />);
-    // expect(screen.getByText("Learn React")).toBeInTheDocument();
+  it("サンプルテスト", async () => {
+    const { container } = render(<Sample />);
+    expect(screen.getByTestId("text")).toMatchInlineSnapshot(`
+      <p
+        data-testid="text"
+      >
+        Learn React
+      </p>
+    `);
+    expect(screen.getByTestId("text2")).toMatchInlineSnapshot(`
+      <p
+        data-testid="text2"
+      >
+        Learn JS
+      </p>
+    `);
   });
 });
