@@ -64,6 +64,12 @@ const useStyles = makeStyles((theme) => ({
       color: "#333333",
     },
   },
+  logout: {
+    "&:hover": {
+      backgroundColor: red[500],
+      color: "#ffffff",
+    },
+  },
 }));
 
 export default function HeaderRight() {
@@ -135,7 +141,7 @@ export default function HeaderRight() {
         PaperProps={{
           style: {
             width: "150px",
-            marginTop: "54px",
+            marginTop: "44px",
           },
         }}
       >
@@ -162,6 +168,7 @@ export default function HeaderRight() {
             handleLogout();
             handleClose();
           }}
+          className={classes.logout}
         >
           ログアウト
         </MenuItem>
