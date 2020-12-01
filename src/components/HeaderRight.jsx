@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500],
+    cursor: "pointer",
   },
   headerRight: {
     display: "flex",
