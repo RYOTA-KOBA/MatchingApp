@@ -36,7 +36,13 @@ export default function UpdateProfile({ userName }) {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const { updateUser, currentUser, updatePassword, logout } = useAuth();
+  const {
+    updateUser,
+    currentUser,
+    updatePassword,
+    logout,
+    defUsername,
+  } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -45,7 +51,6 @@ export default function UpdateProfile({ userName }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [defUsername, setDefUsername] = useState("");
 
   const inputUsername = useCallback(
     (event) => {
@@ -93,6 +98,7 @@ export default function UpdateProfile({ userName }) {
         const data = snapshot.data();
         setLoading(true);
         setError("");
+        console.log(usernameRef.current.value);
         return updateUser(username, email, data);
       })
       .then(() => {
@@ -100,7 +106,7 @@ export default function UpdateProfile({ userName }) {
         history.push("/dashboard");
       })
       .catch((error) => {
-        setError("failed!!");
+        setError("編集に失敗しました!!");
       })
       .finally(() => {
         setLoading(false);
@@ -118,41 +124,21 @@ export default function UpdateProfile({ userName }) {
     }
   }
 
-  useEffect(() => {
-    const uid = currentUser.uid;
-    db.collection("users")
-      .doc(uid)
-      .get()
-      .then((snapshot) => {
-        const data = snapshot.data();
-        if (data.username !== "") {
-          setDefUsername(data.username);
-          console.log(defUsername);
-        }
-      });
-  }, []);
-
   return (
     <>
-      {error && (
-        <Alert className={classes.alert} severity="error">
-          {error}
-        </Alert>
-      )}
       <Card className={classes.card}>
+        {error && <Alert severity="error">{error}</Alert>}
         <CardContent>
           <h2 className="text-center mb-4 update-profile-header">
             プロフィールの編集 ⚙️
           </h2>
-          {error && <Alert variant="danger">{error}</Alert>}
           <form onSubmit={handleSubmit}>
             <TextField
               className={classes.postFormTextField}
               type="text"
-              ref={usernameRef}
+              // ref={usernameRef}
               label="名前"
               required
-              value={username}
               defaultValue={defUsername}
               onChange={inputUsername}
             />
@@ -160,7 +146,7 @@ export default function UpdateProfile({ userName }) {
             <TextField
               className={classes.postFormTextField}
               type="email"
-              ref={emailRef}
+              // ref={emailRef}
               label="Email"
               required
               defaultValue={currentUser.email}
@@ -170,18 +156,20 @@ export default function UpdateProfile({ userName }) {
             <TextField
               className={classes.postFormTextField}
               type="password"
-              ref={passwordRef}
+              // ref={passwordRef}
               label="パスワード"
               placeholder="空欄の場合は変更しません"
+              value={password}
               onChange={inputPassword}
             />
             <br />
             <TextField
               className={classes.postFormTextField}
               type="password"
-              ref={passwordConfirmRef}
+              // ref={passwordConfirmRef}
               label="パスワードの編集"
               placeholder="空欄の場合は変更しません"
+              value={passwordConfirm}
               onChange={inputPasswordConfirm}
             />
             <br />
