@@ -3,6 +3,7 @@ import { Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import { db } from "../firebase";
+import MyPost from "./MyPost";
 
 //materialUI
 import { makeStyles } from "@material-ui/core/styles";
@@ -44,9 +45,10 @@ const useStyles = makeStyles({
 });
 
 export default function Dashboard() {
-  const [error, setError] = useState("");
-  const { currentUser, setCurrentUser } = useAuth();
   const classes = useStyles();
+  const { currentUser, setCurrentUser } = useAuth();
+  const [error, setError] = useState("");
+  const [post, setPost] = useState([]);
 
   useEffect(() => {
     const uid = currentUser.uid;
@@ -56,6 +58,34 @@ export default function Dashboard() {
       .then((snapshot) => {
         const data = snapshot.data();
         setCurrentUser(data);
+      });
+  }, []);
+
+  useEffect(() => {
+    let posts = [];
+    db.collection("posts")
+      .orderBy("createdAt", "desc")
+      .get()
+      .then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          const data = doc.data();
+
+          if (data.uid === currentUser.uid) {
+            const date = new Date(data.createdAt.seconds * 1000);
+            const Day = date.toLocaleDateString("ja-JP");
+            const Time = date.toLocaleTimeString("ja-JP");
+
+            posts.push({
+              authorName: data.authorName,
+              content: data.content,
+              createdAt: Day + " " + Time,
+              title: data.title,
+              id: doc.id,
+              uid: data.uid,
+            });
+            setPost(posts);
+          }
+        });
       });
   }, []);
 
@@ -79,6 +109,19 @@ export default function Dashboard() {
           </Link>
         </CardActions>
       </Card>
+      <div>
+        {post.map((post) => (
+          <MyPost
+            key={post.id}
+            authorName={post.authorName}
+            content={post.content}
+            createdAt={post.createdAt}
+            title={post.title}
+            id={post.id}
+            uid={post.uid}
+          />
+        ))}
+      </div>
     </>
   );
 }
