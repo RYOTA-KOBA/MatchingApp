@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react"
-import { Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
-import { Link, useHistory } from "react-router-dom"
-import { db } from "../firebase"
+import React, { useState, useEffect } from "react";
+import { Alert } from "react-bootstrap";
+import { useAuth } from "../contexts/AuthContext";
+import { Link, useHistory } from "react-router-dom";
+import { db } from "../firebase";
 
 //materialUI
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,86 +14,71 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
   root: {
-      width: "100%",
-      marginTop: "130px"
+    width: "100%",
+    marginTop: "130px",
   },
   bullet: {
-      display: "inline-block",
-      margin: "0 2px",
-      transform: "scale(0.8)"
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)",
   },
   title: {
-      fontSize: 20,
-      color: "#000"
+    fontSize: 20,
+    color: "#000",
   },
   pos: {
-      marginBottom: 12,
-      marginTop: 30
+    marginBottom: 12,
+    marginTop: 30,
   },
   edit_btn: {
     "&:hover": {
-      textDecoration: "none"
-    }
-  }
+      textDecoration: "none",
+    },
+  },
+  user_edit_btn: {
+    "&:focus": {
+      outline: "none",
+    },
+    fontWeight: "bold",
+  },
 });
 
 export default function Dashboard() {
-  const [error, setError] = useState("")
-  const { currentUser, setCurrentUser, logout } = useAuth()
-  const history = useHistory()
+  const [error, setError] = useState("");
+  const { currentUser, setCurrentUser } = useAuth();
   const classes = useStyles();
 
-  async function handleLogout() {
-    setError("")
-
-    try {
-      await logout()
-      history.push("/login")
-    } catch {
-      setError("Failed to log out")
-    }
-  }
-
   useEffect(() => {
-    const uid = currentUser.uid
-    db.collection('users').doc(uid).get()
-    .then(snapshot => {
-      const data = snapshot.data()
-      setCurrentUser(data)
-    })
-  }, [])
+    const uid = currentUser.uid;
+    db.collection("users")
+      .doc(uid)
+      .get()
+      .then((snapshot) => {
+        const data = snapshot.data();
+        setCurrentUser(data);
+      });
+  }, []);
 
   return (
     <>
       <Card className={classes.root}>
-          <CardContent>
-            <h2 className="text-center mb-4">プロフィール</h2>
-            {error && <Alert variant="danger">{error}</Alert>}
-              <Typography className={classes.pos} color="textSecondary">
-                <strong>Email:</strong> {currentUser.email}
-                <br />
-                <strong>名前:</strong> {currentUser.username}
-              </Typography>
-          </CardContent>
-          <CardActions>
-            <Link to="/update-profile"  className={classes.edit_btn}>
-              <Button variant="contained" >
-                プロフィールの編集
-              </Button>
-            </Link>
-          </CardActions>
+        <CardContent>
+          <h2 className="text-center mb-4">プロフィール</h2>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <Typography className={classes.pos} color="textSecondary">
+            <strong>Email:</strong> {currentUser.email}
+            <br />
+            <strong>名前:</strong> {currentUser.username}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Link to="/update-profile" className={classes.edit_btn}>
+            <Button variant="contained" className={classes.user_edit_btn}>
+              ユーザー設定
+            </Button>
+          </Link>
+        </CardActions>
       </Card>
-      <div className="w-100 text-center mt-2">
-        <Button size="small" variant="contained" color="secondary" onClick={handleLogout}>
-          ログアウト
-        </Button>
-      </div>
-      <div className="w-100 text-center mt-2">
-        <Link to="/" variant="link">
-          Job一覧へ
-        </Link>
-      </div>
-
     </>
-  )
+  );
 }
