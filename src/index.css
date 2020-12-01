@@ -31,3 +31,12 @@ header
   background-color: #1976d2;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
+
+/**************
+profile
+******************/
+
+.update-profile-header {
+  font-size: 24px;
+  font-weight: bold;
+}
