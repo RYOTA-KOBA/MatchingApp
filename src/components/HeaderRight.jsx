@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -10,6 +10,9 @@ import Avatar from "@material-ui/core/Avatar";
 import { red } from "@material-ui/core/colors";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   headerRightButton: {
@@ -54,12 +57,49 @@ const useStyles = makeStyles((theme) => ({
       color: "white",
     },
   },
+  dashboardLink: {
+    color: "#333333",
+    "&:hover": {
+      textDecoration: "none",
+      color: "#333333",
+    },
+  },
+  logout: {
+    "&:hover": {
+      backgroundColor: red[500],
+      color: "#ffffff",
+    },
+  },
 }));
 
 export default function HeaderRight() {
   const classes = useStyles();
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
   const [userNameInitial, setUserNameInitial] = useState();
+  const [error, setError] = useState("");
+  const history = useHistory();
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = async () => {
+    setError("");
+
+    try {
+      await logout();
+      history.push("/login");
+    } catch {
+      setError("ログアウトに失敗しました");
+    }
+  };
 
   useEffect(() => {
     const id = currentUser.uid;
@@ -76,6 +116,7 @@ export default function HeaderRight() {
 
   return (
     <div className={classes.headerRight}>
+      {error && <Alert variant="danger">{error}</Alert>}
       <Link to="/postform" className={classes.postFormLink}>
         <Button className={classes.postFormButton}>新規投稿</Button>
       </Link>
@@ -84,11 +125,54 @@ export default function HeaderRight() {
           <LibraryBooksIcon />
         </IconButton>
       </Link>
-      <Link to="/dashboard" className={classes.avatarLink}>
-        <Avatar aria-label="recipe" className={classes.avatar}>
-          {userNameInitial}
-        </Avatar>
-      </Link>
+      <Avatar
+        aria-label="recipe"
+        className={classes.avatar}
+        onClick={handleClick}
+      >
+        {userNameInitial}
+      </Avatar>
+      <Menu
+        anchorEl={anchorEl}
+        keepMounted
+        autoFocus={false}
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            width: "150px",
+            marginTop: "44px",
+          },
+        }}
+      >
+        <Link to="/dashboard" className={classes.dashboardLink}>
+          <MenuItem
+            onClick={() => {
+              handleClose();
+            }}
+          >
+            ダッシュボード
+          </MenuItem>
+        </Link>
+        <Link to="/update-profile" className={classes.dashboardLink}>
+          <MenuItem
+            onClick={() => {
+              handleClose();
+            }}
+          >
+            設定
+          </MenuItem>
+        </Link>
+        <MenuItem
+          onClick={() => {
+            handleLogout();
+            handleClose();
+          }}
+          className={classes.logout}
+        >
+          ログアウト
+        </MenuItem>
+      </Menu>
     </div>
   );
 }
