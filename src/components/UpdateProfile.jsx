@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
-import { Link, useHistory } from "react-router-dom"
-import { db } from "../firebase"
+import React, { useRef, useState } from "react";
+import { Form, Button, Card, Alert } from "react-bootstrap";
+import { useAuth } from "../contexts/AuthContext";
+import { Link, useHistory } from "react-router-dom";
+import { db } from "../firebase";
 
 //material ui
 // import { makeStyles } from '@material-ui/core/styles';
@@ -21,44 +21,61 @@ import { db } from "../firebase"
 // }));
 
 export default function UpdateProfile() {
-  const usernameRef = useRef()
-  const emailRef = useRef()
-  const passwordRef = useRef()
-  const passwordConfirmRef = useRef()
-  const { updateUser, currentUser, updatePassword } = useAuth()
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
-  const history = useHistory()
+  const usernameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const passwordConfirmRef = useRef();
+  const { updateUser, currentUser, updatePassword, logout } = useAuth();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
   // const classes = useStyles();
 
   function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("パスワードが一致しません")
+      return setError("パスワードが一致しません");
     }
 
     if (passwordRef.current.value) {
-      updatePassword(passwordRef.current.value)
+      updatePassword(passwordRef.current.value);
     }
 
-    const uid = currentUser.uid
-    db.collection('users').doc(uid).get()
-    .then(snapshot => {
-      const data = snapshot.data()
-      setLoading(true)
-      setError("")
-      return updateUser(usernameRef.current.value, emailRef.current.value, data);
-    })
-    .then(() => {
+    const uid = currentUser.uid;
+    db.collection("users")
+      .doc(uid)
+      .get()
+      .then((snapshot) => {
+        const data = snapshot.data();
+        setLoading(true);
+        setError("");
+        return updateUser(
+          usernameRef.current.value,
+          emailRef.current.value,
+          data
+        );
+      })
+      .then(() => {
         // Success
-        history.push('/dashboard')
-    })
-    .catch((error) => {
-        setError("failed!!")
-    })
-    .finally(() => {
-        setLoading(false)
-    });
+        history.push("/dashboard");
+      })
+      .catch((error) => {
+        setError("failed!!");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  async function handleLogout() {
+    setError("");
+
+    try {
+      await logout();
+      history.push("/login");
+    } catch {
+      setError("Failed to log out");
+    }
   }
 
   return (
@@ -111,6 +128,16 @@ export default function UpdateProfile() {
       <div className="w-100 text-center mt-2">
         <Link to="/">キャンセル</Link>
       </div>
+      <div className="w-100 text-center mt-2">
+        <Button
+          size="small"
+          variant="contained"
+          color="secondary"
+          onClick={handleLogout}
+        >
+          ログアウト
+        </Button>
+      </div>
     </>
-  )
+  );
 }
