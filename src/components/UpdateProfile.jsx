@@ -47,59 +47,31 @@ export default function UpdateProfile({ userName }) {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const classes = useStyles();
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
 
-  const inputUsername = useCallback(
-    (event) => {
-      setUsername(event.target.value);
-    },
-    [setUsername]
-  );
-
-  const inputEmail = useCallback(
-    (event) => {
-      setEmail(event.target.value);
-    },
-    [setEmail]
-  );
-
-  const inputPassword = useCallback(
-    (event) => {
-      setPassword(event.target.value);
-    },
-    [setPassword]
-  );
-
-  const inputPasswordConfirm = useCallback(
-    (event) => {
-      setPasswordConfirm(event.target.value);
-    },
-    [setPasswordConfirm]
-  );
-
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password !== passwordConfirm) {
+    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("パスワードが一致しません");
     }
 
-    if (password !== "") {
-      updatePassword(password);
+    if (passwordRef.current.value !== "") {
+      updatePassword(passwordRef.current.value);
     }
 
     const uid = currentUser.uid;
-    db.collection("users")
+    await db
+      .collection("users")
       .doc(uid)
       .get()
       .then((snapshot) => {
         const data = snapshot.data();
         setLoading(true);
         setError("");
-        console.log(usernameRef.current.value);
-        return updateUser(username, email, data);
+        return updateUser(
+          usernameRef.current.value,
+          emailRef.current.value,
+          data
+        );
       })
       .then(() => {
         // Success
@@ -111,7 +83,7 @@ export default function UpdateProfile({ userName }) {
       .finally(() => {
         setLoading(false);
       });
-  }
+  };
 
   async function handleLogout() {
     setError("");
@@ -132,45 +104,39 @@ export default function UpdateProfile({ userName }) {
           <h2 className="text-center mb-4 update-profile-header">
             プロフィールの編集 ⚙️
           </h2>
-          <form onSubmit={handleSubmit}>
+          <form noValidate autoComplete="off" onSubmit={handleSubmit}>
             <TextField
               className={classes.postFormTextField}
               type="text"
-              // ref={usernameRef}
+              inputRef={usernameRef}
               label="名前"
               required
               defaultValue={defUsername}
-              onChange={inputUsername}
             />
             <br />
             <TextField
               className={classes.postFormTextField}
               type="email"
-              // ref={emailRef}
+              inputRef={emailRef}
               label="Email"
               required
               defaultValue={currentUser.email}
-              onChange={inputEmail}
             />
             <br />
             <TextField
               className={classes.postFormTextField}
               type="password"
-              // ref={passwordRef}
+              inputRef={passwordRef}
               label="パスワード"
               placeholder="空欄の場合は変更しません"
-              value={password}
-              onChange={inputPassword}
             />
             <br />
             <TextField
               className={classes.postFormTextField}
               type="password"
-              // ref={passwordConfirmRef}
+              inputRef={passwordConfirmRef}
               label="パスワードの編集"
               placeholder="空欄の場合は変更しません"
-              value={passwordConfirm}
-              onChange={inputPasswordConfirm}
             />
             <br />
             <Button
