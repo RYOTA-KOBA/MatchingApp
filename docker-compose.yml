@@ -1,0 +1,12 @@
+version: "3"
+services:
+  node:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/usr/src/app # ローカルとコンテナ内の同期
+    command: sh -c "npm start"
+    ports:
+      - "3000:3000"
+    stdin_open: true
