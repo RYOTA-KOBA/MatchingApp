@@ -83,9 +83,9 @@ export default function Dashboard() {
               id: doc.id,
               uid: data.uid,
             });
-            setPost(posts);
           }
         });
+        setPost(posts);
       });
   }, []);
 
@@ -110,17 +110,22 @@ export default function Dashboard() {
         </CardActions>
       </Card>
       <div>
-        {post.map((post) => (
-          <MyPost
-            key={post.id}
-            authorName={post.authorName}
-            content={post.content}
-            createdAt={post.createdAt}
-            title={post.title}
-            id={post.id}
-            uid={post.uid}
-          />
-        ))}
+        {post.map(
+          (myPost) => (
+            console.log(myPost),
+            (
+              <MyPost
+                key={myPost.id}
+                authorName={myPost.authorName}
+                content={myPost.content}
+                createdAt={myPost.createdAt}
+                title={myPost.title}
+                id={myPost.id}
+                uid={myPost.uid}
+              />
+            )
+          )
+        )}
       </div>
     </>
   );
