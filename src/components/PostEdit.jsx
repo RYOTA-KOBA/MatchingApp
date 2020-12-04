@@ -12,9 +12,6 @@ import CardContent from "@material-ui/core/CardContent";
 import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
-  alert: {
-    marginBottom: "15px",
-  },
   card: {
     width: "600px",
     padding: "30px",
@@ -60,8 +57,11 @@ export default function PostEdit() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (titleRef.current.value.length > 42) {
+      return setError("タイトルは42文字以内で入力してください");
+    }
     if (titleRef.current.value === "") {
-      return setError("必須の入力項目が空です。");
+      return setError("タイトルは入力必須項目です");
     }
     if (contentRef.current.value === "") {
       return setError("必須の入力項目が空です。");
@@ -110,13 +110,9 @@ export default function PostEdit() {
 
   return (
     <>
-      {error && (
-        <Alert className={classes.alert} severity="error">
-          {error}
-        </Alert>
-      )}
       {currentPost.map((post) => (
         <Card className={classes.card} key={post_id}>
+          {error && <Alert severity="error">{error}</Alert>}
           <CardContent>
             <h2 className={classes.header}>投稿を編集</h2>
             <form

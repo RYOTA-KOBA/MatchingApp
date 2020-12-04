@@ -73,11 +73,14 @@ export default function PostForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (title.length > 42) {
+      return setError("タイトルは42文字以内で入力してください");
+    }
     if (title === "") {
-      return setError("必須の入力項目が空です。");
+      return setError("タイトルは入力必須項目です");
     }
     if (content === "") {
-      return setError("必須の入力項目が空です。");
+      return setError("入力内容が正しくありません");
     }
 
     setError("");
@@ -85,29 +88,27 @@ export default function PostForm() {
     setTitle("");
     setContent("");
 
-    const uid = currentUser.uid;
-    await db
-      .collection("users")
-      .doc(uid)
-      .get()
-      .then((snapshot) => {
-        const data = snapshot.data();
-        const authorName = data.username;
-        return createPost(title, content, authorName, uid);
-      });
-
-    setError("投稿に失敗しました");
-    setLoading(false);
+    try {
+      const uid = currentUser.uid;
+      await db
+        .collection("users")
+        .doc(uid)
+        .get()
+        .then((snapshot) => {
+          const data = snapshot.data();
+          const authorName = data.username;
+          return createPost(title, content, authorName, uid);
+        });
+    } catch {
+      setError("投稿に失敗しました");
+      setLoading(false);
+    }
   };
 
   return (
     <>
-      {error && (
-        <Alert className={classes.alert} severity="error">
-          {error}
-        </Alert>
-      )}
       <Card className={classes.card}>
+        {error && <Alert severity="error">{error}</Alert>}
         <CardContent>
           <h2 className={classes.header}>新規投稿を作成</h2>
           <form
@@ -122,7 +123,6 @@ export default function PostForm() {
                 label="タイトル"
                 ref={titleRef}
                 className={classes.postFormTextField}
-                multiline={true}
                 required
                 value={title}
                 onChange={inputTitle}
