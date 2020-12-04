@@ -110,22 +110,17 @@ export default function Dashboard() {
         </CardActions>
       </Card>
       <div>
-        {post.map(
-          (myPost) => (
-            console.log(myPost),
-            (
-              <MyPost
-                key={myPost.id}
-                authorName={myPost.authorName}
-                content={myPost.content}
-                createdAt={myPost.createdAt}
-                title={myPost.title}
-                id={myPost.id}
-                uid={myPost.uid}
-              />
-            )
-          )
-        )}
+        {post.map((myPost) => (
+          <MyPost
+            key={myPost.id}
+            authorName={myPost.authorName}
+            content={myPost.content}
+            createdAt={myPost.createdAt}
+            title={myPost.title}
+            id={myPost.id}
+            uid={myPost.uid}
+          />
+        ))}
       </div>
     </>
   );
