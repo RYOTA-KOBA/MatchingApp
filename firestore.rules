@@ -51,7 +51,7 @@ service cloud.firestore {
       && 'content' in post && post.content is string && post.content.size() > 0
       && 'createdAt' in post && post.createdAt is timestamp
       && 'uid' in post && post.uid is string
-      && 'title' in post && post.title is string && post.title.size() > 0
+      && 'title' in post && post.title is string && post.title.size() > 0 && post.title.size() <= 42
     }
 
     function isValidPostUpdate(post) {
@@ -61,7 +61,7 @@ service cloud.firestore {
       && 'createdAt' in post && post.createdAt is timestamp
       && 'id' in post && post.id is string
       && 'uid' in post && post.uid is string
-      && 'title' in post && post.title is string && post.title.size() > 0
+      && 'title' in post && post.title is string && post.title.size() > 0 && post.title.size() <= 42
     }
 
     match /users/{userId} {  
