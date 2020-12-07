@@ -1,6 +1,8 @@
 import React, { useRef, useState, useCallback } from "react"
 // import { Form, Button, Card, Alert } from "react-bootstrap"
+// @ts-expect-error ts-migrate(6142) FIXME: Module '../contexts/AuthContext' was resolved to '... Remove this comment to see the full error message
 import { useAuth } from "../contexts/AuthContext"
+// @ts-expect-error ts-migrate(7016) FIXME: Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import {  Link, useHistory } from "react-router-dom"
 
 // materialUI
@@ -71,7 +73,7 @@ export default function Login() {
     setPassword(event.target.value)
   }, [setPassword]);
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: any) {
     e.preventDefault()
     
     setError("")
@@ -80,7 +82,7 @@ export default function Login() {
     .then(() => {
       history.push("/")
     })
-    .catch((error) => {
+    .catch((error: any) => {
       setError("failed!!")
     })
     .finally(() => {
@@ -95,7 +97,7 @@ export default function Login() {
     .then(() => {
       history.push("/")
     })
-    .catch((error) => {
+    .catch((error: any) => {
       setError("failed!!")
     })
     .finally(() => {
@@ -104,17 +106,26 @@ export default function Login() {
   }
 
   return (
+    // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <>
+    {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
     {error && <Alert className={classes.alert} severity="error">{error}</Alert>}
+    {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
     <Container component="main" maxWidth="xs">
+      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <div className={classes.paper}>
+        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Avatar className={classes.avatar}>
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <LockOutlinedIcon />
         </Avatar>
+        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Typography component="h1" variant="h5">
           ログイン
         </Typography>
+        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <TextField
             variant="outlined"
             margin="normal"
@@ -123,9 +134,11 @@ export default function Login() {
             id="email"
             label="Email Address"
             value={email}
+            // @ts-expect-error ts-migrate(2322) FIXME: Type 'MutableRefObject<undefined>' is not assignab... Remove this comment to see the full error message
             ref={emailRef}
             onChange={inputEmail}
           />
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <TextField
             variant="outlined"
             margin="normal"
@@ -135,13 +148,17 @@ export default function Login() {
             type="password"
             id="password"
             value={password}
+            // @ts-expect-error ts-migrate(2322) FIXME: Type 'MutableRefObject<undefined>' is not assignab... Remove this comment to see the full error message
             ref={passwordRef}
             onChange={inputPassword}
           />
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <FormControlLabel
+            // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Button
             type="submit"
             fullWidth
@@ -152,13 +169,18 @@ export default function Login() {
           >
             ログインする
           </Button>
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Grid container>
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Grid item xs>
+              {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <Link to="/forgot-password" variant="body2">
                 パスワードを忘れた場合はこちら
               </Link>
             </Grid>
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Grid item>
+              {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <Link to="/signup" variant="body2">
                 {"サインアップ"}
               </Link>
@@ -167,6 +189,7 @@ export default function Login() {
         </form>
       </div>
     </Container>
+    {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
     <Button className={classes.guestLogin} onClick={onClickGuestButton}>
       ゲストユーザーとしてログイン
     </Button>

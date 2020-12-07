@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
+// @ts-expect-error ts-migrate(6142) FIXME: Module '../contexts/AuthContext' was resolved to '... Remove this comment to see the full error message
 import { useAuth } from "../contexts/AuthContext"
+// @ts-expect-error ts-migrate(7016) FIXME: Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import { Link } from 'react-router-dom'
+// @ts-expect-error ts-migrate(7016) FIXME: Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import { useHistory } from 'react-router-dom'
+// @ts-expect-error ts-migrate(6142) FIXME: Module '../firebase' was resolved to '/Users/ryota... Remove this comment to see the full error message
 import { db } from '../firebase'
 
 //materialUI
@@ -82,7 +86,7 @@ export default function Detail() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
   
-    const handleClick = (event) => {
+    const handleClick = (event: any) => {
       setAnchorEl(event.currentTarget);
     };
   
@@ -100,9 +104,9 @@ export default function Detail() {
     }
 
     const getPost = async() => {
-        let post = []
+        let post: any = []
         await db.collection('posts').doc(id).get()
-        .then(doc => {
+        .then((doc: any) => {
             const data = doc.data()
             
             const date = new Date(data.createdAt.seconds*1000);
@@ -132,24 +136,34 @@ export default function Detail() {
 
     useEffect(() => {
         getPost();
-    }, [])
+    }, [getPost])
     
     return (
+        // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
         <>
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <div style={{ marginTop: "100px" }}>
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Link to="/" className={classes.backLink}>
+                {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                 <Button className={classes.backButton}>
                     トップに戻る
                 </Button>
             </Link>
             {postDetail.map(post => 
+            // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <Card className={classes.root} key={post.id}>
+                {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                 <CardContent>
+                    {/* @ts-expect-error ts-migrate(2339) FIXME: Property 'uid' does not exist on type 'never'. */}
                     {post.uid === currentUser.uid && (
+                    // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
                     <IconButton className={classes.threeDots} onClick={handleClick}>
+                        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                         <MoreVertIcon />
                     </IconButton>
                     )}
+                    {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                     <Menu
                         anchorEl={anchorEl}
                         keepMounted
@@ -161,6 +175,7 @@ export default function Detail() {
                         },
                         }}
                     >
+                        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                         <MenuItem
                             onClick={() => {
                                 setId()
@@ -168,12 +183,15 @@ export default function Detail() {
                                 handleClose()
                             }}
                         >
+                            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                             <Link to={'/postedit/' + id} className={classes.editLink}>
                                 編集する
                             </Link>
                         </MenuItem>
+                        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                         <MenuItem 
                             onClick={() => {
+                                // @ts-expect-error ts-migrate(2554) FIXME: Expected 0 arguments, but got 1.
                                 deletePost(id)
                                 handleClose()
                             }}
@@ -181,20 +199,28 @@ export default function Detail() {
                             削除する
                         </MenuItem>
                     </Menu>
+                    {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                     <Typography
                     className={classes.title}
                     color="textSecondary"
                     gutterBottom
                     >
+                        {/* @ts-expect-error ts-migrate(2339) FIXME: Property 'title' does not exist on type 'never'. */}
                         {post.title}
                     </Typography>
+                    {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                     <Typography className={classes.pos} color="textSecondary">
+                        {/* @ts-expect-error ts-migrate(2339) FIXME: Property 'authorName' does not exist on type 'neve... Remove this comment to see the full error message */}
                         {post.authorName}
                     </Typography>
+                    {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                     <Typography variant="body2" component="p">
+                        {/* @ts-expect-error ts-migrate(2339) FIXME: Property 'content' does not exist on type 'never'. */}
                         {post.content}
                     </Typography>
+                    {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                     <Typography className={classes.time} color="textSecondary">
+                        {/* @ts-expect-error ts-migrate(2339) FIXME: Property 'createdAt' does not exist on type 'never... Remove this comment to see the full error message */}
                         {post.createdAt}
                     </Typography>
                 </CardContent>

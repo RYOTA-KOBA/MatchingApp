@@ -1,7 +1,10 @@
 import React, { useRef, useState } from "react";
 // import { Form, Button, Card, Alert } from "react-bootstrap";
+// @ts-expect-error ts-migrate(6142) FIXME: Module '../contexts/AuthContext' was resolved to '... Remove this comment to see the full error message
 import { useAuth } from "../contexts/AuthContext";
+// @ts-expect-error ts-migrate(7016) FIXME: Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import { Link, useHistory } from "react-router-dom";
+// @ts-expect-error ts-migrate(6142) FIXME: Module '../firebase' was resolved to '/Users/ryota... Remove this comment to see the full error message
 import { db } from "../firebase";
 
 // material ui
@@ -31,7 +34,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UpdateProfile({ userName }) {
+export default function UpdateProfile({
+  userName
+}: any) {
   const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -48,13 +53,16 @@ export default function UpdateProfile({ userName }) {
   const history = useHistory();
   const classes = useStyles();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+    // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("パスワードが一致しません");
     }
 
+    // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
     if (passwordRef.current.value !== "") {
+      // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
       updatePassword(passwordRef.current.value);
     }
 
@@ -63,12 +71,14 @@ export default function UpdateProfile({ userName }) {
       .collection("users")
       .doc(uid)
       .get()
-      .then((snapshot) => {
+      .then((snapshot: any) => {
         const data = snapshot.data();
         setLoading(true);
         setError("");
         return updateUser(
+          // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
           usernameRef.current.value,
+          // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
           emailRef.current.value,
           data
         );
@@ -77,7 +87,7 @@ export default function UpdateProfile({ userName }) {
         // Success
         history.push("/dashboard");
       })
-      .catch((error) => {
+      .catch((error: any) => {
         setError("編集に失敗しました!!");
       })
       .finally(() => {
@@ -97,14 +107,21 @@ export default function UpdateProfile({ userName }) {
   }
 
   return (
+    // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <>
+      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <Card className={classes.card}>
+        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         {error && <Alert severity="error">{error}</Alert>}
+        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <CardContent>
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <h2 className="text-center mb-4 update-profile-header">
             プロフィールの編集 ⚙️
           </h2>
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <TextField
               className={classes.postFormTextField}
               type="text"
@@ -113,7 +130,9 @@ export default function UpdateProfile({ userName }) {
               required
               defaultValue={defUsername}
             />
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <br />
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <TextField
               className={classes.postFormTextField}
               type="email"
@@ -122,7 +141,9 @@ export default function UpdateProfile({ userName }) {
               required
               defaultValue={currentUser.email}
             />
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <br />
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <TextField
               className={classes.postFormTextField}
               type="password"
@@ -130,7 +151,9 @@ export default function UpdateProfile({ userName }) {
               label="パスワード"
               placeholder="空欄の場合は変更しません"
             />
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <br />
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <TextField
               className={classes.postFormTextField}
               type="password"
@@ -138,7 +161,9 @@ export default function UpdateProfile({ userName }) {
               label="パスワードの編集"
               placeholder="空欄の場合は変更しません"
             />
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <br />
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Button
               disabled={loading}
               color="primary"
@@ -151,10 +176,14 @@ export default function UpdateProfile({ userName }) {
           </form>
         </CardContent>
       </Card>
+      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <div className="w-100 text-center mt-2">
+        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Link to="/">キャンセル</Link>
       </div>
+      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <div className="w-100 text-center mt-2">
+        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Button
           size="small"
           variant="contained"

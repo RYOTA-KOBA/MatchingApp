@@ -1,7 +1,11 @@
 import React, { useRef, useState, useCallback } from "react";
+// @ts-expect-error ts-migrate(6142) FIXME: Module '../contexts/AuthContext' was resolved to '... Remove this comment to see the full error message
 import { useAuth } from "../contexts/AuthContext";
+// @ts-expect-error ts-migrate(7016) FIXME: Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import { Link } from "react-router-dom";
+// @ts-expect-error ts-migrate(6142) FIXME: Module '../firebase' was resolved to '/Users/ryota... Remove this comment to see the full error message
 import { db } from "../firebase";
+// @ts-expect-error ts-migrate(6142) FIXME: Module '../firebase' was resolved to '/Users/ryota... Remove this comment to see the full error message
 import firebase from "../firebase";
 
 // materialUI
@@ -70,7 +74,7 @@ export default function PostForm() {
     [setContent]
   );
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     if (title.length > 42) {
@@ -94,7 +98,7 @@ export default function PostForm() {
         .collection("users")
         .doc(uid)
         .get()
-        .then((snapshot) => {
+        .then((snapshot: any) => {
           const data = snapshot.data();
           const authorName = data.username;
           return createPost(title, content, authorName, uid);
@@ -106,31 +110,43 @@ export default function PostForm() {
   };
 
   return (
+    // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <>
+      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <Card className={classes.card}>
+        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         {error && <Alert severity="error">{error}</Alert>}
+        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <CardContent>
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <h2 className={classes.header}>新規投稿を作成</h2>
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <form
             className={classes.root}
             noValidate
             autoComplete="off"
             onSubmit={handleSubmit}
           >
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <div className={classes.postFormBox}>
+              {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <TextField
                 type="text"
                 label="タイトル"
+                // @ts-expect-error ts-migrate(2322) FIXME: Type 'MutableRefObject<undefined>' is not assignab... Remove this comment to see the full error message
                 ref={titleRef}
                 className={classes.postFormTextField}
                 required
                 value={title}
                 onChange={inputTitle}
               />
+              {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <br />
+              {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <TextField
                 type="text"
                 label="内容"
+                // @ts-expect-error ts-migrate(2322) FIXME: Type 'MutableRefObject<undefined>' is not assignab... Remove this comment to see the full error message
                 ref={contentRef}
                 className={classes.postFormTextField}
                 multiline={true}
@@ -139,7 +155,9 @@ export default function PostForm() {
                 value={content}
                 onChange={inputContent}
               />
+              {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <br />
+              {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <Button
                 variant="contained"
                 type="submit"
@@ -153,6 +171,7 @@ export default function PostForm() {
           </form>
         </CardContent>
       </Card>
+      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <Link to="/" className={classes.cancel}>
         キャンセル
       </Link>

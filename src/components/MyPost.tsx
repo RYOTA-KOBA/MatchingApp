@@ -1,6 +1,9 @@
 import React from "react";
+// @ts-expect-error ts-migrate(6142) FIXME: Module '../contexts/AuthContext' was resolved to '... Remove this comment to see the full error message
 import { useAuth } from "../contexts/AuthContext";
+// @ts-expect-error ts-migrate(6142) FIXME: Module '../firebase' was resolved to '/Users/ryota... Remove this comment to see the full error message
 import { db } from "../firebase";
+// @ts-expect-error ts-migrate(7016) FIXME: Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import { Link } from "react-router-dom";
 
 //material ui
@@ -83,15 +86,15 @@ export default function MyPost({
   createdAt,
   title,
   id,
-  uid,
-}) {
+  uid
+}: any) {
   const classes = useStyles();
   const { currentUser } = useAuth();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event) => {
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -111,12 +114,18 @@ export default function MyPost({
   };
 
   return (
+    // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <>
+      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <Card className={classes.root}>
+        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <CardContent style={{ paddingBottom: "0" }}>
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <IconButton className={classes.threeDots} onClick={handleClick}>
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <MoreVertIcon />
           </IconButton>
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Menu
             anchorEl={anchorEl}
             keepMounted
@@ -128,17 +137,21 @@ export default function MyPost({
               },
             }}
           >
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <MenuItem
               onClick={() => {
                 handleClose();
               }}
             >
+              {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <Link to={"/postedit/" + id} className={classes.editLink}>
                 編集する
               </Link>
             </MenuItem>
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <MenuItem
               onClick={() => {
+                // @ts-expect-error ts-migrate(2554) FIXME: Expected 0 arguments, but got 1.
                 deletePost(id);
                 handleClose();
               }}
@@ -146,12 +159,15 @@ export default function MyPost({
               削除する
             </MenuItem>
           </Menu>
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Typography variant="h5" component="h3">
             {title}
           </Typography>
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Typography className={classes.pos} color="textSecondary">
             {authorName + "・" + createdAt}
           </Typography>
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Typography
             className={classes.contentText}
             variant="body2"
@@ -160,8 +176,11 @@ export default function MyPost({
             {content}
           </Typography>
         </CardContent>
+        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <CardActions className={classes.detailBtnWrap}>
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Link to={"/detail/" + id} className={classes.detailLink}>
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Button
               variant="contained"
               className={classes.detailButton}

@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Alert } from "react-bootstrap";
+// @ts-expect-error ts-migrate(6142) FIXME: Module '../contexts/AuthContext' was resolved to '... Remove this comment to see the full error message
 import { useAuth } from "../contexts/AuthContext";
+// @ts-expect-error ts-migrate(7016) FIXME: Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import { Link, useHistory } from "react-router-dom";
+// @ts-expect-error ts-migrate(6142) FIXME: Module '../firebase' was resolved to '/Users/ryota... Remove this comment to see the full error message
 import { db } from "../firebase";
+// @ts-expect-error ts-migrate(6142) FIXME: Module './MyPost' was resolved to '/Users/ryota/Li... Remove this comment to see the full error message
 import MyPost from "./MyPost";
 
 //materialUI
@@ -55,19 +59,19 @@ export default function Dashboard() {
     db.collection("users")
       .doc(uid)
       .get()
-      .then((snapshot) => {
+      .then((snapshot: any) => {
         const data = snapshot.data();
         setCurrentUser(data);
       });
-  }, []);
+  }, [currentUser.uid, setCurrentUser]);
 
   useEffect(() => {
-    let posts = [];
+    let posts: any = [];
     db.collection("posts")
       .orderBy("createdAt", "desc")
       .get()
-      .then((snapshot) => {
-        snapshot.docs.forEach((doc) => {
+      .then((snapshot: any) => {
+        snapshot.docs.forEach((doc: any) => {
           const data = doc.data();
 
           if (data.uid === currentUser.uid) {
@@ -87,37 +91,58 @@ export default function Dashboard() {
         });
         setPost(posts);
       });
-  }, []);
+  }, [currentUser.uid]);
 
   return (
+    // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <>
+      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <Card className={classes.root}>
+        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <CardContent>
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <h2 className="text-center mb-4">プロフィール</h2>
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           {error && <Alert variant="danger">{error}</Alert>}
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Typography className={classes.pos} color="textSecondary">
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <strong>Email:</strong> {currentUser.email}
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <br />
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <strong>名前:</strong> {currentUser.username}
           </Typography>
         </CardContent>
+        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <CardActions>
+          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Link to="/update-profile" className={classes.edit_btn}>
+            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Button variant="contained" className={classes.user_edit_btn}>
               ユーザー設定
             </Button>
           </Link>
         </CardActions>
       </Card>
+      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <div>
         {post.map((myPost) => (
+          // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <MyPost
+            // @ts-expect-error ts-migrate(2339) FIXME: Property 'id' does not exist on type 'never'.
             key={myPost.id}
+            // @ts-expect-error ts-migrate(2339) FIXME: Property 'authorName' does not exist on type 'neve... Remove this comment to see the full error message
             authorName={myPost.authorName}
+            // @ts-expect-error ts-migrate(2339) FIXME: Property 'content' does not exist on type 'never'.
             content={myPost.content}
+            // @ts-expect-error ts-migrate(2339) FIXME: Property 'createdAt' does not exist on type 'never... Remove this comment to see the full error message
             createdAt={myPost.createdAt}
+            // @ts-expect-error ts-migrate(2339) FIXME: Property 'title' does not exist on type 'never'.
             title={myPost.title}
+            // @ts-expect-error ts-migrate(2339) FIXME: Property 'id' does not exist on type 'never'.
             id={myPost.id}
+            // @ts-expect-error ts-migrate(2339) FIXME: Property 'uid' does not exist on type 'never'.
             uid={myPost.uid}
           />
         ))}
