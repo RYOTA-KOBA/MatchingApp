@@ -84,14 +84,14 @@ export default function MyPost({
   title,
   id,
   uid,
-}) {
+}: any) {
   const classes = useStyles();
-  const { currentUser } = useAuth();
+  const { currentUser }: any = useAuth();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event) => {
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -139,6 +139,7 @@ export default function MyPost({
             </MenuItem>
             <MenuItem
               onClick={() => {
+                // @ts-expect-error ts-migrate(2554) FIXME: Expected 0 arguments, but got 1.
                 deletePost(id);
                 handleClose();
               }}

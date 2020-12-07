@@ -46,7 +46,7 @@ const useStyles = makeStyles({
 
 export default function Dashboard() {
   const classes = useStyles();
-  const { currentUser, setCurrentUser } = useAuth();
+  const { currentUser, setCurrentUser }: any = useAuth();
   const [error, setError] = useState("");
   const [post, setPost] = useState([]);
 
@@ -55,19 +55,19 @@ export default function Dashboard() {
     db.collection("users")
       .doc(uid)
       .get()
-      .then((snapshot) => {
+      .then((snapshot: any) => {
         const data = snapshot.data();
         setCurrentUser(data);
       });
-  }, []);
+  }, [currentUser.uid, setCurrentUser]);
 
   useEffect(() => {
-    let posts = [];
+    let posts: any = [];
     db.collection("posts")
       .orderBy("createdAt", "desc")
       .get()
-      .then((snapshot) => {
-        snapshot.docs.forEach((doc) => {
+      .then((snapshot: any) => {
+        snapshot.docs.forEach((doc: any) => {
           const data = doc.data();
 
           if (data.uid === currentUser.uid) {
@@ -87,7 +87,7 @@ export default function Dashboard() {
         });
         setPost(posts);
       });
-  }, []);
+  }, [currentUser.uid]);
 
   return (
     <>
@@ -110,7 +110,7 @@ export default function Dashboard() {
         </CardActions>
       </Card>
       <div>
-        {post.map((myPost) => (
+        {post.map((myPost: any) => (
           <MyPost
             key={myPost.id}
             authorName={myPost.authorName}

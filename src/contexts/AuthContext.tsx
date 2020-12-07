@@ -1,23 +1,27 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, ReactNode } from "react";
 import { auth, db, timestamp } from "../firebase";
 import firebase from "../firebase";
 import { useHistory, Redirect } from "react-router-dom";
 
-const AuthContext = React.createContext();
+interface Props {
+  children: ReactNode | ReactNode[];
+}
+
+const AuthContext = React.createContext<Partial<Props>>({});
 
 export function useAuth() {
   return useContext(AuthContext);
 }
 
-export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState();
+export function AuthProvider({ children }: any) {
+  const [currentUser, setCurrentUser]: any = useState();
   const [currentPost, setCurrentPost] = useState([]);
   const [currentId, setCurrentId] = useState();
   const [defUsername, setDefUsername] = useState("");
   const [loading, setLoading] = useState(true);
   const history = useHistory();
 
-  async function signup(username, email, password) {
+  async function signup(username: any, email: any, password: any) {
     const result = await auth.createUserWithEmailAndPassword(email, password);
     console.log(result);
     const user = result.user;
@@ -29,14 +33,12 @@ export function AuthProvider({ children }) {
         username: username,
       };
 
-      db.collection("users")
-        .doc(uid)
-        .set(userInitialData)
-        .then("ユーザーが作成されました!");
+      db.collection("users").doc(uid).set(userInitialData);
+      // .then("ユーザーが作成されました!");
     }
   }
 
-  function login(email, password) {
+  function login(email: any, password: any) {
     return auth.signInWithEmailAndPassword(email, password);
   }
 
@@ -44,11 +46,11 @@ export function AuthProvider({ children }) {
     return auth.signOut();
   }
 
-  function resetPassword(email) {
+  function resetPassword(email: any) {
     return auth.sendPasswordResetEmail(email);
   }
 
-  function updateUser(username, email, data) {
+  function updateUser(username: any, email: any, data: any) {
     const uid = data.uid;
     return db
       .collection("users")
@@ -63,11 +65,11 @@ export function AuthProvider({ children }) {
       .then(() => console.log("success!!"));
   }
 
-  function updatePassword(password) {
-    return firebase.auth().currentUser.updatePassword(password);
+  function updatePassword(password: any) {
+    return firebase.auth().currentUser?.updatePassword(password);
   }
 
-  const createPost = (title, content, authorName, uid) => {
+  const createPost = (title: any, content: any, authorName: any, uid: any) => {
     // const enterToBr = content.replace(/\r?\n/g, '<br>');
     // const brToBreak = enterToBr.replace(/(<br>|<br \/>)/gi, '\r\n');
     db.collection("posts")
@@ -78,7 +80,7 @@ export function AuthProvider({ children }) {
         createdAt: timestamp,
         uid: uid,
       })
-      .then((result) => {
+      .then((result: any) => {
         const id = result.id;
         console.log(result.id);
         db.collection("posts")
@@ -91,17 +93,17 @@ export function AuthProvider({ children }) {
       });
   };
 
-  const setNowId = (id) => {
+  const setNowId = (id: any) => {
     return setCurrentId(id);
   };
 
-  const setNowPost = async (id) => {
-    let post = [];
+  const setNowPost = async (id: any) => {
+    let post: any = [];
     await db
       .collection("posts")
       .doc(id)
       .get()
-      .then((snapshot) => {
+      .then((snapshot: any) => {
         const data = snapshot.data();
         post.push({
           title: data.title,
@@ -111,7 +113,7 @@ export function AuthProvider({ children }) {
     setCurrentPost(post[0]);
   };
 
-  const editPost = (title, content, data) => {
+  const editPost = (title: any, content: any, data: any) => {
     const id = data.id;
     db.collection("posts")
       .doc(id)
@@ -128,7 +130,7 @@ export function AuthProvider({ children }) {
       });
   };
 
-  const savePostToBookmark = async (savedPosts) => {
+  const savePostToBookmark = async (savedPosts: any) => {
     const uid = currentUser.uid;
     const saveRef = db
       .collection("users")
@@ -139,7 +141,7 @@ export function AuthProvider({ children }) {
     await saveRef.set(savedPosts);
   };
 
-  const removePostFromBookmark = async (id) => {
+  const removePostFromBookmark = async (id: any) => {
     const uid = currentUser.uid;
     await db
       .collection("users")
@@ -149,11 +151,11 @@ export function AuthProvider({ children }) {
       .delete();
   };
 
-  const getCurrentUserName = (uid) => {
+  const getCurrentUserName = (uid: any) => {
     db.collection("users")
       .doc(uid)
       .get()
-      .then((snapshot) => {
+      .then((snapshot: any) => {
         const data = snapshot.data();
         if (data.username !== "") {
           setDefUsername(data.username);
@@ -162,16 +164,16 @@ export function AuthProvider({ children }) {
   };
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user: any) => {
       setCurrentUser(user);
       setLoading(false);
       if (user !== null) getCurrentUserName(user.uid);
       history.push("/");
     });
     return unsubscribe;
-  }, []);
+  }, [history]);
 
-  const value = {
+  const value: any = {
     currentUser,
     setCurrentUser,
     login,
@@ -197,5 +199,3 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
-
-//コンポーネントが表示されなくなったら、loadingの!を外してログイン→!つけて再度ログイン

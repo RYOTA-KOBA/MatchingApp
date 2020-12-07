@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HeaderRight() {
   const classes = useStyles();
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout }: any = useAuth();
   const [userNameInitial, setUserNameInitial] = useState();
   const [error, setError] = useState("");
   const history = useHistory();
@@ -83,7 +83,7 @@ export default function HeaderRight() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event) => {
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -107,17 +107,17 @@ export default function HeaderRight() {
     db.collection("users")
       .doc(id)
       .get()
-      .then((snapshot) => {
+      .then((snapshot: any) => {
         const data = snapshot.data();
         const username = data.username;
         const initial = username.slice(0, 1);
         setUserNameInitial(initial);
       });
-  }, []);
+  }, [currentUser.uid]);
 
   return (
     <div className={classes.headerRight}>
-      {error && <Alert variant="danger">{error}</Alert>}
+      {error && <Alert severity="error">{error}</Alert>}
       <Link to="/postform" className={classes.postFormLink}>
         <Button className={classes.postFormButton}>新規投稿</Button>
       </Link>

@@ -48,13 +48,13 @@ export default function PostEdit() {
   const [loading, setLoading] = useState(false);
   const [currentPost, setCurrentPost] = useState([]);
   const history = useHistory();
-  const titleRef = useRef();
-  const contentRef = useRef();
+  const titleRef: any = useRef();
+  const contentRef: any = useRef();
   const path = window.location.href;
   const post_id = path.split("/postedit/")[1];
-  const { editPost } = useAuth();
+  const { editPost }: any = useAuth();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     if (titleRef.current.value.length > 42) {
@@ -72,13 +72,13 @@ export default function PostEdit() {
       .collection("posts")
       .doc(id)
       .get()
-      .then((snapshot) => {
+      .then((snapshot: any) => {
         const data = snapshot.data();
         setLoading(true);
         setError("");
         return editPost(titleRef.current.value, contentRef.current.value, data);
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.log(error);
         setError("failed!!");
       })
@@ -88,12 +88,12 @@ export default function PostEdit() {
   };
 
   const getPost = async () => {
-    let post = [];
+    let post: any = [];
     await db
       .collection("posts")
       .doc(post_id)
       .get()
-      .then((doc) => {
+      .then((doc: any) => {
         const data = doc.data();
         post.push({
           title: data.title,
@@ -106,11 +106,11 @@ export default function PostEdit() {
 
   useEffect(() => {
     getPost();
-  }, []);
+  }, [getPost]);
 
   return (
     <>
-      {currentPost.map((post) => (
+      {currentPost.map((post: any) => (
         <Card className={classes.card} key={post_id}>
           {error && <Alert severity="error">{error}</Alert>}
           <CardContent>

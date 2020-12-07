@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 // import Sample from "../../sample";
 
 export default function Header() {
-  const { currentUser } = useAuth();
+  const { currentUser }: any = useAuth();
 
   return (
     <div style={{ margin: "0", padding: "0", minWidth: "100vw" }}>

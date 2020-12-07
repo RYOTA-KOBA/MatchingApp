@@ -54,7 +54,7 @@ export default function PostForm() {
   const [loading, setLoading] = useState(false);
   const titleRef = useRef();
   const contentRef = useRef();
-  const { createPost, currentUser } = useAuth();
+  const { createPost, currentUser }: any = useAuth();
 
   const inputTitle = useCallback(
     (event) => {
@@ -70,7 +70,7 @@ export default function PostForm() {
     [setContent]
   );
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     if (title.length > 42) {
@@ -94,7 +94,7 @@ export default function PostForm() {
         .collection("users")
         .doc(uid)
         .get()
-        .then((snapshot) => {
+        .then((snapshot: any) => {
           const data = snapshot.data();
           const authorName = data.username;
           return createPost(title, content, authorName, uid);
@@ -121,7 +121,7 @@ export default function PostForm() {
               <TextField
                 type="text"
                 label="タイトル"
-                ref={titleRef}
+                inputRef={titleRef}
                 className={classes.postFormTextField}
                 required
                 value={title}
@@ -131,7 +131,7 @@ export default function PostForm() {
               <TextField
                 type="text"
                 label="内容"
-                ref={contentRef}
+                inputRef={contentRef}
                 className={classes.postFormTextField}
                 multiline={true}
                 rows={4}

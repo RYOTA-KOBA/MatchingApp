@@ -31,24 +31,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UpdateProfile({ userName }) {
-  const usernameRef = useRef();
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
+export default function UpdateProfile({ userName }: any) {
+  const usernameRef: any = useRef();
+  const emailRef: any = useRef();
+  const passwordRef: any = useRef();
+  const passwordConfirmRef: any = useRef();
   const {
     updateUser,
     currentUser,
     updatePassword,
     logout,
     defUsername,
-  } = useAuth();
+  }: any = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const classes = useStyles();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("パスワードが一致しません");
@@ -63,7 +63,7 @@ export default function UpdateProfile({ userName }) {
       .collection("users")
       .doc(uid)
       .get()
-      .then((snapshot) => {
+      .then((snapshot: any) => {
         const data = snapshot.data();
         setLoading(true);
         setError("");
@@ -77,7 +77,7 @@ export default function UpdateProfile({ userName }) {
         // Success
         history.push("/dashboard");
       })
-      .catch((error) => {
+      .catch((error: any) => {
         setError("編集に失敗しました!!");
       })
       .finally(() => {

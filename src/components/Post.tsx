@@ -79,16 +79,20 @@ const useStyles = makeStyles({
   },
 });
 
-const Post = ({ authorName, content, createdAt, title, id, uid }) => {
+const Post = ({ authorName, content, createdAt, title, id, uid }: any) => {
   const classes = useStyles();
-  const { currentUser, savePostToBookmark, removePostFromBookmark } = useAuth();
+  const {
+    currentUser,
+    savePostToBookmark,
+    removePostFromBookmark,
+  }: any = useAuth();
   const [savedId, setSavedId] = useState();
   const [saved, setSaved] = useState(false);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event) => {
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -113,7 +117,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid }) => {
     await savePostToBookmark(savedPosts);
   };
 
-  const removeBookmark = async (savedId) => {
+  const removeBookmark = async (savedId: any) => {
     setSaved(false);
     await removePostFromBookmark(savedId);
   };
@@ -123,14 +127,14 @@ const Post = ({ authorName, content, createdAt, title, id, uid }) => {
     db.collection("users")
       .doc(uid)
       .get()
-      .then((doc) => {
+      .then((doc: any) => {
         if (doc.exists) {
           db.collection("users")
             .doc(uid)
             .collection("bookmarks")
             .get()
-            .then((snapshots) => {
-              snapshots.docs.forEach((doc) => {
+            .then((snapshots: any) => {
+              snapshots.docs.forEach((doc: any) => {
                 const data = doc.data();
                 // post_idはbookmarkしたpostのid
                 const post_id = data.id;
@@ -143,7 +147,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid }) => {
             });
         }
       });
-  }, [saved]);
+  }, [currentUser.uid, id, saved]);
 
   return (
     <>
@@ -176,7 +180,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid }) => {
             </MenuItem>
             <MenuItem
               onClick={() => {
-                deletePost(id);
+                deletePost();
                 handleClose();
               }}
             >

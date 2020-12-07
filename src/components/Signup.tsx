@@ -1,35 +1,39 @@
-import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
-import { Link, useHistory } from "react-router-dom"
+import React, { useRef, useState } from "react";
+import { Form, Button, Card, Alert } from "react-bootstrap";
+import { useAuth } from "../contexts/AuthContext";
+import { Link, useHistory } from "react-router-dom";
 
 export default function Signup() {
-  const usernameRef = useRef()
-  const emailRef = useRef()
-  const passwordRef = useRef()
-  const passwordConfirmRef = useRef()
-  const { signup } = useAuth()
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
-  const history = useHistory()
+  const usernameRef: any = useRef();
+  const emailRef: any = useRef();
+  const passwordRef: any = useRef();
+  const passwordConfirmRef: any = useRef();
+  const { signup }: any = useAuth();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
-  async function handleSubmit(e) {
-    e.preventDefault()
+  async function handleSubmit(e: any) {
+    e.preventDefault();
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("パスワードが一致しません")
+      return setError("パスワードが一致しません");
     }
 
     try {
-      setError("")
-      setLoading(true)
-      await signup( usernameRef.current.value, emailRef.current.value, passwordRef.current.value)
-      history.push("/")
+      setError("");
+      setLoading(true);
+      await signup(
+        usernameRef.current.value,
+        emailRef.current.value,
+        passwordRef.current.value
+      );
+      history.push("/");
     } catch {
-      setError("アカウントの作成に失敗しました")
+      setError("アカウントの作成に失敗しました");
     }
 
-    setLoading(false)
+    setLoading(false);
   }
 
   return (
@@ -65,5 +69,5 @@ export default function Signup() {
         アカウントを既に持っている場合は? <Link to="/login">ログイン</Link>
       </div>
     </>
-  )
+  );
 }
