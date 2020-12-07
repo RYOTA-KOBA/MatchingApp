@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-// @ts-expect-error ts-migrate(7016) FIXME: Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import { Link } from "react-router-dom";
-// @ts-expect-error ts-migrate(6142) FIXME: Module '../firebase' was resolved to '/Users/ryota... Remove this comment to see the full error message
 import { db } from "../firebase";
-// @ts-expect-error ts-migrate(6142) FIXME: Module '../contexts/AuthContext' was resolved to '... Remove this comment to see the full error message
 import { useAuth } from "../contexts/AuthContext";
 
 //material ui
@@ -82,16 +79,13 @@ const useStyles = makeStyles({
   },
 });
 
-const Post = ({
-  authorName,
-  content,
-  createdAt,
-  title,
-  id,
-  uid
-}: any) => {
+const Post = ({ authorName, content, createdAt, title, id, uid }: any) => {
   const classes = useStyles();
-  const { currentUser, savePostToBookmark, removePostFromBookmark } = useAuth();
+  const {
+    currentUser,
+    savePostToBookmark,
+    removePostFromBookmark,
+  }: any = useAuth();
   const [savedId, setSavedId] = useState();
   const [saved, setSaved] = useState(false);
 
@@ -156,20 +150,14 @@ const Post = ({
   }, [currentUser.uid, id, saved]);
 
   return (
-    // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <>
-      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <Card className={classes.root}>
-        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <CardContent style={{ paddingBottom: "0" }}>
           {uid === currentUser.uid && (
-            // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
             <IconButton className={classes.threeDots} onClick={handleClick}>
-              {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <MoreVertIcon />
             </IconButton>
           )}
-          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Menu
             anchorEl={anchorEl}
             keepMounted
@@ -181,37 +169,30 @@ const Post = ({
               },
             }}
           >
-            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <MenuItem
               onClick={() => {
                 handleClose();
               }}
             >
-              {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <Link to={"/postedit/" + id} className={classes.editLink}>
                 編集する
               </Link>
             </MenuItem>
-            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <MenuItem
               onClick={() => {
-                // @ts-expect-error ts-migrate(2554) FIXME: Expected 0 arguments, but got 1.
-                deletePost(id);
+                deletePost();
                 handleClose();
               }}
             >
               削除する
             </MenuItem>
           </Menu>
-          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Typography variant="h5" component="h3">
             {title}
           </Typography>
-          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Typography className={classes.pos} color="textSecondary">
             {authorName + "・" + createdAt}
           </Typography>
-          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Typography
             className={classes.contentText}
             variant="body2"
@@ -220,11 +201,8 @@ const Post = ({
             {content}
           </Typography>
         </CardContent>
-        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <CardActions className={classes.detailBtnWrap}>
-          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <Link to={"/detail/" + id} className={classes.detailLink}>
-            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <Button
               variant="contained"
               className={classes.detailButton}
@@ -235,18 +213,14 @@ const Post = ({
           </Link>
         </CardActions>
         {saved === true ? (
-          // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <IconButton
             className={classes.likeBtn}
             onClick={() => removeBookmark(savedId)}
           >
-            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <BookmarkIcon />
           </IconButton>
         ) : (
-          // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
           <IconButton className={classes.likeBtn} onClick={savePost}>
-            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <BookmarkBorderIcon />
           </IconButton>
         )}

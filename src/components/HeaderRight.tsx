@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-// @ts-expect-error ts-migrate(7016) FIXME: Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import { Link, useHistory } from "react-router-dom";
-// @ts-expect-error ts-migrate(6142) FIXME: Module '../firebase' was resolved to '/Users/ryota... Remove this comment to see the full error message
 import { db } from "../firebase";
-// @ts-expect-error ts-migrate(6142) FIXME: Module '../contexts/AuthContext' was resolved to '... Remove this comment to see the full error message
 import { useAuth } from "../contexts/AuthContext";
 
 //material ui
@@ -78,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HeaderRight() {
   const classes = useStyles();
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout }: any = useAuth();
   const [userNameInitial, setUserNameInitial] = useState();
   const [error, setError] = useState("");
   const history = useHistory();
@@ -119,24 +116,16 @@ export default function HeaderRight() {
   }, [currentUser.uid]);
 
   return (
-    // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className={classes.headerRight}>
-      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
-      {error && <Alert variant="danger">{error}</Alert>}
-      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
+      {error && <Alert severity="error">{error}</Alert>}
       <Link to="/postform" className={classes.postFormLink}>
-        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Button className={classes.postFormButton}>新規投稿</Button>
       </Link>
-      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <Link to="/bookmarkList">
-        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <IconButton className={classes.bookMark}>
-          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <LibraryBooksIcon />
         </IconButton>
       </Link>
-      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <Avatar
         aria-label="recipe"
         className={classes.avatar}
@@ -144,7 +133,6 @@ export default function HeaderRight() {
       >
         {userNameInitial}
       </Avatar>
-      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <Menu
         anchorEl={anchorEl}
         keepMounted
@@ -158,9 +146,7 @@ export default function HeaderRight() {
           },
         }}
       >
-        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Link to="/dashboard" className={classes.dashboardLink}>
-          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <MenuItem
             onClick={() => {
               handleClose();
@@ -169,9 +155,7 @@ export default function HeaderRight() {
             ダッシュボード
           </MenuItem>
         </Link>
-        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <Link to="/update-profile" className={classes.dashboardLink}>
-          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <MenuItem
             onClick={() => {
               handleClose();
@@ -180,7 +164,6 @@ export default function HeaderRight() {
             設定
           </MenuItem>
         </Link>
-        {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
         <MenuItem
           onClick={() => {
             handleLogout();

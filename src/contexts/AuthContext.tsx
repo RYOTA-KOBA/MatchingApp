@@ -1,22 +1,20 @@
-import React, { useContext, useState, useEffect } from "react";
-// @ts-expect-error ts-migrate(6142) FIXME: Module '../firebase' was resolved to '/Users/ryota... Remove this comment to see the full error message
+import React, { useContext, useState, useEffect, ReactNode } from "react";
 import { auth, db, timestamp } from "../firebase";
-// @ts-expect-error ts-migrate(6142) FIXME: Module '../firebase' was resolved to '/Users/ryota... Remove this comment to see the full error message
 import firebase from "../firebase";
-// @ts-expect-error ts-migrate(7016) FIXME: Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import { useHistory, Redirect } from "react-router-dom";
 
-// @ts-expect-error ts-migrate(2554) FIXME: Expected 1 arguments, but got 0.
-const AuthContext = React.createContext();
+interface Props {
+  children: ReactNode | ReactNode[];
+}
+
+const AuthContext = React.createContext<Partial<Props>>({});
 
 export function useAuth() {
   return useContext(AuthContext);
 }
 
-export function AuthProvider({
-  children
-}: any) {
-  const [currentUser, setCurrentUser] = useState();
+export function AuthProvider({ children }: any) {
+  const [currentUser, setCurrentUser]: any = useState();
   const [currentPost, setCurrentPost] = useState([]);
   const [currentId, setCurrentId] = useState();
   const [defUsername, setDefUsername] = useState("");
@@ -35,10 +33,8 @@ export function AuthProvider({
         username: username,
       };
 
-      db.collection("users")
-        .doc(uid)
-        .set(userInitialData)
-        .then("ユーザーが作成されました!");
+      db.collection("users").doc(uid).set(userInitialData);
+      // .then("ユーザーが作成されました!");
     }
   }
 
@@ -70,7 +66,7 @@ export function AuthProvider({
   }
 
   function updatePassword(password: any) {
-    return firebase.auth().currentUser.updatePassword(password);
+    return firebase.auth().currentUser?.updatePassword(password);
   }
 
   const createPost = (title: any, content: any, authorName: any, uid: any) => {
@@ -135,7 +131,6 @@ export function AuthProvider({
   };
 
   const savePostToBookmark = async (savedPosts: any) => {
-    // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
     const uid = currentUser.uid;
     const saveRef = db
       .collection("users")
@@ -147,7 +142,6 @@ export function AuthProvider({
   };
 
   const removePostFromBookmark = async (id: any) => {
-    // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
     const uid = currentUser.uid;
     await db
       .collection("users")
@@ -179,7 +173,7 @@ export function AuthProvider({
     return unsubscribe;
   }, [history]);
 
-  const value = {
+  const value: any = {
     currentUser,
     setCurrentUser,
     login,
@@ -200,11 +194,8 @@ export function AuthProvider({
   };
 
   return (
-    // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <AuthContext.Provider value={value}>
       {!loading && children}
     </AuthContext.Provider>
   );
 }
-
-//コンポーネントが表示されなくなったら、loadingの!を外してログイン→!つけて再度ログイン

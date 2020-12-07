@@ -1,9 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
-// @ts-expect-error ts-migrate(6142) FIXME: Module '../contexts/AuthContext' was resolved to '... Remove this comment to see the full error message
 import { useAuth } from "../contexts/AuthContext";
-// @ts-expect-error ts-migrate(7016) FIXME: Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import { Link, useHistory } from "react-router-dom";
-// @ts-expect-error ts-migrate(6142) FIXME: Module '../firebase' was resolved to '/Users/ryota... Remove this comment to see the full error message
 import { db } from "../firebase";
 
 // materialUI
@@ -51,24 +48,21 @@ export default function PostEdit() {
   const [loading, setLoading] = useState(false);
   const [currentPost, setCurrentPost] = useState([]);
   const history = useHistory();
-  const titleRef = useRef();
-  const contentRef = useRef();
+  const titleRef: any = useRef();
+  const contentRef: any = useRef();
   const path = window.location.href;
   const post_id = path.split("/postedit/")[1];
-  const { editPost } = useAuth();
+  const { editPost }: any = useAuth();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
     if (titleRef.current.value.length > 42) {
       return setError("タイトルは42文字以内で入力してください");
     }
-    // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
     if (titleRef.current.value === "") {
       return setError("タイトルは入力必須項目です");
     }
-    // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
     if (contentRef.current.value === "") {
       return setError("必須の入力項目が空です。");
     }
@@ -82,7 +76,6 @@ export default function PostEdit() {
         const data = snapshot.data();
         setLoading(true);
         setError("");
-        // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
         return editPost(titleRef.current.value, contentRef.current.value, data);
       })
       .catch((error: any) => {
@@ -116,39 +109,28 @@ export default function PostEdit() {
   }, [getPost]);
 
   return (
-    // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <>
-      {currentPost.map((post) => (
-        // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
+      {currentPost.map((post: any) => (
         <Card className={classes.card} key={post_id}>
-          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           {error && <Alert severity="error">{error}</Alert>}
-          {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
           <CardContent>
-            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <h2 className={classes.header}>投稿を編集</h2>
-            {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
             <form
               className={classes.root}
               noValidate
               autoComplete="off"
               onSubmit={handleSubmit}
             >
-              {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
               <div className={classes.postFormBox}>
-                {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                 <TextField
                   type="text"
                   label="タイトル"
                   inputRef={titleRef}
                   className={classes.postFormTextField}
                   required
-                  // @ts-expect-error ts-migrate(2339) FIXME: Property 'title' does not exist on type 'never'.
                   defaultValue={post.title}
                 />
-                {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                 <br />
-                {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                 <TextField
                   type="text"
                   label="内容"
@@ -157,12 +139,9 @@ export default function PostEdit() {
                   multiline={true}
                   rows={4}
                   required
-                  // @ts-expect-error ts-migrate(2339) FIXME: Property 'content' does not exist on type 'never'.
                   defaultValue={post.content}
                 />
-                {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                 <br />
-                {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                 <Button
                   variant="contained"
                   type="submit"
@@ -177,7 +156,6 @@ export default function PostEdit() {
           </CardContent>
         </Card>
       ))}
-      {/* @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
       <Link to="/" className={classes.cancel}>
         キャンセル
       </Link>
