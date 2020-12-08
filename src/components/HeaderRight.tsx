@@ -146,7 +146,10 @@ export default function HeaderRight() {
           },
         }}
       >
-        <Link to="/dashboard" className={classes.dashboardLink}>
+        <Link
+          to={"/userprofile/" + currentUser.uid}
+          className={classes.dashboardLink}
+        >
           <MenuItem
             onClick={() => {
               handleClose();
