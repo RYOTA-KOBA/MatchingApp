@@ -62,8 +62,8 @@ export default function UserProfile() {
       .get()
       .then((snapshot: any) => {
         const data = snapshot.data();
-        console.log(data);
         setUser(data);
+        console.log(data);
       });
   }, []);
 
@@ -94,7 +94,7 @@ export default function UserProfile() {
   }, []);
 
   return (
-    <>
+    <div className="card-maxWith">
       <Card className={classes.root}>
         <CardContent>
           <h2 className="text-center mb-4">プロフィール</h2>
@@ -128,6 +128,6 @@ export default function UserProfile() {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }

@@ -109,7 +109,7 @@ export default function PostEdit() {
   }, [getPost]);
 
   return (
-    <>
+    <div className="card-maxWith">
       {currentPost.map((post: any) => (
         <Card className={classes.card} key={post_id}>
           {error && <Alert severity="error">{error}</Alert>}
@@ -159,6 +159,6 @@ export default function PostEdit() {
       <Link to="/" className={classes.cancel}>
         キャンセル
       </Link>
-    </>
+    </div>
   );
 }

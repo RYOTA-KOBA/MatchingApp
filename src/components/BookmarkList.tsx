@@ -42,7 +42,7 @@ export default function BookmarkList() {
   }, [currentUser.uid]);
 
   return (
-    <>
+    <div className="card-maxWith">
       <div style={{ marginTop: "100px" }}>
         <h3>保存した投稿</h3>
         {bookmarks.map((bookmark: any) => (
@@ -58,6 +58,6 @@ export default function BookmarkList() {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }

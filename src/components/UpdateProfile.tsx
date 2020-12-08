@@ -75,7 +75,7 @@ export default function UpdateProfile({ userName }: any) {
       })
       .then(() => {
         // Success
-        history.push("/dashboard");
+        history.push("/");
       })
       .catch((error: any) => {
         setError("編集に失敗しました!!");
@@ -135,7 +135,7 @@ export default function UpdateProfile({ userName }: any) {
               className={classes.postFormTextField}
               type="password"
               inputRef={passwordConfirmRef}
-              label="パスワードの編集"
+              label="パスワード(再入力)"
               placeholder="空欄の場合は変更しません"
             />
             <br />
