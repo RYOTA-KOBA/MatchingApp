@@ -67,33 +67,31 @@ export default function UserProfile() {
       });
   }, []);
 
-  //   useEffect(() => {
-  //     let posts: any = [];
-  //     db.collection("posts")
-  //       .orderBy("createdAt", "desc")
-  //       .get()
-  //       .then((snapshot: any) => {
-  //         snapshot.docs.forEach((doc: any) => {
-  //           const data = doc.data();
+  useEffect(() => {
+    let posts: any = [];
+    db.collection("posts")
+      .where("uid", "==", uid)
+      .get()
+      .then((snapshot: any) => {
+        snapshot.docs.forEach((doc: any) => {
+          const data = doc.data();
 
-  //           if (data.uid === currentUser.uid) {
-  //             const date = new Date(data.createdAt.seconds * 1000);
-  //             const Day = date.toLocaleDateString("ja-JP");
-  //             const Time = date.toLocaleTimeString("ja-JP");
+          const date = new Date(data.createdAt.seconds * 1000);
+          const Day = date.toLocaleDateString("ja-JP");
+          const Time = date.toLocaleTimeString("ja-JP");
 
-  //             posts.push({
-  //               authorName: data.authorName,
-  //               content: data.content,
-  //               createdAt: Day + " " + Time,
-  //               title: data.title,
-  //               id: doc.id,
-  //               uid: data.uid,
-  //             });
-  //           }
-  //         });
-  //         setPost(posts);
-  //       });
-  //   }, [currentUser.uid]);
+          posts.push({
+            authorName: data.authorName,
+            content: data.content,
+            createdAt: Day + " " + Time,
+            title: data.title,
+            id: doc.id,
+            uid: data.uid,
+          });
+        });
+        setPost(posts);
+      });
+  }, []);
 
   return (
     <>
@@ -118,17 +116,17 @@ export default function UserProfile() {
         )}
       </Card>
       <div>
-        {/* {post.map((myPost: any) => (
+        {post.map((post: any) => (
           <MyPost
-            key={myPost.id}
-            authorName={myPost.authorName}
-            content={myPost.content}
-            createdAt={myPost.createdAt}
-            title={myPost.title}
-            id={myPost.id}
-            uid={myPost.uid}
+            key={post.id}
+            authorName={post.authorName}
+            content={post.content}
+            createdAt={post.createdAt}
+            title={post.title}
+            id={post.id}
+            uid={post.uid}
           />
-        ))} */}
+        ))}
       </div>
     </>
   );
