@@ -17,6 +17,7 @@ import Footer from "./Footer";
 import BookmarkList from "./BookmarkList";
 import BookmarkListItem from "./BookmarkList";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import UserProfile from "./UserProfile";
 
 function App() {
   return (
@@ -47,7 +48,12 @@ function App() {
                 component={BookmarkListItem}
               />
               <PrivateRoute exact path="/detail/:id" component={Detail} />
-              <PrivateRoute path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/dashboard/:id" component={Dashboard} />
+              <PrivateRoute
+                exact
+                path="/userprofile/:id"
+                component={UserProfile}
+              />
               <PrivateRoute exact path="/postedit/:id" component={PostEdit} />
               <PrivateRoute path="/postform" component={PostForm} />
               <PrivateRoute path="/update-profile" component={UpdateProfile} />
