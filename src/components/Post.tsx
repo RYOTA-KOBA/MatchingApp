@@ -49,6 +49,13 @@ const useStyles = makeStyles({
     fontSize: "14px",
     marginTop: "8px",
   },
+  usernameLink: {
+    color: "#0000008A",
+    "&:hover": {
+      color: "#333333",
+      textDecoration: "none",
+    },
+  },
   contentText: {
     overflow: "hidden",
     lineHeight: "1.5",
@@ -191,7 +198,14 @@ const Post = ({ authorName, content, createdAt, title, id, uid }: any) => {
             {title}
           </Typography>
           <Typography className={classes.pos} color="textSecondary">
-            {authorName + "・" + createdAt}
+            <Link
+              color="textSecondary"
+              className={classes.usernameLink}
+              to={"/userprofile/" + uid}
+            >
+              {authorName}
+            </Link>
+            {"・" + createdAt}
           </Typography>
           <Typography
             className={classes.contentText}
