@@ -114,39 +114,42 @@ export default function MyPost({
     <>
       <Card className={classes.root}>
         <CardContent style={{ paddingBottom: "0" }}>
-          <IconButton className={classes.threeDots} onClick={handleClick}>
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            keepMounted
-            open={open}
-            onClose={handleClose}
-            PaperProps={{
-              style: {
-                width: "150px",
-              },
-            }}
-          >
-            <MenuItem
-              onClick={() => {
-                handleClose();
-              }}
-            >
-              <Link to={"/postedit/" + id} className={classes.editLink}>
-                編集する
-              </Link>
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                // @ts-expect-error ts-migrate(2554) FIXME: Expected 0 arguments, but got 1.
-                deletePost(id);
-                handleClose();
-              }}
-            >
-              削除する
-            </MenuItem>
-          </Menu>
+          {uid === currentUser.uid && (
+            <div>
+              <IconButton className={classes.threeDots} onClick={handleClick}>
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                keepMounted
+                open={open}
+                onClose={handleClose}
+                PaperProps={{
+                  style: {
+                    width: "150px",
+                  },
+                }}
+              >
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                  }}
+                >
+                  <Link to={"/postedit/" + id} className={classes.editLink}>
+                    編集する
+                  </Link>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    deletePost();
+                    handleClose();
+                  }}
+                >
+                  削除する
+                </MenuItem>
+              </Menu>
+            </div>
+          )}
           <Typography variant="h5" component="h3">
             {title}
           </Typography>
