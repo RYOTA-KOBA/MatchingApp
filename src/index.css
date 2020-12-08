@@ -40,3 +40,12 @@ profile
   font-size: 24px;
   font-weight: bold;
 }
+
+.card-maxWith {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.home-cardWith {
+  width: 507px;
+}

@@ -31,7 +31,7 @@ function App() {
           className="d-flex justify-content-center"
           style={{ height: "100%", marginBottom: "60px" }}
         >
-          <div className="w-100" style={{ maxWidth: "600px" }}>
+          <div className="w-100">
             <Switch>
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />

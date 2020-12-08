@@ -139,7 +139,7 @@ export default function Detail() {
   }, [getPost]);
 
   return (
-    <>
+    <div className="card-maxWith">
       <div style={{ marginTop: "100px" }}>
         <Link to="/" className={classes.backLink}>
           <Button className={classes.backButton}>トップに戻る</Button>
@@ -203,6 +203,6 @@ export default function Detail() {
           </Card>
         ))}
       </div>
-    </>
+    </div>
   );
 }

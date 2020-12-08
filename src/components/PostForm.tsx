@@ -106,7 +106,7 @@ export default function PostForm() {
   };
 
   return (
-    <>
+    <div className="card-maxWith">
       <Card className={classes.card}>
         {error && <Alert severity="error">{error}</Alert>}
         <CardContent>
@@ -156,6 +156,6 @@ export default function PostForm() {
       <Link to="/" className={classes.cancel}>
         キャンセル
       </Link>
-    </>
+    </div>
   );
 }
