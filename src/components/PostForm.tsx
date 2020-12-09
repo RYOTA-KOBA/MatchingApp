@@ -5,14 +5,25 @@ import { db } from "../firebase";
 import firebase from "../firebase";
 
 // materialUI
-import { makeStyles } from "@material-ui/core/styles";
+import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Alert from "@material-ui/lab/Alert";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
+  formControl: {
+    minWidth: 250,
+    marginBottom: "20px",
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
   alert: {
     marginBottom: "15px",
   },
@@ -55,6 +66,11 @@ export default function PostForm() {
   const titleRef = useRef();
   const contentRef = useRef();
   const { createPost, currentUser }: any = useAuth();
+  const [category, setCategory] = React.useState("");
+
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setCategory(event.target.value as string);
+  };
 
   const inputTitle = useCallback(
     (event) => {
@@ -140,6 +156,23 @@ export default function PostForm() {
                 onChange={inputContent}
               />
               <br />
+              <FormControl className={classes.formControl}>
+                <InputLabel id="category-select-label">カテゴリー</InputLabel>
+                <Select
+                  labelId="category-select-label"
+                  id="category-select"
+                  value={category}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="">None</MenuItem>
+                  <MenuItem value={"frontend"}>
+                    フロントエンドエンジニア
+                  </MenuItem>
+                  <MenuItem value={"backend"}>バックエンドエンジニア</MenuItem>
+                  <MenuItem value={"infra"}>インフラエンジニア</MenuItem>
+                  <MenuItem value={"designer"}>デザイナー</MenuItem>
+                </Select>
+              </FormControl>
               <Button
                 variant="contained"
                 type="submit"
