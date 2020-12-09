@@ -46,19 +46,21 @@ service cloud.firestore {
     }
 
     function isValidPostCreate(post) {
-      return post.size() == 5
+      return post.size() == 6
       && 'authorName' in post && post.authorName is string && post.authorName.size() > 0
       && 'content' in post && post.content is string && post.content.size() > 0
       && 'createdAt' in post && post.createdAt is timestamp
+      && 'category' in post && post.category is string
       && 'uid' in post && post.uid is string
       && 'title' in post && post.title is string && post.title.size() > 0 && post.title.size() <= 42
     }
 
     function isValidPostUpdate(post) {
-      return post.size() == 6
+      return post.size() == 7
       && 'authorName' in post && post.authorName is string && post.authorName.size() > 0
       && 'content' in post && post.content is string && post.content.size() > 0
       && 'createdAt' in post && post.createdAt is timestamp
+      && 'category' in post && post.category is string
       && 'id' in post && post.id is string
       && 'uid' in post && post.uid is string
       && 'title' in post && post.title is string && post.title.size() > 0 && post.title.size() <= 42
