@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 // material ui
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
@@ -18,13 +19,19 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Tags() {
   const classes = useStyles();
+  const history = useHistory();
+
+  const isSelected = (category: string) => {
+    history.push(`/?category=${category}`);
+  };
+
   return (
     <>
       <List className={classes.root} aria-label="contacts">
-        <ListItem button>
+        <ListItem button onClick={() => isSelected("backend")}>
           <ListItemText primary="#バックエンド" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => isSelected("frontend")}>
           <ListItemText primary="#フロントエンド" />
         </ListItem>
       </List>
