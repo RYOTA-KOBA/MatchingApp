@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { db } from "../firebase";
@@ -66,7 +66,7 @@ export default function PostForm() {
   const titleRef = useRef();
   const contentRef = useRef();
   const { createPost, currentUser }: any = useAuth();
-  const [category, setCategory] = React.useState("");
+  const [category, setCategory] = useState("");
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setCategory(event.target.value as string);
@@ -113,7 +113,7 @@ export default function PostForm() {
         .then((snapshot: any) => {
           const data = snapshot.data();
           const authorName = data.username;
-          return createPost(title, content, authorName, uid);
+          return createPost(title, content, authorName, uid, category);
         });
     } catch {
       setError("投稿に失敗しました");
