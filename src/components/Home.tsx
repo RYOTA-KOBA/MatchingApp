@@ -7,37 +7,40 @@ import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 
 const Home = () => {
   const [currentPost, setCurrentPost] = useState([]);
+  const query = window.location.search;
+  const category = /^\?category=/.test(query)
+    ? query.split("?category=")[1]
+    : "";
 
   useEffect(() => {
-    getPosts();
-  }, []);
+    getPosts(category);
+  }, [query]);
 
-  const getPosts = async () => {
+  const getPosts = async (category: any) => {
+    let query = db.collection("posts").orderBy("createdAt", "desc");
+    query = category !== "" ? query.where("category", "==", category) : query;
+
     let posts: any = [];
-    await db
-      .collection("posts")
-      .orderBy("createdAt", "desc")
-      .get()
-      .then((snapshot: any) => {
-        snapshot.docs.forEach((doc: any) => {
-          const data = doc.data();
+    await query.get().then((snapshot: any) => {
+      snapshot.docs.forEach((doc: any) => {
+        const data = doc.data();
 
-          const date = new Date(data.createdAt.seconds * 1000);
-          const Day = date.toLocaleDateString("ja-JP");
-          const Time = date.toLocaleTimeString("ja-JP");
+        const date = new Date(data.createdAt.seconds * 1000);
+        const Day = date.toLocaleDateString("ja-JP");
+        const Time = date.toLocaleTimeString("ja-JP");
 
-          posts.push({
-            authorName: data.authorName,
-            content: data.content,
-            createdAt: Day + " " + Time,
-            title: data.title,
-            id: doc.id,
-            uid: data.uid,
-          });
+        posts.push({
+          authorName: data.authorName,
+          content: data.content,
+          createdAt: Day + " " + Time,
+          title: data.title,
+          id: doc.id,
+          uid: data.uid,
         });
-
-        setCurrentPost(posts);
       });
+
+      setCurrentPost(posts);
+    });
   };
 
   return (
