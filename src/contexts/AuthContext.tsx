@@ -69,7 +69,13 @@ export function AuthProvider({ children }: any) {
     return firebase.auth().currentUser?.updatePassword(password);
   }
 
-  const createPost = (title: any, content: any, authorName: any, uid: any) => {
+  const createPost = (
+    title: any,
+    content: any,
+    authorName: any,
+    uid: any,
+    category: any
+  ) => {
     // const enterToBr = content.replace(/\r?\n/g, '<br>');
     // const brToBreak = enterToBr.replace(/(<br>|<br \/>)/gi, '\r\n');
     db.collection("posts")
@@ -78,6 +84,7 @@ export function AuthProvider({ children }: any) {
         content: content,
         authorName: authorName,
         createdAt: timestamp,
+        category: category,
         uid: uid,
       })
       .then((result: any) => {
