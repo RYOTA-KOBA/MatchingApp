@@ -29,10 +29,10 @@ export default function Tags() {
     <>
       <List className={classes.root} aria-label="contacts">
         <ListItem button onClick={() => isSelected("backend")}>
-          <ListItemText primary="#バックエンド" />
+          <ListItemText primary="#バックエンド" id="backend" />
         </ListItem>
         <ListItem button onClick={() => isSelected("frontend")}>
-          <ListItemText primary="#フロントエンド" />
+          <ListItemText primary="#フロントエンド" id="frontend" />
         </ListItem>
       </List>
     </>

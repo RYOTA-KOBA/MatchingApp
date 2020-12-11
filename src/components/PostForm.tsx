@@ -2,7 +2,6 @@ import React, { useRef, useState, useCallback, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { db } from "../firebase";
-import firebase from "../firebase";
 
 // materialUI
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
