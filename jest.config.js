@@ -1,7 +1,11 @@
 module.exports = {
-  moduleFileExtensions: ["js", "jsx"],
+  preset: "ts-jest",
+  testEnvironment: "node",
+  roots: ["<rootDir>/src"],
+  testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"],
+  moduleFileExtensions: ["js", "jsx", "ts", "tsx"],
   moduleDirectories: ["node_modules", "client"],
   transform: {
-    "^.+\\.jsx?$": "./custom-transformer.js",
+    "^.+\\.(ts|tsx)$": "ts-jest",
   },
 };
