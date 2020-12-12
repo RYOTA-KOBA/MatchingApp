@@ -150,6 +150,7 @@ export default function Login() {
             />
             <Button
               type="submit"
+              id="submit-login"
               fullWidth
               variant="contained"
               color="primary"
