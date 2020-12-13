@@ -77,6 +77,7 @@ export default function Detail() {
   const id = path.split("/detail/")[1];
   const [postDetail, setPostDetail] = useState([]);
   const { setNowId, setNowPost, currentUser }: any = useAuth();
+  const [comment, setComment] = useState([]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -137,6 +138,31 @@ export default function Detail() {
   useEffect(() => {
     getPost();
   }, [getPost]);
+
+  useEffect(() => {
+    let comments: any = [];
+    db.collection("posts")
+      .doc(id)
+      .collection("comments")
+      .get()
+      .then((snapshots) => {
+        snapshots.docs.forEach((doc) => {
+          const data = doc.data();
+
+          const date = new Date(data.createdAt.seconds * 1000);
+          const Day = date.toLocaleDateString("ja-JP");
+          const Time = date.toLocaleTimeString("ja-JP");
+
+          comments.push({
+            uid: data.uid,
+            id: data.id,
+            createdAt: Day + " " + Time,
+            content: data.content,
+          });
+        });
+        setComment(comments);
+      });
+  }, []);
 
   return (
     <div className="card-maxWith">
@@ -203,6 +229,9 @@ export default function Detail() {
           </Card>
         ))}
       </div>
+      {comment.map((comment: any) => (
+        <h3>{comment.content}</h3>
+      ))}
     </div>
   );
 }
