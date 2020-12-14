@@ -36,7 +36,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest --env=jsdom",
+    "test": "jest --env=node",
     "eject": "react-scripts eject",
     "format": "prettier --write 'src/**/*.{js,ts,tsx}'"
   },
@@ -57,6 +57,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "^7.12.7",
+    "@firebase/rules-unit-testing": "^1.1.5",
     "@types/react-router-dom": "^5.1.6",
     "@typescript-eslint/eslint-plugin": "^4.9.1",
     "@typescript-eslint/parser": "^4.9.1",
