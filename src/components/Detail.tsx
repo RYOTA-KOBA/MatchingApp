@@ -230,7 +230,9 @@ export default function Detail() {
         ))}
       </div>
       {comment.map((comment: any) => (
-        <h3>{comment.content}</h3>
+        <div key={comment.id}>
+          <h3>{comment.content}</h3>
+        </div>
       ))}
     </div>
   );
