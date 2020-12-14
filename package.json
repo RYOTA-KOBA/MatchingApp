@@ -36,7 +36,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest --env=jsdom",
+    "test": "jest --env=node",
     "eject": "react-scripts eject",
     "format": "prettier --write 'src/**/*.{js,ts,tsx}'"
   },

@@ -148,7 +148,7 @@ export default function Detail() {
       .then((snapshots) => {
         snapshots.docs.forEach((doc) => {
           const data = doc.data();
-
+          console.log(data.createdAt);
           const date = new Date(data.createdAt.seconds * 1000);
           const Day = date.toLocaleDateString("ja-JP");
           const Time = date.toLocaleTimeString("ja-JP");
