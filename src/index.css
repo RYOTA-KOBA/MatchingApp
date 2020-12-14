@@ -49,3 +49,41 @@ profile
 .home-cardWith {
   width: 507px;
 }
+
+/**************
+comment
+******************/
+.comments-title {
+  font-weight: 600;
+  font-size: 28px;
+  border-bottom: 1px solid #d6d6d6;
+  padding: 1rem 1.3rem;
+  margin: 0;
+}
+.comment-block {
+  border-top: 1px solid #d6d6d6;
+  padding: 1rem 1.3rem;
+}
+.comment-textarea {
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 1px solid #d6d6d6;
+  resize: none;
+  width: 100%;
+  height: 5rem;
+  padding: 1rem 1.3rem;
+  display: flex;
+}
+.comment-textarea:focus {
+  outline: none;
+}
+.comment-submit-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 0.8rem 1.3rem;
+}
+.comment-submit:focus {
+  outline: none;
+}
