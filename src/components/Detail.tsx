@@ -3,6 +3,8 @@ import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { db } from "../firebase";
+import Comment from "./Comment";
+import CommentForm from "./CommentForm";
 
 //materialUI
 import { makeStyles } from "@material-ui/core/styles";
@@ -29,6 +31,7 @@ const useStyles = makeStyles({
   root: {
     width: "100%",
     marginTop: "15px",
+    borderRadius: "12px",
   },
   threeDots: {
     float: "right",
@@ -144,11 +147,12 @@ export default function Detail() {
     db.collection("posts")
       .doc(id)
       .collection("comments")
+      .orderBy("createdAt", "desc")
       .get()
       .then((snapshots) => {
         snapshots.docs.forEach((doc) => {
           const data = doc.data();
-          console.log(data.createdAt);
+
           const date = new Date(data.createdAt.seconds * 1000);
           const Day = date.toLocaleDateString("ja-JP");
           const Time = date.toLocaleTimeString("ja-JP");
@@ -171,7 +175,7 @@ export default function Detail() {
           <Button className={classes.backButton}>トップに戻る</Button>
         </Link>
         {postDetail.map((post: any) => (
-          <Card className={classes.root} key={post.id}>
+          <Card className={classes.root} key={post.id} variant="outlined">
             <CardContent>
               {post.uid === currentUser.uid && (
                 <IconButton className={classes.threeDots} onClick={handleClick}>
@@ -229,11 +233,19 @@ export default function Detail() {
           </Card>
         ))}
       </div>
-      {comment.map((comment: any) => (
-        <div key={comment.id}>
-          <h3>{comment.content}</h3>
-        </div>
-      ))}
+      <Card className={classes.root} variant="outlined">
+        <h3 className="comments-title">Comments</h3>
+        <CommentForm id={id} />
+        {comment.map((comment: any) => (
+          <Comment
+            key={comment.id}
+            id={comment.id}
+            uid={comment.uid}
+            content={comment.content}
+            createdAt={comment.createdAt}
+          />
+        ))}
+      </Card>
     </div>
   );
 }
