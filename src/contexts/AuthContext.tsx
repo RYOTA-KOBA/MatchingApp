@@ -137,12 +137,24 @@ export function AuthProvider({ children }: any) {
       });
   };
 
-  const createComment = (id: string, content: string, uid: string) => {
-    db.collection("posts").doc(id).collection("comments").add({
-      content: content,
-      createdAt: timestamp,
-      uid: uid,
-    });
+  const createComment = (postId: string, content: string, uid: string) => {
+    db.collection("posts")
+      .doc(postId)
+      .collection("comments")
+      .add({
+        content: content,
+        createdAt: timestamp,
+        uid: uid,
+      })
+      .then(async (result: any) => {
+        const id = result.id;
+        const commentsRef = db
+          .collection("posts")
+          .doc(postId)
+          .collection("comments")
+          .doc(id);
+        commentsRef.set({ id: id }, { merge: true });
+      });
   };
 
   const savePostToBookmark = async (savedPosts: any) => {
