@@ -137,6 +137,14 @@ export function AuthProvider({ children }: any) {
       });
   };
 
+  const createComment = (id: string, content: string, uid: string) => {
+    db.collection("posts").doc(id).collection("comments").add({
+      content: content,
+      createdAt: timestamp,
+      uid: uid,
+    });
+  };
+
   const savePostToBookmark = async (savedPosts: any) => {
     const uid = currentUser.uid;
     const saveRef = db
@@ -191,6 +199,7 @@ export function AuthProvider({ children }: any) {
     updateUser,
     createPost,
     editPost,
+    createComment,
     setNowId,
     currentId,
     setNowPost,

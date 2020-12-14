@@ -152,7 +152,7 @@ export default function Detail() {
       .then((snapshots) => {
         snapshots.docs.forEach((doc) => {
           const data = doc.data();
-          console.log(data.createdAt);
+
           const date = new Date(data.createdAt.seconds * 1000);
           const Day = date.toLocaleDateString("ja-JP");
           const Time = date.toLocaleTimeString("ja-JP");
@@ -235,7 +235,7 @@ export default function Detail() {
       </div>
       <Card className={classes.root} variant="outlined">
         <h3 className="comments-title">Comments</h3>
-        <CommentForm />
+        <CommentForm id={id} />
         {comment.map((comment: any) => (
           <Comment
             key={comment.id}
