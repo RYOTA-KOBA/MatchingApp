@@ -40,6 +40,9 @@ export default function CommentForm({ id }: any) {
     if (content === "") {
       return setError("コメントを入力してください"), setOpen(true);
     }
+    if (content.length > 200) {
+      return setError("200文字以内で入力してください"), setOpen(true);
+    }
 
     setError("");
     setLoading(true);
