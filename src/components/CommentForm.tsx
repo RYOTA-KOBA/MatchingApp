@@ -44,10 +44,6 @@ export default function CommentForm({ id }: any) {
       return setError("200文字以内で入力してください"), setOpen(true);
     }
 
-    setError("");
-    setLoading(true);
-    setContent("");
-
     // db.collection("posts").doc(id).collection("comments").add;
     try {
       setError("");
@@ -57,7 +53,6 @@ export default function CommentForm({ id }: any) {
     } catch {
       setError("投稿に失敗しました");
       setOpen(true);
-      setLoading(false);
     }
     setLoading(false);
   };
