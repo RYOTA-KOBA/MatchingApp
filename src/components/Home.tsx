@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
 import Post from "./Post";
 import Tags from "./Tags";
-import { green } from "@material-ui/core/colors";
+import { red } from "@material-ui/core/colors";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 
 const Home = () => {
@@ -54,7 +54,7 @@ const Home = () => {
     >
       <div style={{ width: "25%" }}>
         <h5 style={{ marginTop: "15px" }}>
-          <LocalOfferIcon style={{ color: green[500] }} />
+          <LocalOfferIcon style={{ color: red[500] }} />
           &nbsp; Tags
         </h5>
         <Tags />
