@@ -67,10 +67,17 @@ service cloud.firestore {
     }
 
     function isValidCommentCreate(comment) {
-      return comment.size() == 5
+      return comment.size() == 3
+      && "uid" in comment && comment.uid is string
+      && "content" in comment && comment.content is string && comment.content.size() <= 200
+      && "createdAt" in comment && comment.createdAt is timestamp
+    }
+
+    function isValidCommentUpdate(comment) {
+      return comment.size() == 4
       && "id" in comment && comment.id is string
       && "uid" in comment && comment.uid is string
-      && "content" in comment && comment.content is string
+      && "content" in comment && comment.content is string && comment.content.size() <= 200
       && "createdAt" in comment && comment.createdAt is timestamp
     }
 
@@ -95,8 +102,8 @@ service cloud.firestore {
 
       match /comments/{commentId} {
         allow read: if isUserAuthenticated(request.auth.uid);
-        allow create: if isUserAuthenticated(request.auth.uid);
-        allow update: if isUserAuthenticated(request.auth.uid);
+        allow create: if isUserAuthenticated(request.auth.uid) && isValidCommentCreate(request.resource.data);
+        allow update: if isUserAuthenticated(request.auth.uid) && isValidCommentUpdate(request.resource.data);
         allow delete: if isUserAuthenticated(request.auth.uid);
       }
     }
