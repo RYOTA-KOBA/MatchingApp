@@ -229,4 +229,131 @@ describe("firestore security test", () => {
       await firebase.assertFails(ref.update({ uid: 111 }));
     });
   });
+
+  describe("commentsの読み書きテスト", () => {
+    it("認証済みユーザーなら書き込み可能", async () => {
+      const firestore = getAuthFirestore({ uid: "user" });
+      const ref = firestore
+        .collection("posts")
+        .doc("post")
+        .collection("comments")
+        .doc("comment");
+
+      await firebase.assertSucceeds(
+        ref.set({
+          content: "こんにちは",
+          createdAt: serverTimestamp(),
+          uid: "commentUser",
+        })
+      );
+      // 同じpostに対して別のユーザーでもコメントできる
+      const firestoreB = getAuthFirestore({ uid: "userB" });
+      const refB = firestoreB
+        .collection("posts")
+        .doc("post")
+        .collection("comments")
+        .doc("commentB");
+
+      await firebase.assertSucceeds(
+        refB.set({
+          content: "こんにちは",
+          createdAt: serverTimestamp(),
+          uid: "commentUser",
+        })
+      );
+    });
+
+    // ↓バグ？？？
+    // it("認証済みユーザーならコメントの編集が可能", async () => {
+    //   const firestore = getAuthFirestore({ uid: "user" });
+    //   const ref = firestore
+    //     .collection("posts")
+    //     .doc("post")
+    //     .collection("comments")
+    //     .doc("comment");
+
+    //   await firebase.assertSucceeds(
+    //     ref.update({
+    //       content: "更新",
+    //       id: "12345aa",
+    //       uid: "54321aa",
+    //       createdAt: serverTimestamp(),
+    //     })
+    //   );
+    // });
+
+    it("認証済みユーザーなら全てのコメントの閲覧が可能", async () => {
+      const firestore = getAuthFirestore({ uid: "user" });
+      const ref = firestore
+        .collection("posts")
+        .doc("post")
+        .collection("comments")
+        .doc("comment");
+
+      await firebase.assertSucceeds(ref.get());
+    });
+  });
+
+  describe("commentsのスキーマテスト", () => {
+    it("正しくないスキーマの場合はコメントできない", async () => {
+      const firestore = getAuthFirestore({ uid: "user" });
+      const ref = firestore
+        .collection("posts")
+        .doc("post")
+        .collection("comments")
+        .doc("comment");
+
+      // 想定外のプロパティ
+      await firebase.assertFails(
+        ref.set({
+          content: "こんにちは",
+          createdAt: serverTimestamp(),
+          uid: "commentUser",
+          title: "これは想定外のデータです",
+        })
+      );
+
+      // 型が違う場合
+      await firebase.assertFails(
+        ref.set({
+          content: 11,
+          createdAt: serverTimestamp(),
+          uid: "commentUser",
+        })
+      );
+      await firebase.assertFails(
+        ref.set({
+          content: "こんにちは",
+          createdAt: 11,
+          uid: "commentUser",
+        })
+      );
+      await firebase.assertFails(
+        ref.set({
+          content: "こんにちは",
+          createdAt: serverTimestamp(),
+          uid: 11,
+        })
+      );
+    });
+
+    it("正しくないスキーマの場合はコメントを編集できない", async () => {
+      const firestore = getAuthFirestore({ uid: "user" });
+      const ref = firestore
+        .collection("posts")
+        .doc("post")
+        .collection("comments")
+        .doc("comment");
+      // 想定外のプロパティ
+      await firebase.assertFails(ref.update({ otherProps: "想定外" }));
+
+      // プロパティの型が異なる場合
+      await firebase.assertFails(ref.update({ id: 111 }));
+      await firebase.assertFails(ref.update({ content: 111 }));
+      await firebase.assertFails(ref.update({ uid: 111 }));
+      await firebase.assertFails(ref.update({ createdAt: 111 }));
+    });
+  });
 });
+
+// firebase emulators:start --only firestore
