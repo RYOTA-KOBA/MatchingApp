@@ -3,7 +3,6 @@ import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { db } from "../firebase";
-import Comment from "./Comment";
 import CommentForm from "./CommentForm";
 
 //materialUI
@@ -142,32 +141,6 @@ export default function Detail() {
     getPost();
   }, [getPost]);
 
-  useEffect(() => {
-    let comments: any = [];
-    db.collection("posts")
-      .doc(id)
-      .collection("comments")
-      .orderBy("createdAt", "desc")
-      .get()
-      .then((snapshots) => {
-        snapshots.docs.forEach((doc) => {
-          const data = doc.data();
-
-          const date = new Date(data.createdAt.seconds * 1000);
-          const Day = date.toLocaleDateString("ja-JP");
-          const Time = date.toLocaleTimeString("ja-JP");
-
-          comments.push({
-            uid: data.uid,
-            id: data.id,
-            createdAt: Day + " " + Time,
-            content: data.content,
-          });
-        });
-        setComment(comments);
-      });
-  }, []);
-
   return (
     <div className="card-maxWith">
       <div style={{ marginTop: "100px" }}>
@@ -236,15 +209,6 @@ export default function Detail() {
       <Card className={classes.root} variant="outlined">
         <h3 className="comments-title">Comments</h3>
         <CommentForm id={id} />
-        {comment.map((comment: any) => (
-          <Comment
-            key={comment.id}
-            id={comment.id}
-            uid={comment.uid}
-            content={comment.content}
-            createdAt={comment.createdAt}
-          />
-        ))}
       </Card>
     </div>
   );

@@ -5,21 +5,23 @@ export default function Comment({ id, uid, content, createdAt }: any) {
   const [commentUsername, setCommentUsername] = useState();
 
   useEffect(() => {
-    db.collection("users")
+    const unsubscribe = db
+      .collection("users")
       .doc(uid)
-      .get()
-      .then((snapshot) => {
+      .onSnapshot((snapshot) => {
         const data: any = snapshot.data();
         const username = data.username;
         setCommentUsername(username);
+        console.log(username);
       });
+    return () => unsubscribe();
   }, []);
 
   return (
     <div className="comment-block">
       <p>{commentUsername}</p>
       <p>{content}</p>
-      <p>{createdAt}</p>
+      {/* <p>{createdAt}</p> */}
     </div>
   );
 }
