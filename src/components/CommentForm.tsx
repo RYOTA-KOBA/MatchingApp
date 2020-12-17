@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { db, timestamp } from "../firebase";
+import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
-import { useHistory } from "react-router-dom";
 import Comment from "./Comment";
 
 //material ui
@@ -18,10 +17,8 @@ export default function CommentForm({ id }: any) {
   const [error, setError] = useState("");
   const [content, setContent] = useState("");
   const { currentUser, createComment }: any = useAuth();
-  const history = useHistory();
   const [open, setOpen] = React.useState(false);
   const [comment, setComment] = useState([]);
-  const [created, setCreated] = useState(false);
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === "clickaway") {
@@ -50,18 +47,14 @@ export default function CommentForm({ id }: any) {
     try {
       setError("");
       setLoading(true);
-      console.log("try");
       const uid = currentUser.uid;
       return createComment(id, content, uid);
     } catch {
       setError("投稿に失敗しました");
       setOpen(true);
-      console.log("catch");
     } finally {
-      setCreated(true);
       setLoading(false);
       setContent("");
-      console.log(content);
     }
   };
 
@@ -74,16 +67,13 @@ export default function CommentForm({ id }: any) {
       .orderBy("createdAt", "desc")
       .onSnapshot((snapshots) => {
         snapshots.docChanges().forEach((change) => {
-          const data = change.doc.data();
+          const data = change.doc.data({ serverTimestamps: "estimate" });
           const changeType = change.type;
-          //   const date = new Date(data.createdAt.seconds * 1000);
-          //   const Day = date.toLocaleDateString("ja-JP");
-          //   const Time = date.toLocaleTimeString("ja-JP");
+          const date = data.createdAt.toDate();
 
           switch (changeType) {
             case "added":
-              comments.push(data);
-              console.log(data);
+              comments.push({ ...data, date });
               break;
             case "modified":
               const index = comments.findIndex(
@@ -103,7 +93,7 @@ export default function CommentForm({ id }: any) {
         setComment(comments);
         return () => unsubscribe();
       });
-  }, [setComment]);
+  }, []);
 
   return (
     <>
