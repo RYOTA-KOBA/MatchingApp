@@ -153,8 +153,9 @@ export function AuthProvider({ children }: any) {
           .doc(postId)
           .collection("comments")
           .doc(id);
-        commentsRef.set({ id: id }, { merge: true });
+        await commentsRef.set({ id: id }, { merge: true });
       });
+    console.log("投稿成功");
   };
 
   const savePostToBookmark = async (savedPosts: any) => {

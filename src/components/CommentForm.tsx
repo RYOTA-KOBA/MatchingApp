@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import { db, timestamp } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
+import Comment from "./Comment";
 
 //material ui
 import Button from "@material-ui/core/Button";
@@ -19,6 +20,8 @@ export default function CommentForm({ id }: any) {
   const { currentUser, createComment }: any = useAuth();
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
+  const [comment, setComment] = useState([]);
+  const [created, setCreated] = useState(false);
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === "clickaway") {
@@ -44,18 +47,63 @@ export default function CommentForm({ id }: any) {
       return setError("200文字以内で入力してください"), setOpen(true);
     }
 
-    // db.collection("posts").doc(id).collection("comments").add;
     try {
       setError("");
       setLoading(true);
+      console.log("try");
       const uid = currentUser.uid;
       return createComment(id, content, uid);
     } catch {
       setError("投稿に失敗しました");
       setOpen(true);
+      console.log("catch");
+    } finally {
+      setCreated(true);
+      setLoading(false);
+      setContent("");
+      console.log(content);
     }
-    setLoading(false);
   };
+
+  useEffect(() => {
+    let comments: any = [];
+    const unsubscribe: any = db
+      .collection("posts")
+      .doc(id)
+      .collection("comments")
+      .orderBy("createdAt", "desc")
+      .onSnapshot((snapshots) => {
+        snapshots.docChanges().forEach((change) => {
+          const data = change.doc.data();
+          const changeType = change.type;
+          //   const date = new Date(data.createdAt.seconds * 1000);
+          //   const Day = date.toLocaleDateString("ja-JP");
+          //   const Time = date.toLocaleTimeString("ja-JP");
+
+          switch (changeType) {
+            case "added":
+              comments.push(data);
+              console.log(data);
+              break;
+            case "modified":
+              const index = comments.findIndex(
+                (comment: any) => comment.id === change.doc.id
+              );
+              comments[index] = comment;
+              break;
+            case "removed":
+              comments = comments.filter(
+                (comment: any) => comment.id !== change.doc.id
+              );
+              break;
+            default:
+              break;
+          }
+        });
+        setComment(comments);
+        return () => unsubscribe();
+      });
+  }, [setComment]);
 
   return (
     <>
@@ -66,6 +114,7 @@ export default function CommentForm({ id }: any) {
           id="content"
           placeholder="コメントを残す"
           onChange={inputContent}
+          value={content}
         ></textarea>
         <div className="comment-submit-wrapper">
           <Button
@@ -79,6 +128,15 @@ export default function CommentForm({ id }: any) {
           </Button>
         </div>
       </form>
+      {comment.map((comment: any) => (
+        <Comment
+          key={comment.id}
+          id={comment.id}
+          uid={comment.uid}
+          content={comment.content}
+          createdAt={comment.createdAt}
+        />
+      ))}
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error">
           {error}
