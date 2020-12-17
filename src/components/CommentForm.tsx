@@ -73,7 +73,8 @@ export default function CommentForm({ id }: any) {
 
           switch (changeType) {
             case "added":
-              comments.push({ ...data, date });
+              comments.push({ ...data, createdAt: date });
+              console.log(date);
               break;
             case "modified":
               const index = comments.findIndex(
@@ -118,13 +119,14 @@ export default function CommentForm({ id }: any) {
           </Button>
         </div>
       </form>
-      {comment.map((comment: any) => (
+      {/* {console.log(comment)} */}
+      {comment.map((commentItem: any) => (
         <Comment
-          key={comment.id}
-          id={comment.id}
-          uid={comment.uid}
-          content={comment.content}
-          createdAt={comment.createdAt}
+          key={commentItem.id}
+          id={commentItem.id}
+          uid={commentItem.uid}
+          content={commentItem.content}
+          createdAt={commentItem.createdAt}
         />
       ))}
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

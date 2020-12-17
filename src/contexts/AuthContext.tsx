@@ -155,7 +155,6 @@ export function AuthProvider({ children }: any) {
           .doc(id);
         await commentsRef.set({ id: id }, { merge: true });
       });
-    console.log("投稿成功");
   };
 
   const savePostToBookmark = async (savedPosts: any) => {
