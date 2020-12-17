@@ -39,6 +39,7 @@ export default function CommentForm({ id }: any) {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
     if (content === "") {
       return setError("コメントを入力してください"), setOpen(true);
     }
@@ -57,12 +58,10 @@ export default function CommentForm({ id }: any) {
       setOpen(true);
       console.log("catch");
     } finally {
-      return (
-        setCreated(true),
-        setLoading(false),
-        setContent(""),
-        console.log(content)
-      );
+      setCreated(true);
+      setLoading(false);
+      setContent("");
+      console.log(content);
     }
   };
 
@@ -104,7 +103,7 @@ export default function CommentForm({ id }: any) {
         setComment(comments);
         return () => unsubscribe();
       });
-  }, []);
+  }, [setComment]);
 
   return (
     <>
@@ -115,6 +114,7 @@ export default function CommentForm({ id }: any) {
           id="content"
           placeholder="コメントを残す"
           onChange={inputContent}
+          value={content}
         ></textarea>
         <div className="comment-submit-wrapper">
           <Button
