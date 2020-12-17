@@ -33,6 +33,7 @@ const useStyles = makeStyles({
   },
   threeDots: {
     float: "right",
+    margin: "16px",
     "&:focus": {
       outline: "none",
     },
@@ -168,42 +169,42 @@ const Post = ({ authorName, content, createdAt, title, id, uid }: any) => {
   return (
     <>
       <Card className={classes.root}>
+        {uid === currentUser.uid && (
+          <IconButton className={classes.threeDots} onClick={handleClick}>
+            <MoreVertIcon />
+          </IconButton>
+        )}
+        <Menu
+          anchorEl={anchorEl}
+          keepMounted
+          open={open}
+          onClose={handleClose}
+          PaperProps={{
+            style: {
+              width: "150px",
+            },
+          }}
+        >
+          <MenuItem
+            onClick={() => {
+              handleClose();
+            }}
+          >
+            <Link to={"/postedit/" + id} className={classes.editLink}>
+              編集する
+            </Link>
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              deletePost();
+              handleClose();
+            }}
+          >
+            削除する
+          </MenuItem>
+        </Menu>
         <Link to={"/detail/" + id} className={classes.cardWrapLink}>
           <CardContent style={{ paddingBottom: "0" }}>
-            {uid === currentUser.uid && (
-              <IconButton className={classes.threeDots} onClick={handleClick}>
-                <MoreVertIcon />
-              </IconButton>
-            )}
-            <Menu
-              anchorEl={anchorEl}
-              keepMounted
-              open={open}
-              onClose={handleClose}
-              PaperProps={{
-                style: {
-                  width: "150px",
-                },
-              }}
-            >
-              <MenuItem
-                onClick={() => {
-                  handleClose();
-                }}
-              >
-                <Link to={"/postedit/" + id} className={classes.editLink}>
-                  編集する
-                </Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  deletePost();
-                  handleClose();
-                }}
-              >
-                削除する
-              </MenuItem>
-            </Menu>
             <Typography variant="h5" component="h3">
               {title}
             </Typography>
@@ -232,19 +233,19 @@ const Post = ({ authorName, content, createdAt, title, id, uid }: any) => {
               </Button>
             </Link>
           </CardActions>
-          {saved === true ? (
-            <IconButton
-              className={classes.likeBtn}
-              onClick={() => removeBookmark(savedId)}
-            >
-              <BookmarkIcon />
-            </IconButton>
-          ) : (
-            <IconButton className={classes.likeBtn} onClick={savePost}>
-              <BookmarkBorderIcon />
-            </IconButton>
-          )}
         </Link>
+        {saved === true ? (
+          <IconButton
+            className={classes.likeBtn}
+            onClick={() => removeBookmark(savedId)}
+          >
+            <BookmarkIcon />
+          </IconButton>
+        ) : (
+          <IconButton className={classes.likeBtn} onClick={savePost}>
+            <BookmarkBorderIcon />
+          </IconButton>
+        )}
       </Card>
     </>
   );
