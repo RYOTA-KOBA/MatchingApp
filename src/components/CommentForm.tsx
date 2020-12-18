@@ -69,12 +69,10 @@ export default function CommentForm({ id }: any) {
         snapshots.docChanges().forEach((change) => {
           const data = change.doc.data({ serverTimestamps: "estimate" });
           const changeType = change.type;
-          const date = data.createdAt.toDate();
 
           switch (changeType) {
             case "added":
-              comments.push({ ...data, createdAt: date });
-              console.log(date);
+              comments.push(data);
               break;
             case "modified":
               const index = comments.findIndex(
@@ -92,8 +90,8 @@ export default function CommentForm({ id }: any) {
           }
         });
         setComment(comments);
-        return () => unsubscribe();
       });
+    return unsubscribe;
   }, []);
 
   return (
