@@ -97,15 +97,6 @@ export default function Comment({ id, uid, content, createdAt, postId }: any) {
       >
         <MenuItem
           onClick={() => {
-            handleClose();
-          }}
-        >
-          <Link to={"/postedit/" + id} className={classes.editLink}>
-            編集する
-          </Link>
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
             deleteComment();
             handleClose();
           }}
