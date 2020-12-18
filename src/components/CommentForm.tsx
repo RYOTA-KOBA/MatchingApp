@@ -125,6 +125,7 @@ export default function CommentForm({ id }: any) {
           uid={commentItem.uid}
           content={commentItem.content}
           createdAt={commentItem.createdAt}
+          postId={id}
         />
       ))}
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
