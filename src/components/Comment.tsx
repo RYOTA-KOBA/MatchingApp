@@ -3,10 +3,9 @@ import { db } from "../firebase";
 
 export default function Comment({ id, uid, content, createdAt }: any) {
   const [commentUsername, setCommentUsername] = useState();
-  // const [time, setTime] = useState();
+  const [time, setTime] = useState("");
 
   useEffect(() => {
-    console.log(createdAt);
     db.collection("users")
       .doc(uid)
       .get()
@@ -17,12 +16,20 @@ export default function Comment({ id, uid, content, createdAt }: any) {
       });
   }, []);
 
+  useEffect(() => {
+    const date = new Date(createdAt.seconds * 1000);
+    const Day = date.toLocaleDateString("ja-JP");
+    const Time = date.toLocaleTimeString("ja-JP");
+    const DayTime = Day + " " + Time;
+
+    setTime(DayTime);
+  }, []);
+
   return (
     <div className="comment-block">
       <p>{commentUsername}</p>
       <p>{content}</p>
-      <p>{createdAt}</p>
-      {/* {console.log(createdAt)} */}
+      <p>{time}</p>
     </div>
   );
 }
