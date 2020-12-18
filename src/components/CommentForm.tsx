@@ -64,7 +64,7 @@ export default function CommentForm({ id }: any) {
       .collection("posts")
       .doc(id)
       .collection("comments")
-      .orderBy("createdAt", "desc")
+      .orderBy("createdAt", "asc")
       .onSnapshot((snapshots) => {
         snapshots.docChanges().forEach((change) => {
           const data = change.doc.data({ serverTimestamps: "estimate" });
