@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Comment({ id, uid, content, createdAt }: any) {
+export default function Comment({ id, uid, content, createdAt, postId }: any) {
   const [commentUsername, setCommentUsername] = useState();
   const [time, setTime] = useState("");
   const { currentUser }: any = useAuth();
@@ -43,7 +43,19 @@ export default function Comment({ id, uid, content, createdAt }: any) {
     setAnchorEl(null);
   };
 
-  const deleteComment = () => {};
+  const deleteComment = () => {
+    db.collection("posts")
+      .doc(postId)
+      .collection("comments")
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("削除成功");
+      })
+      .catch(() => {
+        console.log("削除失敗");
+      });
+  };
 
   useEffect(() => {
     db.collection("users")
