@@ -1,9 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
+import { useAuth } from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
+
+//material ui
+import { makeStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+
+const useStyles = makeStyles({
+  threeDots: {
+    float: "right",
+    "&:focus": {
+      outline: "none",
+    },
+  },
+  editLink: {
+    color: "#000000DE",
+    "&:hover": {
+      textDecoration: "none",
+      color: "#000000DE",
+    },
+  },
+});
 
 export default function Comment({ id, uid, content, createdAt }: any) {
   const [commentUsername, setCommentUsername] = useState();
   const [time, setTime] = useState("");
+  const { currentUser }: any = useAuth();
+  const classes = useStyles();
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const deleteComment = () => {};
 
   useEffect(() => {
     db.collection("users")
@@ -27,6 +67,40 @@ export default function Comment({ id, uid, content, createdAt }: any) {
 
   return (
     <div className="comment-block">
+      {uid === currentUser.uid && (
+        <IconButton className={classes.threeDots} onClick={handleClick}>
+          <MoreVertIcon />
+        </IconButton>
+      )}
+      <Menu
+        anchorEl={anchorEl}
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            width: "150px",
+          },
+        }}
+      >
+        <MenuItem
+          onClick={() => {
+            handleClose();
+          }}
+        >
+          <Link to={"/postedit/" + id} className={classes.editLink}>
+            編集する
+          </Link>
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            deleteComment();
+            handleClose();
+          }}
+        >
+          削除する
+        </MenuItem>
+      </Menu>
       <p>{commentUsername}</p>
       <p>{content}</p>
       <p>{time}</p>
