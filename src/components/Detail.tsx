@@ -66,20 +66,12 @@ const useStyles = makeStyles({
   },
 });
 
-//パフォーマンステスト用
-// if (process.env.NODE_ENV !== 'production') {
-//     const {whyDidYouUpdate} = require('why-did-you-update');
-//     whyDidYouUpdate(React);
-// }
-
 export default function Detail() {
   const classes = useStyles();
   const path = window.location.href;
-  const history = useHistory();
   const id = path.split("/detail/")[1];
   const [postDetail, setPostDetail] = useState([]);
   const { setNowId, setNowPost, currentUser }: any = useAuth();
-  const [comment, setComment] = useState([]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -98,7 +90,7 @@ export default function Detail() {
       .delete()
       .then(() => {
         console.log("削除成功！！");
-        history.push("/");
+        window.location.reload();
       })
       .catch(() => console.log("削除失敗!!"));
   };
