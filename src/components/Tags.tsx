@@ -10,9 +10,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      //   width: "50%",
       maxWidth: 270,
       backgroundColor: theme.palette.background.paper,
+      borderRadius: "12px",
     },
   })
 );
@@ -33,6 +33,12 @@ export default function Tags() {
         </ListItem>
         <ListItem button onClick={() => isSelected("frontend")}>
           <ListItemText primary="#フロントエンド" id="frontend" />
+        </ListItem>
+        <ListItem button onClick={() => isSelected("infra")}>
+          <ListItemText primary="#インフラエンジニア" id="infra" />
+        </ListItem>
+        <ListItem button onClick={() => isSelected("designer")}>
+          <ListItemText primary="#デザイナー" id="designer" />
         </ListItem>
       </List>
     </>
