@@ -77,7 +77,7 @@ export default function Login() {
     [setPassword]
   );
 
-  async function handleSubmit(e: any) {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     setError("");
@@ -92,7 +92,7 @@ export default function Login() {
       .finally(() => {
         setLoading(false);
       });
-  }
+  };
 
   const onClickGuestButton = () => {
     setError("");
@@ -131,6 +131,7 @@ export default function Login() {
               value={email}
               inputRef={emailRef}
               onChange={inputEmail}
+              disabled={loading}
             />
             <TextField
               variant="outlined"
@@ -143,10 +144,12 @@ export default function Login() {
               value={password}
               inputRef={passwordRef}
               onChange={inputPassword}
+              disabled={loading}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
+              disabled={loading}
             />
             <Button
               type="submit"
@@ -172,7 +175,11 @@ export default function Login() {
           </form>
         </div>
       </Container>
-      <Button className={classes.guestLogin} onClick={onClickGuestButton}>
+      <Button
+        className={classes.guestLogin}
+        onClick={onClickGuestButton}
+        disabled={loading}
+      >
         ゲストユーザーとしてログイン
       </Button>
     </>
