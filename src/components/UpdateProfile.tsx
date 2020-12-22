@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     width: "600px",
     padding: "30px",
     paddingBottom: "0",
-    marginTop: "130px",
+    margin: "130px auto auto auto",
   },
   postFormTextField: {
     width: "100%",
