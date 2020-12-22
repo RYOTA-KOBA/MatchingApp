@@ -79,6 +79,7 @@ export default function HeaderRight() {
   const [userNameInitial, setUserNameInitial] = useState();
   const [error, setError] = useState("");
   const history = useHistory();
+  const guestUser_uid = process.env.REACT_APP_GUESTUSER_UID;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -158,15 +159,17 @@ export default function HeaderRight() {
             ダッシュボード
           </MenuItem>
         </Link>
-        <Link to="/update-profile" className={classes.dashboardLink}>
-          <MenuItem
-            onClick={() => {
-              handleClose();
-            }}
-          >
-            設定
-          </MenuItem>
-        </Link>
+        {currentUser.uid !== guestUser_uid && (
+          <Link to="/update-profile" className={classes.dashboardLink}>
+            <MenuItem
+              onClick={() => {
+                handleClose();
+              }}
+            >
+              設定
+            </MenuItem>
+          </Link>
+        )}
         <MenuItem
           onClick={() => {
             handleLogout();
