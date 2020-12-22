@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { db } from "../firebase";
 import MyPost from "./MyPost";
 
@@ -12,6 +11,12 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+
+function Alert(props: AlertProps) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles({
   root: {
@@ -56,7 +61,22 @@ export default function UserProfile() {
   });
   const path = window.location.href;
   const uid = path.split("/userprofile/")[1];
+  const history = useHistory();
   const guestUser_uid = process.env.REACT_APP_GUESTUSER_UID;
+  const [open, setOpen] = React.useState(false);
+  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const isNotGuest = () => {
+    if (currentUser.uid === guestUser_uid) {
+      return setError("ゲストユーザーは編集できません"), setOpen(true);
+    }
+    history.push("/update-profile");
+  };
 
   useEffect(() => {
     db.collection("users")
@@ -100,20 +120,21 @@ export default function UserProfile() {
       <Card className={classes.root}>
         <CardContent>
           <h2 className="text-center mb-4">プロフィール</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
           <Typography className={classes.pos} color="textSecondary">
             <strong>Email:</strong> {user.email}
             <br />
             <strong>名前:</strong> {user.username}
           </Typography>
         </CardContent>
-        {currentUser.uid === uid && currentUser.uid !== guestUser_uid && (
+        {currentUser.uid === uid && (
           <CardActions>
-            <Link to="/update-profile" className={classes.edit_btn}>
-              <Button variant="contained" className={classes.user_edit_btn}>
-                ユーザー設定
-              </Button>
-            </Link>
+            <Button
+              variant="contained"
+              className={classes.user_edit_btn}
+              onClick={isNotGuest}
+            >
+              ユーザー設定
+            </Button>
           </CardActions>
         )}
       </Card>
@@ -130,6 +151,11 @@ export default function UserProfile() {
           />
         ))}
       </div>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          {error}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

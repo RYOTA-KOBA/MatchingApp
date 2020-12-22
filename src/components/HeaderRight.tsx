@@ -12,7 +12,12 @@ import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+
+function Alert(props: AlertProps) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   headerRightButton: {
@@ -81,6 +86,17 @@ export default function HeaderRight() {
   const history = useHistory();
   const guestUser_uid = process.env.REACT_APP_GUESTUSER_UID;
 
+  const [errorOpen, setErrorOpen] = React.useState(false);
+  const handleCloseSnackbar = (
+    event?: React.SyntheticEvent,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setErrorOpen(false);
+  };
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -92,6 +108,13 @@ export default function HeaderRight() {
     setAnchorEl(null);
   };
 
+  const isNotGuest = () => {
+    if (currentUser.uid === guestUser_uid) {
+      return setError("ゲストユーザーは編集できません"), setErrorOpen(true);
+    }
+    history.push("/update-profile");
+  };
+
   const handleLogout = async () => {
     setError("");
 
@@ -100,6 +123,7 @@ export default function HeaderRight() {
       history.push("/login");
     } catch {
       setError("ログアウトに失敗しました");
+      setErrorOpen(true);
     }
   };
 
@@ -118,7 +142,6 @@ export default function HeaderRight() {
 
   return (
     <div className={classes.headerRight}>
-      {error && <Alert severity="error">{error}</Alert>}
       <Link to="/postform" className={classes.postFormLink}>
         <Button className={classes.postFormButton}>新規投稿</Button>
       </Link>
@@ -159,17 +182,14 @@ export default function HeaderRight() {
             ダッシュボード
           </MenuItem>
         </Link>
-        {currentUser.uid !== guestUser_uid && (
-          <Link to="/update-profile" className={classes.dashboardLink}>
-            <MenuItem
-              onClick={() => {
-                handleClose();
-              }}
-            >
-              設定
-            </MenuItem>
-          </Link>
-        )}
+        <MenuItem
+          onClick={() => {
+            isNotGuest();
+            handleClose();
+          }}
+        >
+          設定
+        </MenuItem>
         <MenuItem
           onClick={() => {
             handleLogout();
@@ -180,6 +200,15 @@ export default function HeaderRight() {
           ログアウト
         </MenuItem>
       </Menu>
+      <Snackbar
+        open={errorOpen}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert onClose={handleCloseSnackbar} severity="error">
+          {error}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
