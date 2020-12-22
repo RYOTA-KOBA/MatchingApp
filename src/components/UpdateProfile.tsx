@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "30px",
     paddingBottom: "0",
     margin: "130px auto auto auto",
+    borderRadius: "12px",
   },
   postFormTextField: {
     width: "100%",

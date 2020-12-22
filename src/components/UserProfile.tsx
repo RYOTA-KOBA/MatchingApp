@@ -17,6 +17,7 @@ const useStyles = makeStyles({
   root: {
     width: "100%",
     marginTop: "130px",
+    borderRadius: "12px",
   },
   bullet: {
     display: "inline-block",
@@ -55,6 +56,7 @@ export default function UserProfile() {
   });
   const path = window.location.href;
   const uid = path.split("/userprofile/")[1];
+  const guestUser_uid = process.env.REACT_APP_GUESTUSER_UID;
 
   useEffect(() => {
     db.collection("users")
@@ -105,7 +107,7 @@ export default function UserProfile() {
             <strong>名前:</strong> {user.username}
           </Typography>
         </CardContent>
-        {currentUser.uid === uid && (
+        {currentUser.uid === uid && currentUser.uid !== guestUser_uid && (
           <CardActions>
             <Link to="/update-profile" className={classes.edit_btn}>
               <Button variant="contained" className={classes.user_edit_btn}>
