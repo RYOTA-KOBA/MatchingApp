@@ -22,7 +22,7 @@ export default function TimeLineLink() {
   const history = useHistory();
 
   const isSelected = (timeline: string) => {
-    history.push(`${timeline}`);
+    history.push(`/${timeline}`);
   };
 
   return (
