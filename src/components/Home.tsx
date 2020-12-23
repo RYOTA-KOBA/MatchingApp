@@ -4,6 +4,7 @@ import Post from "./Post";
 import Tags from "./Tags";
 import { red } from "@material-ui/core/colors";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
+import TimeLineLink from "./TimeLineLink";
 
 const Home = () => {
   const [currentPost, setCurrentPost] = useState([]);
@@ -58,6 +59,7 @@ const Home = () => {
           &nbsp; Tags
         </h5>
         <Tags />
+        <TimeLineLink />
       </div>
       <div className="home-cardWith">
         <h3>Posts</h3>
