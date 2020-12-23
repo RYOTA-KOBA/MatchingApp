@@ -55,7 +55,6 @@ export default function PostEdit() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [currentPost, setCurrentPost] = useState([]);
-  const history = useHistory();
   const titleRef: any = useRef();
   const contentRef: any = useRef();
   const path = window.location.href;
@@ -89,12 +88,6 @@ export default function PostEdit() {
         const data = snapshot.data();
         setLoading(true);
         setError("");
-        console.log(
-          titleRef.current.value,
-          contentRef.current.value,
-          category,
-          data
-        );
         return editPost(
           titleRef.current.value,
           contentRef.current.value,
@@ -111,26 +104,17 @@ export default function PostEdit() {
       });
   };
 
-  const getPost = async () => {
+  useEffect(() => {
     let post: any = [];
-    await db
-      .collection("posts")
+    db.collection("posts")
       .doc(post_id)
       .get()
       .then((doc: any) => {
         const data = doc.data();
-        post.push({
-          title: data.title,
-          content: data.content,
-          id: post_id,
-        });
+        post.push(data);
       });
     setCurrentPost(post);
-  };
-
-  useEffect(() => {
-    getPost();
-  }, [getPost]);
+  }, []);
 
   return (
     <div className="card-maxWith">
