@@ -10,8 +10,16 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Alert from "@material-ui/lab/Alert";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
+  formControl: {
+    minWidth: 250,
+    marginBottom: "20px",
+  },
   card: {
     width: "600px",
     padding: "30px",
@@ -53,6 +61,11 @@ export default function PostEdit() {
   const path = window.location.href;
   const post_id = path.split("/postedit/")[1];
   const { editPost }: any = useAuth();
+  const [category, setCategory] = useState("");
+
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setCategory(event.target.value as string);
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -76,11 +89,22 @@ export default function PostEdit() {
         const data = snapshot.data();
         setLoading(true);
         setError("");
-        return editPost(titleRef.current.value, contentRef.current.value, data);
+        console.log(
+          titleRef.current.value,
+          contentRef.current.value,
+          category,
+          data
+        );
+        return editPost(
+          titleRef.current.value,
+          contentRef.current.value,
+          category,
+          data
+        );
       })
       .catch((error: any) => {
         console.log(error);
-        setError("failed!!");
+        setError("投稿の編集に失敗しました。");
       })
       .finally(() => {
         setLoading(false);
@@ -141,6 +165,26 @@ export default function PostEdit() {
                   required
                   defaultValue={post.content}
                 />
+                <br />
+                <FormControl className={classes.formControl}>
+                  <InputLabel id="category-select-label">カテゴリー</InputLabel>
+                  <Select
+                    labelId="category-select-label"
+                    id="category-select"
+                    value={category}
+                    onChange={handleChange}
+                  >
+                    <MenuItem value="">None</MenuItem>
+                    <MenuItem value={"frontend"}>
+                      フロントエンドエンジニア
+                    </MenuItem>
+                    <MenuItem value={"backend"}>
+                      バックエンドエンジニア
+                    </MenuItem>
+                    <MenuItem value={"infra"}>インフラエンジニア</MenuItem>
+                    <MenuItem value={"designer"}>デザイナー</MenuItem>
+                  </Select>
+                </FormControl>
                 <br />
                 <Button
                   variant="contained"
