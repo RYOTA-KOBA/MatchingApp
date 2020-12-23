@@ -50,6 +50,30 @@ profile
   width: 507px;
 }
 
+.follow_btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+.follow_btn-wrapper .follow_btn-same {
+  margin-right: 10px;
+  border-color: #1976d2;
+  font-weight: 600;
+}
+.follow_btn-wrapper .following_btn:focus {
+  outline: none;
+}
+.follow_btn-wrapper .following_btn:hover {
+  background-color: #1976d2;
+  opacity: 0.7;
+}
+.follow_btn-wrapper .follow_btn {
+  color: #1976d2;
+}
+.follow_btn-wrapper .following_btn {
+  background-color: #1976d2;
+  color: #ffffff;
+}
+
 /**************
 comment
 ******************/
