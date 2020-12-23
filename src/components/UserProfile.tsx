@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 import { db } from "../firebase";
 import MyPost from "./MyPost";
+import FollowButton from "./FollowButton";
 
 //materialUI
 import { makeStyles } from "@material-ui/core/styles";
@@ -36,6 +37,11 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
     marginTop: 30,
+  },
+  followbtn: {
+    "&:focus": {
+      outline: "none",
+    },
   },
   edit_btn: {
     "&:hover": {
@@ -125,6 +131,7 @@ export default function UserProfile() {
             <br />
             <strong>名前:</strong> {user.username}
           </Typography>
+          <FollowButton />
         </CardContent>
         {currentUser.uid === uid && (
           <CardActions>
