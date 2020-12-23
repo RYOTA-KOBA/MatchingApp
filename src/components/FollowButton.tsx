@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../";
 
 // material ui
 import Button from "@material-ui/core/Button";
