@@ -120,7 +120,12 @@ export function AuthProvider({ children }: any) {
     setCurrentPost(post[0]);
   };
 
-  const editPost = (title: any, content: any, data: any) => {
+  const editPost = (
+    title: string,
+    content: string,
+    category: string,
+    data: any
+  ) => {
     const id = data.id;
     db.collection("posts")
       .doc(id)
@@ -128,6 +133,7 @@ export function AuthProvider({ children }: any) {
         {
           title: title,
           content: content,
+          category,
         },
         { merge: true }
       )
