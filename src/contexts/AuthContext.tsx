@@ -163,6 +163,24 @@ export function AuthProvider({ children }: any) {
       });
   };
 
+  const follow = (following_uid: string, followed_uid: string) => {
+    db.collection("follows")
+      .add({
+        following_uid: following_uid,
+        followed_uid: followed_uid,
+      })
+      .then(async (result: any) => {
+        const id = result.id;
+        console.log(id);
+        const followsRef = db.collection("follows").doc(id);
+        await followsRef.set({ id: id }, { merge: true });
+      });
+  };
+
+  const unFollow = (followsId: string) => {
+    db.collection("follows").doc(followsId).delete();
+  };
+
   const savePostToBookmark = async (savedPosts: any) => {
     const uid = currentUser.uid;
     const saveRef = db
@@ -218,6 +236,8 @@ export function AuthProvider({ children }: any) {
     createPost,
     editPost,
     createComment,
+    follow,
+    unFollow,
     setNowId,
     currentId,
     setNowPost,
