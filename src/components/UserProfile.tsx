@@ -70,6 +70,7 @@ export default function UserProfile() {
   const history = useHistory();
   const guestUser_uid = process.env.REACT_APP_GUESTUSER_UID;
   const [isFollowing, setIsFollowing] = useState(false);
+  const [followsId, setFollowsId] = useState();
   const [open, setOpen] = React.useState(false);
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === "clickaway") {
@@ -130,6 +131,7 @@ export default function UserProfile() {
           const data = doc.data();
           if (data.followed_uid === uid) {
             setIsFollowing(true);
+            setFollowsId(data.id);
           } else {
             setIsFollowing(false);
           }
@@ -147,7 +149,11 @@ export default function UserProfile() {
             <br />
             <strong>名前:</strong> {user.username}
           </Typography>
-          <FollowButton uid={uid} isFollowing={isFollowing} />
+          <FollowButton
+            uid={uid}
+            isFollowing={isFollowing}
+            followsId={followsId}
+          />
         </CardContent>
         {currentUser.uid === uid && (
           <CardActions>
