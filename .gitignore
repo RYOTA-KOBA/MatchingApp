@@ -2,6 +2,8 @@
 
 .env
 /firebase-product-branding
+firestore-debug.log
+ui-debug.log
 
 # dependencies
 /node_modules
