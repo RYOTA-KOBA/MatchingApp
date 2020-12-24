@@ -131,7 +131,7 @@ export default function UserProfile() {
             <br />
             <strong>名前:</strong> {user.username}
           </Typography>
-          <FollowButton />
+          <FollowButton uid={uid} />
         </CardContent>
         {currentUser.uid === uid && (
           <CardActions>
