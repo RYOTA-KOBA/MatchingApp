@@ -69,6 +69,7 @@ export default function UserProfile() {
   const uid = path.split("/userprofile/")[1];
   const history = useHistory();
   const guestUser_uid = process.env.REACT_APP_GUESTUSER_UID;
+  const [isFollowing, setIsFollowing] = useState(false);
   const [open, setOpen] = React.useState(false);
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === "clickaway") {
@@ -91,7 +92,6 @@ export default function UserProfile() {
       .then((snapshot: any) => {
         const data = snapshot.data();
         setUser(data);
-        console.log(data);
       });
   }, []);
 
@@ -121,6 +121,22 @@ export default function UserProfile() {
       });
   }, []);
 
+  useEffect(() => {
+    db.collection("follows")
+      .where("following_uid", "==", currentUser.uid)
+      .get()
+      .then((snapshots) => {
+        snapshots.docs.forEach((doc) => {
+          const data = doc.data();
+          if (data.followed_uid === uid) {
+            setIsFollowing(true);
+          } else {
+            setIsFollowing(false);
+          }
+        });
+      });
+  }, [setIsFollowing]);
+
   return (
     <div className="card-maxWith">
       <Card className={classes.root}>
@@ -131,7 +147,7 @@ export default function UserProfile() {
             <br />
             <strong>名前:</strong> {user.username}
           </Typography>
-          <FollowButton uid={uid} />
+          <FollowButton uid={uid} isFollowing={isFollowing} />
         </CardContent>
         {currentUser.uid === uid && (
           <CardActions>

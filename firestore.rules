@@ -81,6 +81,13 @@ service cloud.firestore {
       && "createdAt" in comment && comment.createdAt is timestamp
     }
 
+    function isValidfollowCreate(follow) {
+      return follow.size() == 3
+      && "id" in follow && follow.id is string
+      && "following_uid" in follow && follow.following_uid is string
+      && "followed_uid" in follow && follow.followed_uid is string
+    }
+
     match /users/{userId} {  
       allow get: if isUserAuthenticated(userId) || isAnyAuthenticated();
       allow create: if isUserAuthenticated(userId) && isValidUserCreate(request.resource.data, userId); 
@@ -106,6 +113,12 @@ service cloud.firestore {
         allow update: if isUserAuthenticated(request.auth.uid) && isValidCommentUpdate(request.resource.data);
         allow delete: if isUserAuthenticated(request.auth.uid);
       }
+    }
+
+    match /follows/{followId} {
+      allow read: if isUserAuthenticated(request.auth.uid);
+      allow create: if isUserAuthenticated(request.auth.uid) && isValidfollowCreate(request.resource.data);
+      allow delete: if isUserAuthenticated(request.auth.uid);
     }
   }
 }
