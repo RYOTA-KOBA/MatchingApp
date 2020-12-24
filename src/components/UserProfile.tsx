@@ -69,7 +69,7 @@ export default function UserProfile() {
   const uid = path.split("/userprofile/")[1];
   const history = useHistory();
   const guestUser_uid = process.env.REACT_APP_GUESTUSER_UID;
-  const [isFollowing, setIsFollowing] = useState(false);
+  const [followsData, setFollowsData] = useState([]);
   const [followsId, setFollowsId] = useState();
   const [open, setOpen] = React.useState(false);
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
@@ -123,21 +123,20 @@ export default function UserProfile() {
   }, []);
 
   useEffect(() => {
-    db.collection("follows")
+    const followingData: any = [];
+    const unsubscribe = db
+      .collection("follows")
       .where("following_uid", "==", currentUser.uid)
-      .get()
-      .then((snapshots) => {
-        snapshots.docs.forEach((doc) => {
+      .where("followed_uid", "==", uid)
+      .onSnapshot((snapshots) => {
+        snapshots.forEach((doc) => {
           const data = doc.data();
-          if (data.followed_uid === uid) {
-            setIsFollowing(true);
-            setFollowsId(data.id);
-          } else {
-            setIsFollowing(false);
-          }
+          followingData.push(data);
         });
+        setFollowsData(followingData);
       });
-  }, [setIsFollowing]);
+    return unsubscribe;
+  }, [followsData]);
 
   return (
     <div className="card-maxWith">
@@ -149,11 +148,20 @@ export default function UserProfile() {
             <br />
             <strong>名前:</strong> {user.username}
           </Typography>
-          <FollowButton
-            uid={uid}
-            isFollowing={isFollowing}
-            followsId={followsId}
-          />
+          {console.log(followsData)}
+          {followsData.some((data: any) => data.id) ? (
+            followsData.map((data: any) => (
+              <FollowButton
+                key={data.id}
+                uid={uid}
+                id={data.id}
+                following_uid={data.following_uid}
+                followed_uid={data.followed_uid}
+              />
+            ))
+          ) : (
+            <FollowButton uid={uid} />
+          )}
         </CardContent>
         {currentUser.uid === uid && (
           <CardActions>
