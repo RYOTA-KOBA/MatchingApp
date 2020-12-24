@@ -82,7 +82,13 @@ service cloud.firestore {
     }
 
     function isValidfollowCreate(follow) {
-      return follow.size() == 3
+      return follow.size() == 2 
+      && "following_uid" in follow && follow.following_uid is string
+      && "followed_uid" in follow && follow.followed_uid is string
+    }
+
+    function isValidfollowUpdate(follow) {
+      return follow.size() == 3 
       && "id" in follow && follow.id is string
       && "following_uid" in follow && follow.following_uid is string
       && "followed_uid" in follow && follow.followed_uid is string
@@ -118,6 +124,7 @@ service cloud.firestore {
     match /follows/{followId} {
       allow read: if isUserAuthenticated(request.auth.uid);
       allow create: if isUserAuthenticated(request.auth.uid) && isValidfollowCreate(request.resource.data);
+      allow update: if isUserAuthenticated(request.auth.uid) && isValidfollowUpdate(request.resource.data);
       allow delete: if isUserAuthenticated(request.auth.uid);
     }
   }
