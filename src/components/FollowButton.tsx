@@ -4,18 +4,31 @@ import { useAuth } from "../contexts/AuthContext";
 // material ui
 import Button from "@material-ui/core/Button";
 
-export default function FollowButton({ uid, isFollowing, followsId }: any) {
+export default function FollowButton({
+  id,
+  uid,
+  following_uid,
+  followed_uid,
+}: any) {
   const { currentUser, follow, unFollow }: any = useAuth();
-  const [following, setFollowing] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
 
-  // 確認用(後で消す!)
   const handleClick = () => {
     if (isFollowing === true) {
-      return unFollow(followsId);
+      return unFollow(id);
     } else {
       return follow(currentUser.uid, uid);
     }
   };
+
+  useEffect(() => {
+    // console.log(followsData);
+    if (id) {
+      setIsFollowing(true);
+    } else {
+      setIsFollowing(false);
+    }
+  }, [isFollowing]);
 
   return (
     <div className="follow_btn-wrapper">
