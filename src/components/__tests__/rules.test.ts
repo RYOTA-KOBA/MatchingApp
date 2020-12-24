@@ -354,6 +354,68 @@ describe("firestore security test", () => {
       await firebase.assertFails(ref.update({ createdAt: 111 }));
     });
   });
+
+  describe("follows読み書きテスト", () => {
+    it("認証済みユーザーならフォロー可能", async () => {
+      const firestore = getAuthFirestore({ uid: "user" });
+      const ref = firestore.collection("follows").doc("follow");
+
+      await firebase.assertSucceeds(
+        ref.set({
+          id: "follow1",
+          following_uid: "following",
+          followed_uid: "followed",
+        })
+      );
+    });
+
+    it("認証済みユーザーであれば全てのフォロー情報にアクセス可能", async () => {
+      const firestore = getAuthFirestore({ uid: "user" });
+      const ref = firestore.collection("follows").doc("follow");
+
+      await firebase.assertSucceeds(ref.get());
+    });
+  });
+
+  describe("followsのスキーマテスト", () => {
+    it("正しくないスキーマの場合はフォローできない", async () => {
+      const firestore = getAuthFirestore({ uid: "user" });
+      const ref = firestore.collection("follows").doc("follow");
+
+      // 想定外のプロパティ
+      await firebase.assertFails(
+        ref.set({
+          id: "follow1",
+          following_uid: "following",
+          followed_uid: "followed",
+          failProp: "こんにちは",
+        })
+      );
+
+      // 型が違う場合
+      await firebase.assertFails(
+        ref.set({
+          id: 10,
+          following_uid: "following",
+          followed_uid: "followed",
+        })
+      );
+      await firebase.assertFails(
+        ref.set({
+          id: "following",
+          following_uid: 10,
+          followed_uid: "followed",
+        })
+      );
+      await firebase.assertFails(
+        ref.set({
+          id: "following",
+          following_uid: "following",
+          followed_uid: 10,
+        })
+      );
+    });
+  });
 });
 
 // firebase emulators:start --only firestore
