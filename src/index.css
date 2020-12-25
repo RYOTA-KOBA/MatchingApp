@@ -49,7 +49,25 @@ profile
 .home-cardWith {
   width: 507px;
 }
-
+.userProfile-name {
+  color: #000000;
+}
+.userProfile-intro {
+  font-size: 0.9em;
+  margin-top: 2em;
+}
+.content_txt-wrapper {
+  margin-left: 1em;
+  margin-top: 1em;
+}
+.user_btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1em;
+}
+.user_btn-inner {
+  margin-right: 1em;
+}
 .follow_btn-wrapper {
   display: flex;
   justify-content: flex-end;
@@ -72,6 +90,14 @@ profile
 .follow_btn-wrapper .following_btn {
   background-color: #1976d2;
   color: #ffffff;
+}
+.follower-number {
+  margin-left: 0.3em;
+  color: #000000;
+}
+.follower-text {
+  color: #0000008a;
+  font-size: 14px;
 }
 
 /**************

@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import SettingsIcon from "@material-ui/icons/Settings";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -24,6 +25,10 @@ const useStyles = makeStyles({
     width: "100%",
     marginTop: "130px",
     borderRadius: "12px",
+  },
+  content_wrapper: {
+    display: "flex",
+    justifyContent: "space-between",
   },
   bullet: {
     display: "inline-block",
@@ -36,7 +41,6 @@ const useStyles = makeStyles({
   },
   pos: {
     marginBottom: 12,
-    marginTop: 30,
   },
   followbtn: {
     "&:focus": {
@@ -53,6 +57,8 @@ const useStyles = makeStyles({
       outline: "none",
     },
     fontWeight: "bold",
+    fontSize: ".8em",
+    padding: ".5em 1em",
   },
 });
 
@@ -70,7 +76,7 @@ export default function UserProfile() {
   const history = useHistory();
   const guestUser_uid = process.env.REACT_APP_GUESTUSER_UID;
   const [followsData, setFollowsData] = useState([]);
-  const [followsId, setFollowsId] = useState();
+  const [followers, setFollowers] = useState(0);
   const [open, setOpen] = React.useState(false);
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === "clickaway") {
@@ -138,42 +144,65 @@ export default function UserProfile() {
     return unsubscribe;
   }, [followsData]);
 
+  useEffect(() => {
+    const unsubscribe = db
+      .collection("follows")
+      .where("followed_uid", "==", uid)
+      .onSnapshot((snapshots) => {
+        const numOfFollow = snapshots.size;
+        setFollowers(numOfFollow);
+      });
+    return unsubscribe;
+  }, []);
+
   return (
     <div className="card-maxWith">
-      <Card className={classes.root}>
-        <CardContent>
-          <h2 className="text-center mb-4">プロフィール</h2>
-          <Typography className={classes.pos} color="textSecondary">
-            <strong>Email:</strong> {user.email}
-            <br />
-            <strong>名前:</strong> {user.username}
-          </Typography>
-          {console.log(followsData)}
-          {followsData.some((data: any) => data.id) ? (
-            followsData.map((data: any) => (
-              <FollowButton
-                key={data.id}
-                uid={uid}
-                id={data.id}
-                following_uid={data.following_uid}
-                followed_uid={data.followed_uid}
-              />
-            ))
-          ) : (
-            <FollowButton uid={uid} />
-          )}
+      <Card className={classes.root} variant="outlined">
+        <CardContent className={classes.content_wrapper}>
+          <div className="content_txt-wrapper">
+            <Typography className={classes.pos} color="textSecondary">
+              <h4 className="userProfile-name">{user.username}</h4>
+            </Typography>
+            <Typography>
+              <p className="userProfile-intro">
+                ここに自己紹介が入ります。ここに自己紹介が入ります。ここに自己紹介が入ります。
+              </p>
+            </Typography>
+            <Typography>
+              <strong className="follower-text">
+                Followers<span className="follower-number">{followers}</span>
+              </strong>
+            </Typography>
+          </div>
+          <div className="user_btn-wrapper">
+            <div className="user_btn-inner">
+              {currentUser.uid === uid && (
+                <Button
+                  variant="contained"
+                  className={classes.user_edit_btn}
+                  onClick={isNotGuest}
+                  startIcon={<SettingsIcon />}
+                >
+                  Edit
+                </Button>
+              )}
+              {console.log(followsData)}
+              {followsData.some((data: any) => data.id) ? (
+                followsData.map((data: any) => (
+                  <FollowButton
+                    key={data.id}
+                    uid={uid}
+                    id={data.id}
+                    following_uid={data.following_uid}
+                    followed_uid={data.followed_uid}
+                  />
+                ))
+              ) : (
+                <FollowButton uid={uid} />
+              )}
+            </div>
+          </div>
         </CardContent>
-        {currentUser.uid === uid && (
-          <CardActions>
-            <Button
-              variant="contained"
-              className={classes.user_edit_btn}
-              onClick={isNotGuest}
-            >
-              ユーザー設定
-            </Button>
-          </CardActions>
-        )}
       </Card>
       <div>
         {post.map((post: any) => (

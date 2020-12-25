@@ -40,6 +40,7 @@ export default function FollowButton({
             (isFollowing ? "following_btn" : "follow_btn")
           }
           variant="outlined"
+          size="small"
           onClick={handleClick}
         >
           {isFollowing ? "FOLLOWING" : "FOLLOW"}
