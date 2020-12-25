@@ -70,7 +70,8 @@ export default function UserProfile() {
   const history = useHistory();
   const guestUser_uid = process.env.REACT_APP_GUESTUSER_UID;
   const [followsData, setFollowsData] = useState([]);
-  const [followsId, setFollowsId] = useState();
+  const [followers, setFollowers] = useState(0);
+  const [followings, setFollowings] = useState(0);
   const [open, setOpen] = React.useState(false);
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === "clickaway") {
@@ -138,6 +139,28 @@ export default function UserProfile() {
     return unsubscribe;
   }, [followsData]);
 
+  useEffect(() => {
+    const unsubscribe = db
+      .collection("follows")
+      .where("followed_uid", "==", uid)
+      .onSnapshot((snapshots) => {
+        const numOfFollow = snapshots.size;
+        setFollowers(numOfFollow);
+      });
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = db
+      .collection("follows")
+      .where("following_uid", "==", uid)
+      .onSnapshot((snapshots) => {
+        const numOfFollowing = snapshots.size;
+        setFollowings(numOfFollowing);
+      });
+    return unsubscribe;
+  }, []);
+
   return (
     <div className="card-maxWith">
       <Card className={classes.root}>
@@ -148,6 +171,8 @@ export default function UserProfile() {
             <br />
             <strong>名前:</strong> {user.username}
           </Typography>
+          <p>follower &nbsp; {followers}</p>
+          <p>following &nbsp; {followings}</p>
           {console.log(followsData)}
           {followsData.some((data: any) => data.id) ? (
             followsData.map((data: any) => (
