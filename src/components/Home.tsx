@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
+import { useAuth } from "../contexts/AuthContext";
 import Post from "./Post";
 import Tags from "./Tags";
 import { red } from "@material-ui/core/colors";
@@ -8,18 +9,33 @@ import TimeLineLink from "./TimeLineLink";
 
 const Home = () => {
   const [currentPost, setCurrentPost] = useState([]);
+  // const [followedUid, setFollowedUid] = useState();
+  const { followedUid, getFollowedUid }: any = useAuth();
   const query = window.location.search;
   const category = /^\?category=/.test(query)
     ? query.split("?category=")[1]
     : "";
+  const following_uid = /^\?timeline=/.test(query)
+    ? query.split("?timeline=")[1]
+    : "";
 
   useEffect(() => {
-    getPosts(category);
+    const f = async () => {
+      await getFollowedUid(following_uid);
+      console.log(...followedUid);
+      getPosts(category, followedUid);
+    };
+    f();
   }, [query]);
 
-  const getPosts = async (category: any) => {
+  const getPosts = async (category: any, followedUid: any) => {
     let query = db.collection("posts").orderBy("createdAt", "desc");
     query = category !== "" ? query.where("category", "==", category) : query;
+    console.log([...followedUid]);
+    query =
+      following_uid !== ""
+        ? query.where("uid", "in", ["", ...followedUid])
+        : query;
 
     let posts: any = [];
     await query.get().then((snapshot: any) => {

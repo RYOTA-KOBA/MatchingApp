@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 // material ui
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
@@ -27,15 +28,16 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function TimeLineLink() {
   const classes = useStyles();
   const history = useHistory();
+  const { currentUser }: any = useAuth();
 
-  const isSelected = (timeline: string) => {
-    history.push(`/${timeline}`);
+  const isSelected = (userId: string) => {
+    history.push(`/?timeline=${userId}`);
   };
 
   return (
     <>
       <List className={classes.root} aria-label="contacts">
-        <ListItem button onClick={() => isSelected("timeline")}>
+        <ListItem button onClick={() => isSelected(currentUser.uid)}>
           <RssFeedIcon className={classes.feedicon} />
           <ListItemText primary="タイムライン" id="timeline" />
         </ListItem>
