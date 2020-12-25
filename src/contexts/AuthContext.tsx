@@ -19,6 +19,7 @@ export function AuthProvider({ children }: any) {
   const [currentId, setCurrentId] = useState();
   const [defUsername, setDefUsername] = useState("");
   const [loading, setLoading] = useState(true);
+  const [followedUid, setFollowedUid] = useState([]);
   const history = useHistory();
 
   async function signup(username: any, email: any, password: any) {
@@ -214,6 +215,20 @@ export function AuthProvider({ children }: any) {
       });
   };
 
+  const getFollowedUid = (uid: string) => {
+    const followedArray: any = [];
+    db.collection("follows")
+      .where("following_uid", "==", uid)
+      .get()
+      .then((snapshots) => {
+        snapshots.docs.forEach((doc) => {
+          const followed_uid = doc.data().followed_uid;
+          followedArray.push(followed_uid);
+          setFollowedUid(followedArray);
+        });
+      });
+  };
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: any) => {
       setCurrentUser(user);
@@ -245,6 +260,8 @@ export function AuthProvider({ children }: any) {
     savePostToBookmark,
     removePostFromBookmark,
     defUsername,
+    getFollowedUid,
+    followedUid,
   };
 
   return (
