@@ -101,6 +101,18 @@ profile
 }
 
 /**************
+post
+******************/
+.post_card-head {
+  display: flex;
+  justify-content: space-between;
+}
+.post_card-head-left {
+  display: flex;
+  align-items: center;
+}
+
+/**************
 comment
 ******************/
 .comments-title {
