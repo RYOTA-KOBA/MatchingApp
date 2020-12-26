@@ -16,6 +16,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles({
   root: {
@@ -30,6 +31,9 @@ const useStyles = makeStyles({
     "&:hover": {
       textDecoration: "none",
     },
+  },
+  avatar: {
+    margin: "20px",
   },
   threeDots: {
     float: "right",
@@ -54,8 +58,10 @@ const useStyles = makeStyles({
     fontSize: 14,
   },
   pos: {
+    display: "flex",
     fontSize: "14px",
-    marginTop: "8px",
+    flexDirection: "column",
+    flexWrap: "wrap",
   },
   usernameLink: {
     color: "#0000008A",
@@ -67,11 +73,12 @@ const useStyles = makeStyles({
   contentText: {
     overflow: "hidden",
     lineHeight: "1.5",
-    maxHeight: "3em",
+    maxHeight: "1.5em",
     marginTop: "8px",
   },
   detailBtnWrap: {
     float: "left",
+    padding: "10px",
   },
   detailLink: {
     "&:hover": {
@@ -169,45 +176,9 @@ const Post = ({ authorName, content, createdAt, title, id, uid }: any) => {
   return (
     <>
       <Card className={classes.root}>
-        {uid === currentUser.uid && (
-          <IconButton className={classes.threeDots} onClick={handleClick}>
-            <MoreVertIcon />
-          </IconButton>
-        )}
-        <Menu
-          anchorEl={anchorEl}
-          keepMounted
-          open={open}
-          onClose={handleClose}
-          PaperProps={{
-            style: {
-              width: "150px",
-            },
-          }}
-        >
-          <MenuItem
-            onClick={() => {
-              handleClose();
-            }}
-          >
-            <Link to={"/postedit/" + id} className={classes.editLink}>
-              編集する
-            </Link>
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              deletePost();
-              handleClose();
-            }}
-          >
-            削除する
-          </MenuItem>
-        </Menu>
-        <Link to={"/detail/" + id} className={classes.cardWrapLink}>
-          <CardContent style={{ paddingBottom: "0" }}>
-            <Typography variant="h5" component="h3">
-              {title}
-            </Typography>
+        <div className="post_card-head">
+          <div className="post_card-head-left">
+            <Avatar className={classes.avatar} />
             <Typography className={classes.pos} color="textSecondary">
               <Link
                 color="textSecondary"
@@ -216,7 +187,48 @@ const Post = ({ authorName, content, createdAt, title, id, uid }: any) => {
               >
                 {authorName}
               </Link>
-              {"・" + createdAt}
+              {createdAt}
+            </Typography>
+          </div>
+          {uid === currentUser.uid && (
+            <IconButton className={classes.threeDots} onClick={handleClick}>
+              <MoreVertIcon />
+            </IconButton>
+          )}
+          <Menu
+            anchorEl={anchorEl}
+            keepMounted
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              style: {
+                width: "150px",
+              },
+            }}
+          >
+            <MenuItem
+              onClick={() => {
+                handleClose();
+              }}
+            >
+              <Link to={"/postedit/" + id} className={classes.editLink}>
+                編集する
+              </Link>
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                deletePost();
+                handleClose();
+              }}
+            >
+              削除する
+            </MenuItem>
+          </Menu>
+        </div>
+        <Link to={"/detail/" + id} className={classes.cardWrapLink}>
+          <CardContent style={{ paddingBottom: "0", paddingTop: "0" }}>
+            <Typography variant="h5" component="h3">
+              {title}
             </Typography>
             <Typography
               className={classes.contentText}
