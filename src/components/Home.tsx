@@ -26,7 +26,7 @@ const Home = () => {
       getPosts(category, followedUid);
     };
     f();
-  }, [query]);
+  }, [query, getFollowedUid]);
 
   const getPosts = async (category: any, followedUid: any) => {
     let query = db.collection("posts").orderBy("createdAt", "desc");
