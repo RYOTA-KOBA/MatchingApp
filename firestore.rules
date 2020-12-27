@@ -1,8 +1,131 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write;
+
+    function isAnyAuthenticated() { 
+      return request.auth != null;
+    }
+
+    function isUserAuthenticated(userId) { 
+      return isAnyAuthenticated() && userId == request.auth.uid;
+    }
+
+    function isValidUserCreate(user, targetUserId) {
+      return user.size() == 3
+      && 'email' in user && user.email is string
+      && 'username' in user && user.username is string
+      && 'uid' in user && user.uid is string && user.uid == targetUserId;
+    }
+
+    function isValidUserUpdate(user, targetUserId) {
+      return user.size() == 3
+      && 'email' in user && user.email is string
+      && 'username' in user && user.username is string
+      && 'uid' in user && user.uid is string && user.uid == targetUserId;
+    }
+
+    function isValidBookmarkAdd(bookmark) {
+      return bookmark.size() == 6
+      && 'authorName' in bookmark && bookmark.authorName is string && bookmark.authorName.size() > 0
+      && 'content' in bookmark && bookmark.content is string && bookmark.content.size() > 0
+      && 'createdAt' in bookmark && bookmark.createdAt is string
+      && 'id' in bookmark && bookmark.id is string
+      && 'saveId' in bookmark && bookmark.saveId is string
+      && 'title' in bookmark && bookmark.title is string && bookmark.title.size() > 0
+    }
+
+    function isValidBookmarkUpdate(bookmark) {
+      return bookmark.size() == 6
+      && 'authorName' in bookmark && bookmark.authorName is string && bookmark.authorName.size() > 0
+      && 'content' in bookmark && bookmark.content is string && bookmark.content.size() > 0
+      && 'createdAt' in bookmark && bookmark.createdAt is string
+      && bookmark.createdAt == resource.data.createdAt
+      && 'id' in bookmark && bookmark.id is string
+      && 'saveId' in bookmark && bookmark.saveId is string
+      && 'title' in bookmark && bookmark.title is string && bookmark.title.size() > 0
+    }
+
+    function isValidPostCreate(post) {
+      return post.size() == 6
+      && 'authorName' in post && post.authorName is string && post.authorName.size() > 0
+      && 'content' in post && post.content is string && post.content.size() > 0
+      && 'createdAt' in post && post.createdAt is timestamp
+      && 'category' in post && post.category is string
+      && 'uid' in post && post.uid is string
+      && 'title' in post && post.title is string && post.title.size() > 0 && post.title.size() <= 42
+    }
+
+    function isValidPostUpdate(post) {
+      return post.size() == 7
+      && 'authorName' in post && post.authorName is string && post.authorName.size() > 0
+      && 'content' in post && post.content is string && post.content.size() > 0
+      && 'createdAt' in post && post.createdAt is timestamp
+      && 'category' in post && post.category is string
+      && 'id' in post && post.id is string
+      && 'uid' in post && post.uid is string
+      && 'title' in post && post.title is string && post.title.size() > 0 && post.title.size() <= 42
+    }
+
+    function isValidCommentCreate(comment) {
+      return comment.size() == 3
+      && "uid" in comment && comment.uid is string
+      && "content" in comment && comment.content is string && comment.content.size() <= 200
+      && "createdAt" in comment && comment.createdAt is timestamp
+    }
+
+    function isValidCommentUpdate(comment) {
+      return comment.size() == 4
+      && "id" in comment && comment.id is string
+      && "uid" in comment && comment.uid is string
+      && "content" in comment && comment.content is string && comment.content.size() <= 200
+      && "createdAt" in comment && comment.createdAt is timestamp
+    }
+
+    function isValidfollowCreate(follow) {
+      return follow.size() == 2 
+      && "following_uid" in follow && follow.following_uid is string
+      && "followed_uid" in follow && follow.followed_uid is string
+    }
+
+    function isValidfollowUpdate(follow) {
+      return follow.size() == 3 
+      && "id" in follow && follow.id is string
+      && "following_uid" in follow && follow.following_uid is string
+      && "followed_uid" in follow && follow.followed_uid is string
+    }
+
+    match /users/{userId} {  
+      allow get: if isUserAuthenticated(userId) || isAnyAuthenticated();
+      allow create: if isUserAuthenticated(userId) && isValidUserCreate(request.resource.data, userId); 
+      allow update: if isUserAuthenticated(userId) && isValidUserUpdate(request.resource.data, userId);
+
+      match /bookmarks/{bookmarkId} {
+        allow read: if isUserAuthenticated(userId);
+        allow create: if isUserAuthenticated(userId) && isValidBookmarkAdd(request.resource.data);
+        allow update: if isUserAuthenticated(userId) && isValidBookmarkUpdate(request.resource.data);
+        allow delete: if isUserAuthenticated(userId);
+      }
+    }
+
+    match /posts/{postId} {
+      allow read: if isUserAuthenticated(request.auth.uid);
+      allow create: if isUserAuthenticated(request.auth.uid) && isValidPostCreate(request.resource.data);
+      allow update: if isUserAuthenticated(request.auth.uid) && isValidPostUpdate(request.resource.data);
+      allow delete: if isUserAuthenticated(request.auth.uid);
+
+      match /comments/{commentId} {
+        allow read: if isUserAuthenticated(request.auth.uid);
+        allow create: if isUserAuthenticated(request.auth.uid) && isValidCommentCreate(request.resource.data);
+        allow update: if isUserAuthenticated(request.auth.uid) && isValidCommentUpdate(request.resource.data);
+        allow delete: if isUserAuthenticated(request.auth.uid);
+      }
+    }
+
+    match /follows/{followId} {
+      allow read: if isUserAuthenticated(request.auth.uid);
+      allow create: if isUserAuthenticated(request.auth.uid) && isValidfollowCreate(request.resource.data);
+      allow update: if isUserAuthenticated(request.auth.uid) && isValidfollowUpdate(request.resource.data);
+      allow delete: if isUserAuthenticated(request.auth.uid);
     }
   }
 }

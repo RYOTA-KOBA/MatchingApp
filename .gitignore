@@ -1,6 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 .env
+/firebase-product-branding
+firestore-debug.log
+ui-debug.log
 
 # dependencies
 /node_modules

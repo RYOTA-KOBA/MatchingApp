@@ -1,9 +1,10 @@
-Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！
+Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！
 
 
+[![RYOTA-KOBA](https://circleci.com/gh/RYOTA-KOBA/MatchingApp.svg?style=svg)](https://app.circleci.com/pipelines/github/RYOTA-KOBA/MatchingApp) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## License
+This project is licensed under the terms of the [MIT license](https://github.com/RYOTA-KOBA/MatchingApp/blob/master/LICENSE.txt).
 
 ## Available Scripts
 
