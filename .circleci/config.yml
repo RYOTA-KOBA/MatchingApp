@@ -13,7 +13,7 @@ jobs:
         command: npm install --save-dev firebase-tools
       - run:
           name: emulators start
-          command: firebase emulators:start --only firestore
+          command: ln -s ./node_modules/firebase-tools/bin/firebase . && ./firebase emulators:start --only firestore --project "$FIREBASE_PROJECT_ID" --token "$FIREBASE_TOKEN"
       - run:
           name: Run Test
           command: npm run test
