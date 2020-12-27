@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import { db } from "../firebase";
+import ImageArea from "./ImageArea";
 
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
@@ -44,6 +45,7 @@ export default function UpdateProfile({ userName }: any) {
     logout,
     defUsername,
   }: any = useAuth();
+  const [images, setImages] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -105,6 +107,7 @@ export default function UpdateProfile({ userName }: any) {
           <h2 className="text-center mb-4 update-profile-header">
             プロフィールの編集 ⚙️
           </h2>
+          <ImageArea images={images} setImages={setImages} />
           <form noValidate autoComplete="off" onSubmit={handleSubmit}>
             <TextField
               className={classes.postFormTextField}

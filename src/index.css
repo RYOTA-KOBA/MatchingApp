@@ -22,6 +22,10 @@ body {
   margin-top: 130px;
 }
 
+.display-none {
+  display: none;
+}
+
 /**************
 header
 ******************/
@@ -98,6 +102,25 @@ profile
 .follower-text {
   color: #0000008a;
   font-size: 14px;
+}
+.p-media__icon {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+.p-media__icon::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+.p-media__icon > img {
+  position: absolute;
+  object-fit: cover;
+  object-position: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
 }
 
 /**************
