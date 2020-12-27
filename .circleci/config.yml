@@ -9,9 +9,6 @@ jobs:
           name: npm install
           command: npm install
       - run:
-        name: Install Dependecies
-        command: npm install --save-dev firebase-tools
-      - run:
           name: emulators start
           command: ln -s ./node_modules/firebase-tools/bin/firebase . && ./firebase emulators:start --only firestore --project "$FIREBASE_PROJECT_ID" --token "$FIREBASE_TOKEN"
       - run:
