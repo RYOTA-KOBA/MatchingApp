@@ -51,19 +51,17 @@ export function AuthProvider({ children }: any) {
     return auth.sendPasswordResetEmail(email);
   }
 
-  function updateUser(username: any, email: any, data: any) {
+  async function updateUser(username: any, email: any, images: any, data: any) {
     const uid = data.uid;
-    return db
-      .collection("users")
-      .doc(uid)
-      .set(
-        {
-          email: email,
-          username: username,
-        },
-        { merge: true }
-      )
-      .then(() => console.log("success!!"));
+    await db.collection("users").doc(uid).set(
+      {
+        email: email,
+        username: username,
+        images: images,
+      },
+      { merge: true }
+    );
+    return console.log("success!!");
   }
 
   function updatePassword(password: any) {
