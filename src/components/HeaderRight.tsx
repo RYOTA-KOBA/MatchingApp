@@ -83,6 +83,7 @@ export default function HeaderRight() {
   const { currentUser, logout }: any = useAuth();
   const [userNameInitial, setUserNameInitial] = useState();
   const [error, setError] = useState("");
+  const [images, setImages] = useState();
   const history = useHistory();
   const guestUser_uid = process.env.REACT_APP_GUESTUSER_UID;
 
@@ -134,9 +135,13 @@ export default function HeaderRight() {
       .get()
       .then((snapshot: any) => {
         const data = snapshot.data();
-        const username = data.username;
-        const initial = username.slice(0, 1);
-        setUserNameInitial(initial);
+        if (data.images !== undefined) {
+          setImages(data.images[0].path);
+        } else {
+          const username = data.username;
+          const initial = username.slice(0, 1);
+          setUserNameInitial(initial);
+        }
       });
   }, [currentUser.uid]);
 
@@ -150,13 +155,23 @@ export default function HeaderRight() {
           <LibraryBooksIcon />
         </IconButton>
       </Link>
-      <Avatar
-        aria-label="recipe"
-        className={classes.avatar}
-        onClick={handleClick}
-      >
-        {userNameInitial}
-      </Avatar>
+      {images ? (
+        <Avatar
+          src={images}
+          alt="UserProfile Pic"
+          className={classes.avatar}
+          onClick={handleClick}
+          style={{ backgroundColor: "rgba(0,0,0,0)" }}
+        />
+      ) : (
+        <Avatar
+          aria-label="recipe"
+          className={classes.avatar}
+          onClick={handleClick}
+        >
+          {userNameInitial}
+        </Avatar>
+      )}
       <Menu
         anchorEl={anchorEl}
         keepMounted

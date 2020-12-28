@@ -112,7 +112,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid }: any) => {
   }: any = useAuth();
   const [savedId, setSavedId] = useState();
   const [saved, setSaved] = useState(false);
-
+  const [images, setImages] = useState();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -173,12 +173,30 @@ const Post = ({ authorName, content, createdAt, title, id, uid }: any) => {
       });
   }, [currentUser.uid, id, saved]);
 
+  useEffect(() => {
+    db.collection("users")
+      .doc(uid)
+      .get()
+      .then((snapshot): any => {
+        const data: any = snapshot.data();
+        if (data.images !== undefined) setImages(data.images[0].path);
+      });
+  }, []);
+
   return (
     <>
       <Card className={classes.root}>
         <div className="post_card-head">
           <div className="post_card-head-left">
-            <Avatar className={classes.avatar} />
+            {images ? (
+              <Avatar
+                className={classes.avatar}
+                src={images}
+                alt="UserProfile Pic"
+              />
+            ) : (
+              <Avatar className={classes.avatar} />
+            )}
             <Typography className={classes.pos} color="textSecondary">
               <Link
                 color="textSecondary"
