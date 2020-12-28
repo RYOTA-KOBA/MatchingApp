@@ -161,6 +161,7 @@ export default function HeaderRight() {
           alt="UserProfile Pic"
           className={classes.avatar}
           onClick={handleClick}
+          style={{ backgroundColor: "rgba(0,0,0,0)" }}
         />
       ) : (
         <Avatar
