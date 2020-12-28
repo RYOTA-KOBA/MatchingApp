@@ -21,6 +21,8 @@ const useStyles = makeStyles({
     marginTop: 15,
     maxHeight: "200px",
     position: "relative",
+    maxWidth: "600px",
+    margin: "20px auto",
   },
   threeDots: {
     float: "right",
