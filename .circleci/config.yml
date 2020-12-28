@@ -13,10 +13,10 @@ jobs:
           command: npm install firebase-tools
       - run:
           name: Firestoreエミュレータをインストール
-          command: npm run setup:emulators:firestore
+          command: firebase setup:emulators:firestore
       - run:
           name: エミュレータの起動 & テスト実行
-          command: npm run emulators:start:firestore & sleep 10; npm run ci-test
+          command: npm run emulators:start --only firestore & sleep 10; npm run ci-test
 workflows:
   test:
     jobs:
