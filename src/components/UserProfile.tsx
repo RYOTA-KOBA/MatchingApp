@@ -15,6 +15,7 @@ import Typography from "@material-ui/core/Typography";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import SettingsIcon from "@material-ui/icons/Settings";
+import Avatar from "@material-ui/core/Avatar";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -70,6 +71,7 @@ export default function UserProfile() {
   const [user, setUser] = useState({
     email: "",
     username: "",
+    images: [{ id: "", path: "" }],
   });
   const path = window.location.href;
   const uid = path.split("/userprofile/")[1];
@@ -159,6 +161,12 @@ export default function UserProfile() {
     <div className="card-maxWith">
       <Card className={classes.root} variant="outlined">
         <CardContent className={classes.content_wrapper}>
+          {console.log(user.images)}
+          <img
+            src={user.images[0].path}
+            style={{ width: "20px", height: "20px" }}
+            alt=""
+          />
           <div className="content_txt-wrapper">
             <Typography className={classes.pos} color="textSecondary">
               <h4 className="userProfile-name">{user.username}</h4>

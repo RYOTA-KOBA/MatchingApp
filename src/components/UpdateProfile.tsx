@@ -73,6 +73,7 @@ export default function UpdateProfile({ userName }: any) {
         return updateUser(
           usernameRef.current.value,
           emailRef.current.value,
+          images,
           data
         );
       })
@@ -107,8 +108,8 @@ export default function UpdateProfile({ userName }: any) {
           <h2 className="text-center mb-4 update-profile-header">
             プロフィールの編集 ⚙️
           </h2>
-          <ImageArea images={images} setImages={setImages} />
           <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+            <ImageArea images={images} setImages={setImages} />
             <TextField
               className={classes.postFormTextField}
               type="text"
