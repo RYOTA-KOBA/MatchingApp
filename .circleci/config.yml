@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build: # ジョブ名
+  test: # ジョブ名
     docker:
       - image: circleci/node:lts-browsers # ジョブ実行環境のDockerイメージを記述
     steps:
