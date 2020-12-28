@@ -11,17 +11,19 @@ service cloud.firestore {
     }
 
     function isValidUserCreate(user, targetUserId) {
-      return user.size() == 3
+      return user.size() >= 3
       && 'email' in user && user.email is string
       && 'username' in user && user.username is string
-      && 'uid' in user && user.uid is string && user.uid == targetUserId;
+      && 'uid' in user && user.uid is string && user.uid == targetUserId
+      || 'images' in user
     }
 
     function isValidUserUpdate(user, targetUserId) {
-      return user.size() == 3
+      return user.size() >= 3
       && 'email' in user && user.email is string
       && 'username' in user && user.username is string
-      && 'uid' in user && user.uid is string && user.uid == targetUserId;
+      && 'uid' in user && user.uid is string && user.uid == targetUserId
+      || 'images' in user 
     }
 
     function isValidBookmarkAdd(bookmark) {

@@ -15,6 +15,8 @@ import Typography from "@material-ui/core/Typography";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import SettingsIcon from "@material-ui/icons/Settings";
+import Avatar from "@material-ui/core/Avatar";
+import PersonIcon from "@material-ui/icons/Person";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -34,6 +36,10 @@ const useStyles = makeStyles({
     display: "inline-block",
     margin: "0 2px",
     transform: "scale(0.8)",
+  },
+  avatar: {
+    transform: "scale(3)",
+    margin: "auto 40px",
   },
   title: {
     fontSize: 20,
@@ -70,6 +76,7 @@ export default function UserProfile() {
   const [user, setUser] = useState({
     email: "",
     username: "",
+    images: [{ id: "", path: "" }],
   });
   const path = window.location.href;
   const uid = path.split("/userprofile/")[1];
@@ -156,9 +163,20 @@ export default function UserProfile() {
   }, []);
 
   return (
-    <div className="card-maxWith">
+    <div className="card-maxWith" style={{ maxWidth: "800px" }}>
       <Card className={classes.root} variant="outlined">
         <CardContent className={classes.content_wrapper}>
+          {user.images ? (
+            <Avatar
+              src={user.images[0].path}
+              className={classes.avatar}
+              alt="User Profile Pic"
+            />
+          ) : (
+            <Avatar className={classes.avatar}>
+              <PersonIcon />
+            </Avatar>
+          )}
           <div className="content_txt-wrapper">
             <Typography className={classes.pos} color="textSecondary">
               <h4 className="userProfile-name">{user.username}</h4>

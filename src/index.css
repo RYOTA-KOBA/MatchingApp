@@ -106,7 +106,8 @@ profile
 .p-media__icon {
   position: relative;
   overflow: hidden;
-  width: 100%;
+  width: 40%;
+  margin: 20px auto;
 }
 .p-media__icon::before {
   content: "";
