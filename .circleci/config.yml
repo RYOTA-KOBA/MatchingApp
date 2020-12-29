@@ -7,10 +7,9 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run build
-      - run: gcloud app deploy
+      - run: gcloud -q app deploy
 workflows:
   version: 2
-  deploy: 
+  deploy:
     jobs:
-    - deploy
-        
+      - deploy
