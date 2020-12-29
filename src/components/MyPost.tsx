@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
 import { Link } from "react-router-dom";
@@ -14,16 +14,31 @@ import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import Avatar from "@material-ui/core/Avatar";
+import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+import BookmarkIcon from "@material-ui/icons/Bookmark";
 
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
     marginTop: 15,
+    marginBottom: "15px !important",
     maxHeight: "200px",
     position: "relative",
+    borderRadius: "12px",
+  },
+  cardWrapLink: {
+    color: "#363d44",
+    "&:hover": {
+      textDecoration: "none",
+    },
+  },
+  avatar: {
+    margin: "20px",
   },
   threeDots: {
     float: "right",
+    margin: "16px",
     "&:focus": {
       outline: "none",
     },
@@ -44,17 +59,27 @@ const useStyles = makeStyles({
     fontSize: 14,
   },
   pos: {
+    display: "flex",
     fontSize: "14px",
-    marginTop: "8px",
+    flexDirection: "column",
+    flexWrap: "wrap",
+  },
+  usernameLink: {
+    color: "#0000008A",
+    "&:hover": {
+      color: "#333333",
+      textDecoration: "none",
+    },
   },
   contentText: {
     overflow: "hidden",
     lineHeight: "1.5",
-    maxHeight: "3em",
+    maxHeight: "1.5em",
     marginTop: "8px",
   },
   detailBtnWrap: {
     float: "left",
+    padding: "10px",
   },
   detailLink: {
     "&:hover": {
@@ -62,8 +87,10 @@ const useStyles = makeStyles({
     },
   },
   detailButton: {
-    backgroundColor: "#d2d6db",
-    color: "#363d44",
+    backgroundColor: "#fff",
+    fontWeight: "bold",
+    color: "#555555",
+    padding: "8px 10px",
     "&:focus": {
       outline: "none",
     },
@@ -84,9 +111,16 @@ export default function MyPost({
   title,
   id,
   uid,
+  images,
 }: any) {
   const classes = useStyles();
-  const { currentUser }: any = useAuth();
+  const {
+    currentUser,
+    savePostToBookmark,
+    removePostFromBookmark,
+  }: any = useAuth();
+  const [savedId, setSavedId] = useState();
+  const [saved, setSaved] = useState(false);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -97,6 +131,24 @@ export default function MyPost({
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const savePost = async () => {
+    setSaved(true);
+    const savedPosts = {
+      authorName,
+      content,
+      createdAt,
+      title,
+      id,
+      uid,
+    };
+    await savePostToBookmark(savedPosts);
+  };
+
+  const removeBookmark = async (savedId: any) => {
+    setSaved(false);
+    await removePostFromBookmark(savedId);
   };
 
   const deletePost = () => {
@@ -110,10 +162,60 @@ export default function MyPost({
       .catch(() => console.log("削除失敗!!"));
   };
 
+  useEffect(() => {
+    const uid = currentUser.uid;
+    db.collection("users")
+      .doc(uid)
+      .get()
+      .then((doc: any) => {
+        if (doc.exists) {
+          db.collection("users")
+            .doc(uid)
+            .collection("bookmarks")
+            .get()
+            .then((snapshots: any) => {
+              snapshots.docs.forEach((doc: any) => {
+                const data = doc.data();
+                // post_idはbookmarkしたpostのid
+                const post_id = data.id;
+                const saveId = data.saveId;
+                if (post_id === id) {
+                  setSaved(true);
+                  setSavedId(saveId);
+                }
+              });
+            });
+        }
+      });
+  }, [currentUser.uid, id, saved]);
+
   return (
-    <>
+    <div className="card-maxWith">
       <Card className={classes.root}>
-        <CardContent style={{ paddingBottom: "0" }}>
+        <div className="post_card-head">
+          <div className="post_card-head-left">
+            <Link to={"/userprofile/" + uid}>
+              {images ? (
+                <Avatar
+                  className={classes.avatar}
+                  src={images}
+                  alt="UserProfile Pic"
+                />
+              ) : (
+                <Avatar className={classes.avatar} />
+              )}
+            </Link>
+            <Typography className={classes.pos} color="textSecondary">
+              <Link
+                color="textSecondary"
+                className={classes.usernameLink}
+                to={"/userprofile/" + uid}
+              >
+                {authorName}
+              </Link>
+              {createdAt}
+            </Typography>
+          </div>
           {uid === currentUser.uid && (
             <div>
               <IconButton className={classes.threeDots} onClick={handleClick}>
@@ -150,32 +252,41 @@ export default function MyPost({
               </Menu>
             </div>
           )}
-          <Typography variant="h5" component="h3">
-            {title}
-          </Typography>
-          <Typography className={classes.pos} color="textSecondary">
-            {authorName + "・" + createdAt}
-          </Typography>
-          <Typography
-            className={classes.contentText}
-            variant="body2"
-            component="p"
-          >
-            {content}
-          </Typography>
-        </CardContent>
-        <CardActions className={classes.detailBtnWrap}>
-          <Link to={"/detail/" + id} className={classes.detailLink}>
-            <Button
-              variant="contained"
-              className={classes.detailButton}
-              size="small"
+        </div>
+        <Link to={"/detail/" + id} className={classes.cardWrapLink}>
+          <CardContent style={{ paddingBottom: "0", paddingTop: "0" }}>
+            <Typography variant="h5" component="h3">
+              {title}
+            </Typography>
+            <Typography
+              className={classes.contentText}
+              variant="body2"
+              component="p"
             >
-              詳細を表示
-            </Button>
-          </Link>
-        </CardActions>
+              {content}
+            </Typography>
+          </CardContent>
+          <CardActions className={classes.detailBtnWrap}>
+            <Link to={"/detail/" + id} className={classes.detailLink}>
+              <Button className={classes.detailButton} size="small">
+                詳細を表示
+              </Button>
+            </Link>
+          </CardActions>
+        </Link>
+        {currentUser.uid !== uid && saved === true ? (
+          <IconButton
+            className={classes.likeBtn}
+            onClick={() => removeBookmark(savedId)}
+          >
+            <BookmarkIcon />
+          </IconButton>
+        ) : (
+          <IconButton className={classes.likeBtn} onClick={savePost}>
+            <BookmarkBorderIcon />
+          </IconButton>
+        )}
       </Card>
-    </>
+    </div>
   );
 }

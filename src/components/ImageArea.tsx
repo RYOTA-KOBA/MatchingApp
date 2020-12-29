@@ -35,9 +35,12 @@ export default function ImageArea(props: any) {
       const uploadRef = storage.ref("images").child(fileName);
       const uploadTask = uploadRef.put(blob);
 
-      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-        const newImage = { id: fileName, path: downloadURL };
-        props.setImages((prevState: any) => [...prevState, newImage]);
+      uploadTask.then(() => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          const newImage = { id: fileName, path: downloadURL };
+          console.log(newImage.path, newImage.id);
+          props.setImages((prevState: any) => [...prevState, newImage]);
+        });
       });
     },
     [props.setImages]
@@ -62,14 +65,15 @@ export default function ImageArea(props: any) {
   return (
     <div>
       <div>
-        {props.images.map((image: { id: any; path: any }) => (
-          <ImagePreview
-            id={image.id}
-            path={image.path}
-            key={image.id}
-            delete={deleteImage}
-          />
-        ))}
+        {props.images.length > 0 &&
+          props.images.map((image: any) => (
+            <ImagePreview
+              id={image.id}
+              path={image.path}
+              key={image.id}
+              delete={deleteImage}
+            />
+          ))}
       </div>
       <div>
         <IconButton className={classes.avatarIconButton}>

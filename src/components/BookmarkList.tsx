@@ -42,7 +42,7 @@ export default function BookmarkList() {
   }, [currentUser.uid]);
 
   return (
-    <div className="card-maxWith">
+    <div className="home-cardWith" style={{ margin: "auto" }}>
       <div style={{ marginTop: "100px" }}>
         <h3>保存した投稿</h3>
         {bookmarks.map((bookmark: any) => (
@@ -54,6 +54,7 @@ export default function BookmarkList() {
             title={bookmark.title}
             // bookmarkのid
             id={bookmark.saveId}
+            uid={bookmark.uid}
             post_id={bookmark.post_id}
           />
         ))}
