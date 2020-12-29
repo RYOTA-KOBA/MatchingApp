@@ -232,6 +232,7 @@ export default function UserProfile() {
             title={post.title}
             id={post.id}
             uid={post.uid}
+            images={user.images && user.images[0].path}
           />
         ))}
       </div>
