@@ -137,7 +137,14 @@ const Post = ({ authorName, content, createdAt, title, id, uid }: any) => {
 
   const savePost = async () => {
     setSaved(true);
-    const savedPosts = { authorName, content, createdAt, title, id };
+    const savedPosts = {
+      authorName,
+      content,
+      createdAt,
+      title,
+      id,
+      uid,
+    };
     await savePostToBookmark(savedPosts);
   };
 
