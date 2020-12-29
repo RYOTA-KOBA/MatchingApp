@@ -5,21 +5,12 @@ jobs:
       - image: circleci/node:lts-browsers
     steps:
       - checkout
-      - run:
-        name: Install node modules
-        command: npm install
-      - run:
-        name: Build
-        command: npm run build
-      - run:
-        name: deploy
-        command: gcloud app deploy
-
+      - run: npm install
+      - run: npm run build
+      - run: gcloud app deploy
 workflows:
   version: 2
-  jobs:
-    - deploy:
-        filters:
-          branches:
-            only:
-              - master
+  deploy: 
+    jobs:
+    - deploy
+        
