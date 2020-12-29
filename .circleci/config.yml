@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build: # ジョブ名
+  build:
     docker:
       - image: circleci/node:lts-browsers # ジョブ実行環境のDockerイメージを記述
     steps:
@@ -24,6 +24,7 @@ jobs:
         command: gcloud app deploy
 
 workflows:
+  version: 2
   build:
     jobs:
       - build
