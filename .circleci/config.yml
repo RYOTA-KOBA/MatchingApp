@@ -7,6 +7,9 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run build
+      - run:
+        name: Set up gcloud config
+        command: gcloud --quiet config set project ${GCLOUD_PROJECT}
       - run: gcloud -q app deploy
 workflows:
   version: 2
