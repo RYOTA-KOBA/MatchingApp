@@ -188,15 +188,17 @@ const Post = ({ authorName, content, createdAt, title, id, uid }: any) => {
       <Card className={classes.root}>
         <div className="post_card-head">
           <div className="post_card-head-left">
-            {images ? (
-              <Avatar
-                className={classes.avatar}
-                src={images}
-                alt="UserProfile Pic"
-              />
-            ) : (
-              <Avatar className={classes.avatar} />
-            )}
+            <Link to={"/userprofile/" + uid}>
+              {images ? (
+                <Avatar
+                  className={classes.avatar}
+                  src={images}
+                  alt="UserProfile Pic"
+                />
+              ) : (
+                <Avatar className={classes.avatar} />
+              )}
+            </Link>
             <Typography className={classes.pos} color="textSecondary">
               <Link
                 color="textSecondary"
