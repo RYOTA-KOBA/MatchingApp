@@ -6,7 +6,7 @@ jobs:
     steps:
       - checkout
       - run: rm package-lock.json
-      - run: rm sed -e "/eslint/d" package.json
+      - run: sed -e "/eslint/d" package.json
       - run: npm install
       - run: npm run build
       - run: gcloud app deploy --no-promote --version $CIRCLE_SHA1 --quiet
