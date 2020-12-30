@@ -9,10 +9,9 @@ jobs:
       - run: npm install
       - run: CI=false npm run build
       - run: |
-      echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-      gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-      gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-      
+            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
       - run: echo "export PATH=/Users/ryota/Downloads/google-cloud-sdk/bin/:$PATH" >> .bash_profile
       - run: gcloud app deploy --no-promote --version $CIRCLE_SHA1 --quiet
 workflows:
