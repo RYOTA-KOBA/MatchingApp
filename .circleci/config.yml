@@ -6,6 +6,7 @@ jobs:
     steps:
       - checkout
       - run: rm package-lock.json
+      - run: rm node_modules
       - run: sed -e "/eslint/d" package.json
       - run: npm install
       - run: npm run build
