@@ -8,6 +8,7 @@ jobs:
       - run: echo SKIP_PREFLIGHT_CHECK=true >> .env
       - run: npm install
       - run: CI=false npm run build
+      - run: echo "export PATH=/Users/ryota/Downloads/google-cloud-sdk/bin/:$PATH" >> .bash_profile
       - run: gcloud app deploy --no-promote --version $CIRCLE_SHA1 --quiet
 workflows:
   version: 2
