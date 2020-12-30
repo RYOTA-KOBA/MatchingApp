@@ -5,7 +5,9 @@ jobs:
       - image: circleci/node:lts-browsers
     steps:
       - checkout
-      - run: rm package-lock.json && sed -e "/eslint/d"
+      - run: rm package-lock.json
+      - run: rm node_modules
+      - run: rm sed -e "/eslint/d"
       - run: npm install
       - run: npm run build
       - run: gcloud app deploy --no-promote --version $CIRCLE_SHA1 --quiet
