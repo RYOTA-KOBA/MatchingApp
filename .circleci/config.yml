@@ -9,7 +9,6 @@ jobs:
       - run: npm install
       - run: CI=false npm run build
       - run: echo "export PATH=/Users/ryota/Downloads/google-cloud-sdk/bin/:$PATH" >> .bash_profile
-      - run: source ~/.bash_profile
       - run: |
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
           gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
