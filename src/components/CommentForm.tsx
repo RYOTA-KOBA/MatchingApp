@@ -12,7 +12,19 @@ function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function CommentForm({ id }: any) {
+type CommentProps = Partial<{
+  id: string;
+}>;
+
+type commentItem = {
+  id: string;
+  uid: string;
+  content: string;
+  createdAt: any;
+  postId: string;
+};
+
+export default function CommentForm({ id }: CommentProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [content, setContent] = useState("");
@@ -47,7 +59,7 @@ export default function CommentForm({ id }: any) {
     try {
       setError("");
       setLoading(true);
-      const uid = currentUser.uid;
+      const uid: string = currentUser.uid;
       return createComment(id, content, uid);
     } catch {
       setError("投稿に失敗しました");
@@ -117,8 +129,7 @@ export default function CommentForm({ id }: any) {
           </Button>
         </div>
       </form>
-      {/* {console.log(comment)} */}
-      {comment.map((commentItem: any) => (
+      {comment.map((commentItem: commentItem) => (
         <Comment
           key={commentItem.id}
           id={commentItem.id}
