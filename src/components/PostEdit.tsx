@@ -50,6 +50,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+type postType = Partial<{
+  title: string;
+  createdAt: any;
+  content: string;
+  category: string;
+}>;
+
 export default function PostEdit() {
   const classes = useStyles();
   const [error, setError] = useState("");
@@ -121,7 +128,7 @@ export default function PostEdit() {
       <Card className={classes.card} key={post_id}>
         <CardContent>
           <h2 className={classes.header}>投稿を編集</h2>
-          {currentPost.map((post: any) => (
+          {currentPost.map((post: postType) => (
             <form
               className={classes.root}
               noValidate
