@@ -129,7 +129,7 @@ export default function Signup() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            ログイン
+            サインアップ
           </Typography>
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
