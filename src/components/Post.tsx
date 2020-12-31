@@ -103,7 +103,23 @@ const useStyles = makeStyles({
   },
 });
 
-const Post = ({ authorName, content, createdAt, title, id, uid }: any) => {
+type PostProps = Partial<{
+  authorName: string;
+  content: string;
+  createdAt: any;
+  title: string;
+  id: string;
+  uid: string;
+}>;
+
+const Post = ({
+  authorName,
+  content,
+  createdAt,
+  title,
+  id,
+  uid,
+}: PostProps) => {
   const classes = useStyles();
   const {
     currentUser,
@@ -137,7 +153,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid }: any) => {
 
   const savePost = async () => {
     setSaved(true);
-    const savedPosts = {
+    const savedPosts: PostProps = {
       authorName,
       content,
       createdAt,
@@ -148,7 +164,7 @@ const Post = ({ authorName, content, createdAt, title, id, uid }: any) => {
     await savePostToBookmark(savedPosts);
   };
 
-  const removeBookmark = async (savedId: any) => {
+  const removeBookmark = async (savedId: any | string) => {
     setSaved(false);
     await removePostFromBookmark(savedId);
   };

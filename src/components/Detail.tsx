@@ -73,6 +73,15 @@ const useStyles = makeStyles({
   },
 });
 
+type P = Partial<{
+  authorName: string;
+  content: string;
+  createdAt: any;
+  title: string;
+  id: string;
+  uid: string;
+}>;
+
 export default function Detail() {
   const classes = useStyles();
   const path = window.location.href;
@@ -81,7 +90,7 @@ export default function Detail() {
   const { currentUser }: any = useAuth();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const open: boolean = Boolean(anchorEl);
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -137,7 +146,7 @@ export default function Detail() {
         <Link to="/" className={classes.backLink}>
           <Button className={classes.backButton}>トップに戻る</Button>
         </Link>
-        {postDetail.map((post: any) => (
+        {postDetail.map((post: P) => (
           <Card className={classes.root} key={post.id} variant="outlined">
             <CardContent>
               {post.uid === currentUser.uid && (

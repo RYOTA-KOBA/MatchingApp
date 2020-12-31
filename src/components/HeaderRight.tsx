@@ -85,7 +85,7 @@ export default function HeaderRight() {
   const [error, setError] = useState("");
   const [images, setImages] = useState();
   const history = useHistory();
-  const guestUser_uid = process.env.REACT_APP_GUESTUSER_UID;
+  const guestUser_uid: string | undefined = process.env.REACT_APP_GUESTUSER_UID;
 
   const [errorOpen, setErrorOpen] = React.useState(false);
   const handleCloseSnackbar = (
@@ -99,7 +99,7 @@ export default function HeaderRight() {
   };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const open: boolean = Boolean(anchorEl);
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -129,7 +129,7 @@ export default function HeaderRight() {
   };
 
   useEffect(() => {
-    const id = currentUser.uid;
+    const id: string = currentUser.uid;
     db.collection("users")
       .doc(id)
       .get()

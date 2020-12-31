@@ -9,7 +9,6 @@ import TimeLineLink from "./TimeLineLink";
 
 const Home = () => {
   const [currentPost, setCurrentPost] = useState([]);
-  // const [followedUid, setFollowedUid] = useState();
   const { followedUid, getFollowedUid }: any = useAuth();
   const query = window.location.search;
   const category = /^\?category=/.test(query)
@@ -22,16 +21,14 @@ const Home = () => {
   useEffect(() => {
     const f = async () => {
       await getFollowedUid(following_uid);
-      console.log(...followedUid);
       getPosts(category, followedUid);
     };
     f();
   }, [query, getFollowedUid]);
 
-  const getPosts = async (category: any, followedUid: any) => {
+  const getPosts = async (category: string, followedUid: any | string) => {
     let query = db.collection("posts").orderBy("createdAt", "desc");
     query = category !== "" ? query.where("category", "==", category) : query;
-    console.log([...followedUid]);
     query =
       following_uid !== ""
         ? query.where("uid", "in", ["", ...followedUid])
