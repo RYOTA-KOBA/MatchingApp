@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
-import { Link } from "react-router-dom";
 
 //material ui
 import { makeStyles } from "@material-ui/core/styles";
@@ -26,7 +25,21 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Comment({ id, uid, content, createdAt, postId }: any) {
+type commentProps = Partial<{
+  id: string;
+  uid: string;
+  content: string;
+  createdAt: any;
+  postId: string;
+}>;
+
+export default function Comment({
+  id,
+  uid,
+  content,
+  createdAt,
+  postId,
+}: commentProps) {
   const [commentUsername, setCommentUsername] = useState();
   const [time, setTime] = useState("");
   const { currentUser }: any = useAuth();
@@ -106,7 +119,7 @@ export default function Comment({ id, uid, content, createdAt, postId }: any) {
       </Menu>
       <p>{commentUsername}</p>
       <p>{content}</p>
-      <p>{time}</p>
+      <p style={{ marginBottom: "0" }}>{time}</p>
     </div>
   );
 }
