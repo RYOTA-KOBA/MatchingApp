@@ -1,5 +1,4 @@
-import React, { useRef, useState, useCallback } from "react";
-// import { Form, Button, Card, Alert } from "react-bootstrap"
+import React, { useState, useCallback } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 
@@ -7,8 +6,6 @@ import { Link, useHistory } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -54,8 +51,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
-  const emailRef = useRef();
-  const passwordRef = useRef();
   const { login }: any = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -87,7 +82,7 @@ export default function Login() {
         history.push("/");
       })
       .catch((error: any) => {
-        setError("failed!!");
+        setError("ログインに失敗しました");
       })
       .finally(() => {
         setLoading(false);
@@ -102,7 +97,7 @@ export default function Login() {
         history.push("/");
       })
       .catch((error: any) => {
-        setError("failed!!");
+        setError("ログインに失敗しました");
       })
       .finally(() => {
         setLoading(false);
@@ -129,7 +124,6 @@ export default function Login() {
               id="email"
               label="Email Address"
               value={email}
-              inputRef={emailRef}
               onChange={inputEmail}
               disabled={loading}
             />
@@ -142,13 +136,7 @@ export default function Login() {
               type="password"
               id="password"
               value={password}
-              inputRef={passwordRef}
               onChange={inputPassword}
-              disabled={loading}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
               disabled={loading}
             />
             <Button

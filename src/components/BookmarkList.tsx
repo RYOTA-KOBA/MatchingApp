@@ -3,14 +3,16 @@ import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
 import BookmarkListItem from "./BookmarkListItem";
 
-type BookmarkListItemProp = {
-  saveId: string;
+type BookmarkProps = Partial<{
   authorName: string;
   content: string;
-  createdAt: string;
+  createdAt: any;
   title: string;
   post_id: string;
-};
+  id: string;
+  uid: string;
+  saveId: string;
+}>;
 
 export default function BookmarkList() {
   const { currentUser }: any = useAuth();
@@ -45,7 +47,7 @@ export default function BookmarkList() {
     <div className="home-cardWith" style={{ margin: "auto" }}>
       <div style={{ marginTop: "100px" }}>
         <h3>保存した投稿</h3>
-        {bookmarks.map((bookmark: any) => (
+        {bookmarks.map((bookmark: BookmarkProps) => (
           <BookmarkListItem
             key={bookmark.saveId}
             authorName={bookmark.authorName}

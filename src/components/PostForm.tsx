@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { db } from "../firebase";
@@ -62,8 +62,6 @@ export default function PostForm() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
-  const titleRef = useRef();
-  const contentRef = useRef();
   const { createPost, currentUser }: any = useAuth();
   const [category, setCategory] = useState("");
 
@@ -104,7 +102,7 @@ export default function PostForm() {
     setContent("");
 
     try {
-      const uid = currentUser.uid;
+      const uid: string = currentUser.uid;
       await db
         .collection("users")
         .doc(uid)
@@ -136,7 +134,6 @@ export default function PostForm() {
               <TextField
                 type="text"
                 label="タイトル"
-                inputRef={titleRef}
                 className={classes.postFormTextField}
                 required
                 value={title}
@@ -146,7 +143,6 @@ export default function PostForm() {
               <TextField
                 type="text"
                 label="内容"
-                inputRef={contentRef}
                 className={classes.postFormTextField}
                 multiline={true}
                 rows={4}
