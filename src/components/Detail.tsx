@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 import { db } from "../firebase";
 import CommentForm from "./CommentForm";
 
@@ -58,6 +57,14 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
+  useername: {
+    color: "#0000008A",
+    "&:hover": {
+      textDecoration: "none",
+      opacity: "0.8",
+      color: "#000000",
+    },
+  },
   time: {
     fontSize: "14px",
     marginTop: "15px",
@@ -71,7 +78,7 @@ export default function Detail() {
   const path = window.location.href;
   const id = path.split("/detail/")[1];
   const [postDetail, setPostDetail] = useState([]);
-  const { setNowId, setNowPost, currentUser }: any = useAuth();
+  const { currentUser }: any = useAuth();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -120,15 +127,6 @@ export default function Detail() {
     setPostDetail(post);
   };
 
-  const setId = () => {
-    setNowId(id);
-    // console.log(id)
-  };
-
-  const setPost = () => {
-    setNowPost(id);
-  };
-
   useEffect(() => {
     getPost();
   }, [getPost]);
@@ -160,8 +158,6 @@ export default function Detail() {
               >
                 <MenuItem
                   onClick={() => {
-                    setId();
-                    setPost();
                     handleClose();
                   }}
                 >
@@ -186,7 +182,12 @@ export default function Detail() {
                 {post.title}
               </Typography>
               <Typography className={classes.pos} color="textSecondary">
-                {post.authorName}
+                <Link
+                  className={classes.useername}
+                  to={"/userprofile/" + post.uid}
+                >
+                  {post.authorName}
+                </Link>
               </Typography>
               <Typography variant="body2" component="p">
                 {post.content}
