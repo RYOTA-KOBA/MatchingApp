@@ -4,14 +4,14 @@ import { useAuth } from "../contexts/AuthContext";
 // material ui
 import Button from "@material-ui/core/Button";
 
-type FollowButton = Partial<{
+type FollowButtonProps = Partial<{
   id: string;
   uid: string;
   following_uid: string;
   followed_uid: string;
 }>;
 
-export default function FollowButton({ id, uid }: FollowButton) {
+export default function FollowButton({ id, uid }: FollowButtonProps) {
   const { currentUser, follow, unFollow }: any = useAuth();
   const [isFollowing, setIsFollowing] = useState(false);
 
