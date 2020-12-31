@@ -99,6 +99,16 @@ const useStyles = makeStyles({
   },
 });
 
+type BookmarkListProps = Partial<{
+  authorName: string;
+  content: string;
+  createdAt: any;
+  title: string;
+  post_id: string;
+  id: string;
+  uid: string;
+}>;
+
 export default function BookmarkListItem({
   authorName,
   content,
@@ -107,7 +117,7 @@ export default function BookmarkListItem({
   post_id,
   uid,
   id,
-}: any) {
+}: BookmarkListProps) {
   const classes = useStyles();
   const { removePostFromBookmark }: any = useAuth();
   const [saved, setSaved] = useState(true);
@@ -124,7 +134,6 @@ export default function BookmarkListItem({
       .get()
       .then((snapshot: any) => {
         const data = snapshot.data();
-        console.log(data);
         if (data.images !== undefined) {
           setImages(data.images[0].path);
         }
