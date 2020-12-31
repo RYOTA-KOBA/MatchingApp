@@ -104,6 +104,16 @@ const useStyles = makeStyles({
   },
 });
 
+type MyPostProps = Partial<{
+  authorName: string;
+  content: string;
+  createdAt: any;
+  title: string;
+  id: string;
+  uid: string;
+  images: string;
+}>;
+
 export default function MyPost({
   authorName,
   content,
@@ -112,7 +122,7 @@ export default function MyPost({
   id,
   uid,
   images,
-}: any) {
+}: MyPostProps) {
   const classes = useStyles();
   const {
     currentUser,
@@ -135,7 +145,7 @@ export default function MyPost({
 
   const savePost = async () => {
     setSaved(true);
-    const savedPosts = {
+    const savedPosts: MyPostProps = {
       authorName,
       content,
       createdAt,
@@ -146,7 +156,7 @@ export default function MyPost({
     await savePostToBookmark(savedPosts);
   };
 
-  const removeBookmark = async (savedId: any) => {
+  const removeBookmark = async (savedId: any | string) => {
     setSaved(false);
     await removePostFromBookmark(savedId);
   };
