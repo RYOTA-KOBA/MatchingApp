@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { db } from "../firebase";
 
 // materialUI
@@ -112,17 +112,16 @@ export default function PostEdit() {
       .then((doc: any) => {
         const data = doc.data();
         post.push(data);
+        setCurrentPost(post);
       });
-    setCurrentPost(post);
-  }, []);
+  }, [setCurrentPost]);
 
   return (
     <div className="card-maxWith">
-      {currentPost.map((post: any) => (
-        <Card className={classes.card} key={post_id}>
-          {error && <Alert severity="error">{error}</Alert>}
-          <CardContent>
-            <h2 className={classes.header}>投稿を編集</h2>
+      <Card className={classes.card} key={post_id}>
+        <CardContent>
+          <h2 className={classes.header}>投稿を編集</h2>
+          {currentPost.map((post: any) => (
             <form
               className={classes.root}
               noValidate
@@ -181,9 +180,9 @@ export default function PostEdit() {
                 </Button>
               </div>
             </form>
-          </CardContent>
-        </Card>
-      ))}
+          ))}
+        </CardContent>
+      </Card>
       <Link to="/" className={classes.cancel}>
         キャンセル
       </Link>
