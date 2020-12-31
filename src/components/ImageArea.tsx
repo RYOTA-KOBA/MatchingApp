@@ -17,6 +17,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+type imageProps = {
+  id: string;
+  path: string;
+};
+
 export default function ImageArea(props: any) {
   const classes = useStyles();
 
@@ -38,7 +43,6 @@ export default function ImageArea(props: any) {
       uploadTask.then(() => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
           const newImage = { id: fileName, path: downloadURL };
-          console.log(newImage.path, newImage.id);
           props.setImages((prevState: any) => [...prevState, newImage]);
         });
       });
@@ -53,7 +57,7 @@ export default function ImageArea(props: any) {
         return false;
       } else {
         const newImages = props.images.filter(
-          (image: { id: any }) => image.id !== id
+          (image: { id: string }) => image.id !== id
         );
         props.setImages(newImages);
         return storage.ref("images").child(id).delete();
@@ -66,7 +70,7 @@ export default function ImageArea(props: any) {
     <div>
       <div>
         {props.images.length > 0 &&
-          props.images.map((image: any) => (
+          props.images.map((image: imageProps) => (
             <ImagePreview
               id={image.id}
               path={image.path}
