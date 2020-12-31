@@ -111,9 +111,9 @@ export default function Login() {
 
   return (
     <>
-      {error && <Alert severity="error">{error}</Alert>}
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
+          {error && <Alert severity="error">{error}</Alert>}
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
