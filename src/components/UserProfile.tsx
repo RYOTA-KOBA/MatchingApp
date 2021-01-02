@@ -149,7 +149,7 @@ export default function UserProfile() {
         setFollowsData(followingData);
       });
     return unsubscribe;
-  }, [followsData]);
+  }, [setFollowsData, followers]);
 
   useEffect(() => {
     const unsubscribe = db
@@ -160,7 +160,7 @@ export default function UserProfile() {
         setFollowers(numOfFollow);
       });
     return unsubscribe;
-  }, []);
+  }, [followers]);
 
   return (
     <div className="card-maxWith" style={{ maxWidth: "800px" }}>
@@ -208,7 +208,7 @@ export default function UserProfile() {
               {followsData.some((data: any) => data.id) ? (
                 followsData.map((data: any) => (
                   <FollowButton
-                    key={data.id}
+                    key={uid}
                     uid={uid}
                     id={data.id}
                     following_uid={data.following_uid}
