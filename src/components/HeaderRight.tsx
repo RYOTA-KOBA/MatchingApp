@@ -14,6 +14,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import PersonIcon from "@material-ui/icons/Person";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -169,7 +170,7 @@ export default function HeaderRight() {
           className={classes.avatar}
           onClick={handleClick}
         >
-          {userNameInitial}
+          <PersonIcon />
         </Avatar>
       )}
       <Menu

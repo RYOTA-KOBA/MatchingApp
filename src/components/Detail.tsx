@@ -138,7 +138,7 @@ export default function Detail() {
 
   useEffect(() => {
     getPost();
-  }, [getPost]);
+  }, [setPostDetail]);
 
   return (
     <div className="card-maxWith">
