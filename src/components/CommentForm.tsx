@@ -31,6 +31,7 @@ export default function CommentForm({ id }: CommentProps) {
   const { currentUser, createComment }: any = useAuth();
   const [open, setOpen] = React.useState(false);
   const [comment, setComment] = useState([]);
+  const [commentCreated, setCommentCreated] = useState(false);
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === "clickaway") {
@@ -85,6 +86,7 @@ export default function CommentForm({ id }: CommentProps) {
           switch (changeType) {
             case "added":
               comments.push(data);
+              setCommentCreated(true);
               break;
             case "modified":
               const index = comments.findIndex(
@@ -102,9 +104,10 @@ export default function CommentForm({ id }: CommentProps) {
           }
         });
         setComment(comments);
+        setCommentCreated(false);
       });
     return unsubscribe;
-  }, []);
+  }, [setComment, setCommentCreated]);
 
   return (
     <>
@@ -129,6 +132,7 @@ export default function CommentForm({ id }: CommentProps) {
           </Button>
         </div>
       </form>
+      {console.log(comment)}
       {comment.map((commentItem: commentItem) => (
         <Comment
           key={commentItem.id}
