@@ -9,7 +9,7 @@ import TimeLineLink from "./TimeLineLink";
 
 const Home = () => {
   const [currentPost, setCurrentPost] = useState([]);
-  const { followedUid, getFollowedUid }: any = useAuth();
+  const { setFollowedUid, followedUid, getFollowedUid }: any = useAuth();
   const query = window.location.search;
   const category = /^\?category=/.test(query)
     ? query.split("?category=")[1]
@@ -20,11 +20,11 @@ const Home = () => {
 
   useEffect(() => {
     const f = async () => {
-      await getFollowedUid(following_uid);
-      getPosts(category, followedUid);
+      getFollowedUid(following_uid);
+      await getPosts(category, followedUid);
     };
     f();
-  }, [query, getFollowedUid]);
+  }, [query, setFollowedUid]);
 
   const getPosts = async (category: string, followedUid: any | string) => {
     let query = db.collection("posts").orderBy("createdAt", "desc");
@@ -60,7 +60,7 @@ const Home = () => {
   return (
     <div
       style={{
-        marginTop: "100px",
+        marginTop: "110px",
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-evenly",
