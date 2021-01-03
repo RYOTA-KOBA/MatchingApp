@@ -62,11 +62,17 @@ profile
 }
 .userProfile-intro {
   font-size: 0.9em;
-  margin-top: 2em;
+  margin-top: 1em;
+}
+.content_inner {
+  display: flex;
 }
 .content_txt-wrapper {
-  margin-left: 1em;
+  margin-left: 5em;
   margin-top: 1em;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
 }
 .user_btn-wrapper {
   display: flex;
