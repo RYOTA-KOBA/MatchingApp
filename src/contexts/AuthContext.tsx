@@ -259,6 +259,7 @@ export function AuthProvider({ children }: any) {
     removePostFromBookmark,
     defUsername,
     getFollowedUid,
+    setFollowedUid,
     followedUid,
   };
 
