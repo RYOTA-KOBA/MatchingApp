@@ -1,6 +1,6 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import ImagePreview from "./ImagePreview";
-import { storage } from "../firebase";
+import { db, storage } from "../firebase";
 
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
@@ -66,6 +66,18 @@ export default function ImageArea(props: any) {
     [props.images]
   );
 
+  useEffect(() => {
+    db.collection("users")
+      .doc(props.uid)
+      .get()
+      .then((snapshot: any) => {
+        const data = snapshot.data();
+        if (data.images) {
+          props.setImages(data.images);
+        }
+      });
+  }, [props.setImages]);
+
   return (
     <div>
       <div>
@@ -80,17 +92,24 @@ export default function ImageArea(props: any) {
           ))}
       </div>
       <div>
-        <IconButton className={classes.avatarIconButton}>
-          <label>
-            <AddPhotoAlternateIcon />
-            <input
-              className="display-none"
-              type="file"
-              id="image"
-              onChange={(event) => uploadImage(event)}
-            />
-          </label>
-        </IconButton>
+        {!(props.images.length > 0) && (
+          <IconButton className={classes.avatarIconButton}>
+            <label>
+              <AddPhotoAlternateIcon />
+              <input
+                className="display-none"
+                type="file"
+                id="image"
+                onChange={(event) => uploadImage(event)}
+              />
+            </label>
+          </IconButton>
+        )}
+        {props.images.length > 0 && (
+          <p className="p-userprofile__images__edit">
+            ※画像を削除したい場合は表示されている画像をクリックしてください
+          </p>
+        )}
       </div>
     </div>
   );
