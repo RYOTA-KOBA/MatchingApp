@@ -38,5 +38,5 @@ jobs:
         env:
           CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
         run: |
-          echo 'github-actions@auth-master-a43d2.iam.gserviceaccount.com' | gcloud auth activate-service-account --key-file {echo ${CREDENTIALS}}
+          echo 'github-actions@auth-master-a43d2.iam.gserviceaccount.com' | gcloud auth activate-service-account --key-file echo ${{CREDENTIALS}}
           gcloud app deploy app.yaml --project=auth-master-a43d2
