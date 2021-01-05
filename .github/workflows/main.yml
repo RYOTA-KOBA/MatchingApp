@@ -2,13 +2,13 @@
 
 name: CI
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -24,15 +24,24 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
 
       # Runs a single command using the runners shell
-      - name: yarn install, build
+      - run: rm package-lock.json
+      - run: rm -rf node_modules
+      - name: npm install, build
         run: |
           npm install
-          npm run build
+          CI=false npm run build
 
       # Runs a set of commands using the runners shell
       - name: GAE deploy
         run: |
-            echo 'github-actions@auth-master-a43d2.iam.gserviceaccount.com' | gcloud auth activate-service-account --key-file ./auth-master-a43d2-09a1dbcdb86c.json
-            gcloud app deploy app.yaml --project=auth-master-a43d2
+          echo 'github-actions@auth-master-a43d2.iam.gserviceaccount.com' | 
+          gcloud app deploy app.yaml --quiet --project=auth-master-a43d2
+        env:
+          CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
