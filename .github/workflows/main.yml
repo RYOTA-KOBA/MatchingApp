@@ -42,6 +42,6 @@ jobs:
       - name: GAE deploy
         run: |
           echo 'github-actions@auth-master-a43d2.iam.gserviceaccount.com' | 
-          gcloud app deploy app.yaml --project=auth-master-a43d2
+          gcloud app deploy app.yaml --quiet --project=auth-master-a43d2
         env:
           CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
