@@ -119,6 +119,9 @@ profile
   width: 40%;
   margin: 20px auto;
 }
+.p-media__icon:hover {
+  cursor: pointer;
+}
 .p-media__icon::before {
   content: "";
   display: block;
@@ -132,6 +135,9 @@ profile
   left: 0;
   width: 100%;
   height: auto;
+}
+.p-userprofile__images__edit {
+  font-size: 0.8em;
 }
 
 /**************
