@@ -31,7 +31,7 @@ jobs:
       - name: npm install, build
         run: |
           npm install
-          npm run build CI=false
+          CI=false npm run build
 
       # Runs a set of commands using the runners shell
       - name: GAE deploy
