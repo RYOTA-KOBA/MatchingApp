@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 // import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
@@ -31,11 +31,15 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginBottom: "15px",
   },
+  logoutBtn: {
+    fontWeight: "bold",
+  },
 }));
 
-export default function UpdateProfile({ userName }: any) {
+export default function UpdateProfile() {
   const usernameRef: any = useRef();
   const emailRef: any = useRef();
+  const introRef: any = useRef();
   const passwordRef: any = useRef();
   const passwordConfirmRef: any = useRef();
   const {
@@ -44,6 +48,7 @@ export default function UpdateProfile({ userName }: any) {
     updatePassword,
     logout,
     defUsername,
+    defIntro,
   }: any = useAuth();
   const [images, setImages] = useState([]);
   const [error, setError] = useState("");
@@ -73,6 +78,7 @@ export default function UpdateProfile({ userName }: any) {
         return updateUser(
           usernameRef.current.value,
           emailRef.current.value,
+          introRef.current.value,
           images,
           data
         );
@@ -102,14 +108,18 @@ export default function UpdateProfile({ userName }: any) {
 
   return (
     <>
-      <Card className={classes.card}>
+      <Card className={classes.card} variant="outlined">
         {error && <Alert severity="error">{error}</Alert>}
         <CardContent>
           <h2 className="text-center mb-4 update-profile-header">
             プロフィールの編集 ⚙️
           </h2>
           <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-            <ImageArea images={images} setImages={setImages} />
+            <ImageArea
+              images={images}
+              setImages={setImages}
+              uid={currentUser.uid}
+            />
             <TextField
               className={classes.postFormTextField}
               type="text"
@@ -126,6 +136,15 @@ export default function UpdateProfile({ userName }: any) {
               label="Email"
               required
               defaultValue={currentUser.email}
+            />
+            <br />
+            <TextField
+              className={classes.postFormTextField}
+              type="text"
+              inputRef={introRef}
+              label="自己紹介"
+              multiline={true}
+              defaultValue={defIntro}
             />
             <br />
             <TextField
@@ -156,11 +175,12 @@ export default function UpdateProfile({ userName }: any) {
           </form>
         </CardContent>
       </Card>
-      <div className="w-100 text-center mt-2">
+      <div className="w-100 text-center mt-3">
         <Link to="/">キャンセル</Link>
       </div>
-      <div className="w-100 text-center mt-2">
+      <div className="w-100 text-center mt-3">
         <Button
+          className={classes.logoutBtn}
           size="small"
           variant="contained"
           color="secondary"
