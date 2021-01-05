@@ -24,6 +24,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
 
       # Runs a single command using the runners shell
       - run: rm package-lock.json
@@ -36,7 +41,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: GAE deploy
         run: |
-          echo 'github-actions@auth-master-a43d2.iam.gserviceaccount.com' | gcloud auth activate-service-account --key-file ${CREDENTIALS}
+          echo 'github-actions@auth-master-a43d2.iam.gserviceaccount.com' | 
           gcloud app deploy app.yaml --project=auth-master-a43d2
         env:
           CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
