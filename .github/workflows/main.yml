@@ -35,8 +35,8 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: GAE deploy
-        run: |
-          echo 'github-actions@auth-master-a43d2.iam.gserviceaccount.com' | gcloud auth activate-service-account --key-file credentials
-          gcloud app deploy app.yaml --project=auth-master-a43d2
         env:
-          credentials: ${{ secrets.GCP_CREDENTIALS }}
+          CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+        run: |
+          echo 'github-actions@auth-master-a43d2.iam.gserviceaccount.com' | gcloud auth activate-service-account --key-file echo ${CREDENTIALS}
+          gcloud app deploy app.yaml --project=auth-master-a43d2
