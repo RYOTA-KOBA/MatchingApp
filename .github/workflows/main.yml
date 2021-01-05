@@ -28,6 +28,7 @@ jobs:
       # Runs a single command using the runners shell
       - run: rm package-lock.json
       - run: rm -rf node_modules
+      - run: sed -e '66d' package.json
       - name: yarn install, build
         run: |
           npm install
