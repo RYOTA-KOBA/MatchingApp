@@ -18,6 +18,7 @@ export function AuthProvider({ children }: any) {
   const [currentPost, setCurrentPost] = useState([]);
   const [currentId, setCurrentId] = useState();
   const [defUsername, setDefUsername] = useState("");
+  const [defIntro, setDefIntro] = useState("");
   const [loading, setLoading] = useState(true);
   const [followedUid, setFollowedUid] = useState([]);
   const history = useHistory();
@@ -51,12 +52,19 @@ export function AuthProvider({ children }: any) {
     return auth.sendPasswordResetEmail(email);
   }
 
-  async function updateUser(username: any, email: any, images: any, data: any) {
+  async function updateUser(
+    username: string,
+    email: string,
+    intro: string,
+    images: any,
+    data: any
+  ) {
     const uid = data.uid;
     await db.collection("users").doc(uid).set(
       {
         email: email,
         username: username,
+        intro: intro,
         images: images,
       },
       { merge: true }
@@ -213,6 +221,16 @@ export function AuthProvider({ children }: any) {
       });
   };
 
+  const getCurrentUserIntro = (uid: string) => {
+    db.collection("users")
+      .doc(uid)
+      .get()
+      .then((snapshot: any) => {
+        const data = snapshot.data();
+        setDefIntro(data.intro);
+      });
+  };
+
   const getFollowedUid = (uid: string) => {
     const followedArray: any = [];
     db.collection("follows")
@@ -231,7 +249,10 @@ export function AuthProvider({ children }: any) {
     const unsubscribe = auth.onAuthStateChanged((user: any) => {
       setCurrentUser(user);
       setLoading(false);
-      if (user !== null) getCurrentUserName(user.uid);
+      if (user !== null) {
+        getCurrentUserName(user.uid);
+        getCurrentUserIntro(user.uid);
+      }
       history.push("/");
     });
     return unsubscribe;
@@ -258,6 +279,7 @@ export function AuthProvider({ children }: any) {
     savePostToBookmark,
     removePostFromBookmark,
     defUsername,
+    defIntro,
     getFollowedUid,
     setFollowedUid,
     followedUid,

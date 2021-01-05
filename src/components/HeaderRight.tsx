@@ -136,12 +136,10 @@ export default function HeaderRight() {
       .get()
       .then((snapshot: any) => {
         const data = snapshot.data();
-        if (data.images !== undefined) {
-          setImages(data.images[0].path);
-        } else {
-          const username = data.username;
-          const initial = username.slice(0, 1);
-          setUserNameInitial(initial);
+        if (data.images) {
+          if (data.images.length !== 0) {
+            setImages(data.images[0].path);
+          }
         }
       });
   }, [currentUser.uid]);

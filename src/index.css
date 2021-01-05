@@ -62,11 +62,17 @@ profile
 }
 .userProfile-intro {
   font-size: 0.9em;
-  margin-top: 2em;
+  margin-top: 1em;
+}
+.content_inner {
+  display: flex;
 }
 .content_txt-wrapper {
-  margin-left: 1em;
+  margin-left: 5em;
   margin-top: 1em;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
 }
 .user_btn-wrapper {
   display: flex;
@@ -113,6 +119,9 @@ profile
   width: 40%;
   margin: 20px auto;
 }
+.p-media__icon:hover {
+  cursor: pointer;
+}
 .p-media__icon::before {
   content: "";
   display: block;
@@ -126,6 +135,9 @@ profile
   left: 0;
   width: 100%;
   height: auto;
+}
+.p-userprofile__images__edit {
+  font-size: 0.8em;
 }
 
 /**************

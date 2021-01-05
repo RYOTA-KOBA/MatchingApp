@@ -24,6 +24,7 @@ service cloud.firestore {
       && 'username' in user && user.username is string
       && 'uid' in user && user.uid is string && user.uid == targetUserId
       || 'images' in user 
+      || ('intro' in user && user.intro is string)
     }
 
     function isValidBookmarkAdd(bookmark) {

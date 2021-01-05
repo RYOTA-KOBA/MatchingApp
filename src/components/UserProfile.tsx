@@ -31,6 +31,7 @@ const useStyles = makeStyles({
   content_wrapper: {
     display: "flex",
     justifyContent: "space-between",
+    minHeight: "165px",
   },
   bullet: {
     display: "inline-block",
@@ -41,12 +42,12 @@ const useStyles = makeStyles({
     transform: "scale(3)",
     margin: "auto 40px",
   },
+  followers: {
+    display: "flex",
+  },
   title: {
     fontSize: 20,
     color: "#000",
-  },
-  pos: {
-    marginBottom: 12,
   },
   followbtn: {
     "&:focus": {
@@ -77,6 +78,7 @@ export default function UserProfile() {
     email: "",
     username: "",
     images: [{ id: "", path: "" }],
+    intro: "",
   });
   const path = window.location.href;
   const uid = path.split("/userprofile/")[1];
@@ -166,31 +168,31 @@ export default function UserProfile() {
     <div className="card-maxWith" style={{ maxWidth: "800px" }}>
       <Card className={classes.root} variant="outlined">
         <CardContent className={classes.content_wrapper}>
-          {user.images ? (
-            <Avatar
-              src={user.images[0].path}
-              className={classes.avatar}
-              alt="User Profile Pic"
-            />
-          ) : (
-            <Avatar className={classes.avatar}>
-              <PersonIcon />
-            </Avatar>
-          )}
-          <div className="content_txt-wrapper">
-            <Typography className={classes.pos} color="textSecondary">
-              <h4 className="userProfile-name">{user.username}</h4>
-            </Typography>
-            <Typography>
-              <p className="userProfile-intro">
-                ここに自己紹介が入ります。ここに自己紹介が入ります。ここに自己紹介が入ります。
-              </p>
-            </Typography>
-            <Typography>
-              <strong className="follower-text">
-                Followers<span className="follower-number">{followers}</span>
-              </strong>
-            </Typography>
+          <div className="content_inner">
+            {user.images ? (
+              <Avatar
+                src={user.images[0].path}
+                className={classes.avatar}
+                alt="User Profile Pic"
+              />
+            ) : (
+              <Avatar className={classes.avatar}>
+                <PersonIcon />
+              </Avatar>
+            )}
+            <div className="content_txt-wrapper">
+              <Typography color="textSecondary">
+                <h4 className="userProfile-name">{user.username}</h4>
+              </Typography>
+              <Typography>
+                <p className="userProfile-intro">{user.intro}</p>
+              </Typography>
+              <Typography className={classes.followers}>
+                <strong className="follower-text">
+                  Followers<span className="follower-number">{followers}</span>
+                </strong>
+              </Typography>
+            </div>
           </div>
           <div className="user_btn-wrapper">
             <div className="user_btn-inner">
@@ -204,7 +206,6 @@ export default function UserProfile() {
                   Edit
                 </Button>
               )}
-              {console.log(followsData)}
               {followsData.some((data: any) => data.id) ? (
                 followsData.map((data: any) => (
                   <FollowButton
