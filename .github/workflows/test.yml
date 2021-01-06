@@ -30,5 +30,4 @@ jobs:
       - run: npm install -g npm@latest
       - run: rm -rf node_modules
       - run: npm install
-      - run: npm run build
       - run: npm test
