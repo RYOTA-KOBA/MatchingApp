@@ -28,8 +28,9 @@ jobs:
         run: docker-compose up -d firestore
       - run: sudo chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}
       - run: npm install -g npm@latest
+      - run: rm package-lock.json
       - run: rm -rf node_modules
+      - run: sed -i 's/babel-jest//g' package.json
       - run: npm install
-      - run: npm install --save-dev jest
       - run: CI=false npm run build
       - run: npm test
