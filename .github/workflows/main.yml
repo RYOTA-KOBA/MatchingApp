@@ -30,6 +30,8 @@ jobs:
         run: |
           npm install
           CI=false npm run build
+        env:
+          REACT_APP_FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY }}
 
       # Runs a set of commands using the runners shell
       - name: GAE deploy
