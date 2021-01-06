@@ -1,7 +1,7 @@
 Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！Readmeにはアプリのスクショを載せる！！
 
 
- [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![CI](https://github.com/RYOTA-KOBA/MatchingApp/workflows/CI/badge.svg)
+ [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![CI](https://github.com/RYOTA-KOBA/MatchingApp/workflows/CI/badge.svg)](https://github.com/RYOTA-KOBA/MatchingApp/actions)
 
 ## License
 This project is licensed under the terms of the [MIT license](https://github.com/RYOTA-KOBA/MatchingApp/blob/master/LICENSE.txt).
