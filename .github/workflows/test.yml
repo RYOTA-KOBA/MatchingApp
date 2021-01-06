@@ -25,7 +25,7 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - name: docker-compose up
-        run: docker-compose up firestore
+        run: docker-compose up -d firestore
       - run: npm ci
       - run: npm run build
       - run: npm test
