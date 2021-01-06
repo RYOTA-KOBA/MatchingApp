@@ -3,9 +3,7 @@
 
 name: Node.js CI
 
-on:
-  push:
-    branches: [master]
+on: pull_request
 
 jobs:
   test:
@@ -13,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
+        node-version: [15.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -27,7 +25,12 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - name: docker-compose up
-        run: docker-compose up firestore
-      - run: npm ci
-      - run: npm run build
+        run: docker-compose up -d firestore
+      - run: sudo chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}
+      - run: npm install -g npm@latest
+      - run: rm package-lock.json
+      - run: rm -rf node_modules
+      - run: sed -i 's/babel-jest//g' package.json
+      - run: npm install
+      - run: CI=false npm run build
       - run: npm test
