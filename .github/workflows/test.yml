@@ -26,6 +26,7 @@ jobs:
             ${{ runner.OS }}-
       - name: docker-compose up
         run: docker-compose up -d firestore
+      - run: sudo chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}
       - run: npm install -g npm@latest
       - run: rm -rf node_modules
       - run: npm install
