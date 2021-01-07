@@ -35,6 +35,14 @@ header
   background-color: #1976d2;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
+.header-logo {
+  font-size: 1.5rem;
+  color: white;
+}
+.header-logo:hover {
+  text-decoration: none;
+  color: white;
+}
 .header-wrapper {
   margin: 0;
   padding: 0;
