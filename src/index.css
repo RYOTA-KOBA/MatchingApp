@@ -48,6 +48,27 @@ header
   padding: 0;
   min-width: 100vw;
 }
+.drawer_menu-wrapper {
+  display: none;
+}
+/**************
+home
+******************/
+.home-wrapper {
+  margin-top: 110px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.home-aside {
+  width: 25%;
+}
+.home-aside_menu {
+  display: none;
+}
+.home-card-head .home-card-head-feed {
+  display: none;
+}
 /**************
 profile
 ******************/
@@ -196,4 +217,44 @@ comment
 }
 .comment-submit:focus {
   outline: none;
+}
+
+@media screen and (max-width: 430px) {
+  /**************
+  header
+  ******************/
+  .makeStyles-headerRight-3 a {
+    margin: 0;
+  }
+  .makeStyles-headerRight-3 a button {
+    margin: 0;
+  }
+  .makeStyles-bookMark-6 {
+    margin-right: 8px !important;
+  }
+  .drawer_menu-wrapper {
+    display: block;
+  }
+  /**************
+  home
+  ******************/
+  .home-wrapper .home-aside {
+    display: none !important;
+  }
+  .home-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .home-card-head .home-card-head-feed {
+    display: flex;
+    min-width: 130px;
+  }
+  /**************
+  post
+  ******************/
+  .post-title {
+    max-height: 1.5em;
+    overflow: hidden;
+  }
 }
