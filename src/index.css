@@ -181,6 +181,23 @@ post
   align-items: center;
 }
 
+.post-form-card,
+.post-edit-card {
+  width: 600px;
+  padding: 30px;
+  margin-top: 130px;
+}
+.post-form,
+.post-edit-form {
+  margin: 0 auto;
+  width: 500px;
+  display: flex;
+  justify-content: center;
+}
+.select-category {
+  min-width: 250px;
+  margin-bottom: 20px;
+}
 /**************
 comment
 ******************/
@@ -223,6 +240,9 @@ comment
   /**************
   header
   ******************/
+  .header-nav {
+    height: 65px;
+  }
   .makeStyles-headerRight-3 a {
     margin: 0;
   }
@@ -256,5 +276,18 @@ comment
   .post-title {
     max-height: 1.5em;
     overflow: hidden;
+  }
+  /**************
+  postform
+  ******************/
+  .card-maxWith .post-form-card,
+  .card-maxWith .post-edit-card {
+    width: 100%;
+    padding: 15px;
+  }
+  .card-maxWith .select-category,
+  .card-maxWith .post-form,
+  .card-maxWith .post-edit-form {
+    width: 100%;
   }
 }

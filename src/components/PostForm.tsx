@@ -16,26 +16,11 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme: Theme) => ({
-  formControl: {
-    minWidth: 250,
-    marginBottom: "20px",
-  },
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
   alert: {
     marginBottom: "15px",
-  },
-  card: {
-    width: "600px",
-    padding: "30px",
-    marginTop: "130px",
-  },
-  root: {
-    margin: "0 auto",
-    width: "500px",
-    display: "flex",
-    justifyContent: "center",
   },
   header: {
     textAlign: "center",
@@ -120,12 +105,12 @@ export default function PostForm() {
 
   return (
     <div className="card-maxWith">
-      <Card className={classes.card}>
+      <Card className="post-form-card">
         {error && <Alert severity="error">{error}</Alert>}
         <CardContent>
           <h2 className={classes.header}>新規投稿を作成</h2>
           <form
-            className={classes.root}
+            className="post-form"
             noValidate
             autoComplete="off"
             onSubmit={handleSubmit}
@@ -151,7 +136,7 @@ export default function PostForm() {
                 onChange={inputContent}
               />
               <br />
-              <FormControl className={classes.formControl}>
+              <FormControl className="select-category">
                 <InputLabel id="category-select-label">カテゴリー</InputLabel>
                 <Select
                   labelId="category-select-label"
