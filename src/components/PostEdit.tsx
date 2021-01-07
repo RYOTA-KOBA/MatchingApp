@@ -16,21 +16,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
-  formControl: {
-    minWidth: 250,
-    marginBottom: "20px",
-  },
-  card: {
-    width: "600px",
-    padding: "30px",
-    marginTop: "130px",
-  },
-  root: {
-    margin: "0 auto",
-    width: "500px",
-    display: "flex",
-    justifyContent: "center",
-  },
   header: {
     textAlign: "center",
     marginBottom: "30px",
@@ -125,12 +110,12 @@ export default function PostEdit() {
 
   return (
     <div className="card-maxWith">
-      <Card className={classes.card} key={post_id}>
+      <Card className="post-edit-card" key={post_id}>
         <CardContent>
           <h2 className={classes.header}>投稿を編集</h2>
           {currentPost.map((post: postType) => (
             <form
-              className={classes.root}
+              className="post-edit-form"
               noValidate
               autoComplete="off"
               onSubmit={handleSubmit}
@@ -156,7 +141,7 @@ export default function PostEdit() {
                   defaultValue={post.content}
                 />
                 <br />
-                <FormControl className={classes.formControl}>
+                <FormControl className="select-category">
                   <InputLabel id="category-select-label">カテゴリー</InputLabel>
                   <Select
                     labelId="category-select-label"
