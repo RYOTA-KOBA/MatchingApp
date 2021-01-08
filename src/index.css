@@ -196,10 +196,16 @@ post
 }
 
 .post-form-card,
-.post-edit-card {
+.post-edit-card,
+.profile-edit {
   width: 600px;
   padding: 30px;
   margin-top: 130px;
+}
+.profile-edit {
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: auto;
 }
 .post-form,
 .post-edit-form {
@@ -301,7 +307,8 @@ comment
   }
   .card-maxWith .select-category,
   .card-maxWith .post-form,
-  .card-maxWith .post-edit-form {
+  .card-maxWith .post-edit-form,
+  .profile-edit {
     width: 100%;
   }
 
