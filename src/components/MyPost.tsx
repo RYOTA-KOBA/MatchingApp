@@ -265,7 +265,7 @@ export default function MyPost({
         </div>
         <Link to={"/detail/" + id} className={classes.cardWrapLink}>
           <CardContent style={{ paddingBottom: "0", paddingTop: "0" }}>
-            <Typography variant="h5" component="h3">
+            <Typography className="post-title" variant="h5" component="h3">
               {title}
             </Typography>
             <Typography
