@@ -156,7 +156,7 @@ export default function UserProfile() {
   }, [followers]);
 
   return (
-    <div className="card-maxWith" style={{ maxWidth: "800px" }}>
+    <div className="card-maxWith profile_card-wrapper">
       <Card className="profile_card" variant="outlined">
         <CardContent className="content_wrapper">
           <div className="content_inner">

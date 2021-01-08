@@ -82,7 +82,10 @@ profile
   max-width: 600px;
   margin: 0 auto;
 }
-
+.profile_card-wrapper {
+  max-width: 800px;
+  margin-top: 130px;
+}
 .home-cardWith {
   width: 507px;
 }
@@ -95,6 +98,7 @@ profile
   display: flex;
   justify-content: space-between;
   min-height: 165px;
+  width: 100%;
 }
 .profile_avatar-lg {
   transform: scale(3);
