@@ -202,7 +202,9 @@ const Post = ({
       .get()
       .then((snapshot): any => {
         const data: any = snapshot.data();
-        if (data.images !== undefined) setImages(data.images[0].path);
+        if (data.images) {
+          if (data.images.length !== 0) setImages(data.images[0].path);
+        }
       });
   }, []);
 
@@ -270,7 +272,7 @@ const Post = ({
         </div>
         <Link to={"/detail/" + id} className={classes.cardWrapLink}>
           <CardContent style={{ paddingBottom: "0", paddingTop: "0" }}>
-            <Typography variant="h5" component="h3">
+            <Typography className="post-title" variant="h5" component="h3">
               {title}
             </Typography>
             <Typography

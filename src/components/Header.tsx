@@ -2,6 +2,7 @@ import React from "react";
 import { Navbar } from "react-bootstrap";
 import HeaderRight from "./HeaderRight";
 import { useAuth } from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const { currentUser }: any = useAuth();
@@ -9,9 +10,9 @@ export default function Header() {
   return (
     <div className="header-wrapper">
       <Navbar expand="lg" fixed="top" className="header-nav">
-        <Navbar.Brand href="/" style={{ fontSize: "1.5rem", color: "white" }}>
+        <Link to="/" className="header-logo">
           Start
-        </Navbar.Brand>
+        </Link>
         {currentUser && <HeaderRight />}
       </Navbar>
     </div>

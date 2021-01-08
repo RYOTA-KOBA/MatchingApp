@@ -58,10 +58,13 @@ export default function UpdateProfile() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    if (introRef.current.value.length > 160) {
+      return setError("自己紹介文は160字以内で入力してください");
+    }
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("パスワードが一致しません");
     }
-
     if (passwordRef.current.value !== "") {
       updatePassword(passwordRef.current.value);
     }
@@ -108,7 +111,7 @@ export default function UpdateProfile() {
 
   return (
     <>
-      <Card className={classes.card} variant="outlined">
+      <Card className="profile-edit" variant="outlined">
         {error && <Alert severity="error">{error}</Alert>}
         <CardContent>
           <h2 className="text-center mb-4 update-profile-header">

@@ -35,10 +35,39 @@ header
   background-color: #1976d2;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
+.header-logo {
+  font-size: 1.5rem;
+  color: white;
+}
+.header-logo:hover {
+  text-decoration: none;
+  color: white;
+}
 .header-wrapper {
   margin: 0;
   padding: 0;
   min-width: 100vw;
+}
+.drawer_menu-wrapper {
+  display: none;
+}
+/**************
+home
+******************/
+.home-wrapper {
+  margin-top: 110px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.home-aside {
+  width: 25%;
+}
+.home-aside_menu {
+  display: none;
+}
+.home-card-head .home-card-head-feed {
+  display: none;
 }
 /**************
 profile
@@ -53,9 +82,27 @@ profile
   max-width: 600px;
   margin: 0 auto;
 }
-
+.profile_card-wrapper {
+  max-width: 800px;
+  margin-top: 130px;
+}
 .home-cardWith {
   width: 507px;
+}
+.profile_card {
+  display: flex;
+  min-height: 165px;
+  justify-content: space-between;
+}
+.content_wrapper {
+  display: flex;
+  justify-content: space-between;
+  min-height: 165px;
+  width: 100%;
+}
+.profile_avatar-lg {
+  transform: scale(3);
+  margin: auto 40px;
 }
 .userProfile-name {
   color: #000000;
@@ -152,6 +199,29 @@ post
   align-items: center;
 }
 
+.post-form-card,
+.post-edit-card,
+.profile-edit {
+  width: 600px;
+  padding: 30px;
+  margin-top: 130px;
+}
+.profile-edit {
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: auto;
+}
+.post-form,
+.post-edit-form {
+  margin: 0 auto;
+  width: 500px;
+  display: flex;
+  justify-content: center;
+}
+.select-category {
+  min-width: 250px;
+  margin-bottom: 20px;
+}
 /**************
 comment
 ******************/
@@ -188,4 +258,85 @@ comment
 }
 .comment-submit:focus {
   outline: none;
+}
+
+@media screen and (max-width: 430px) {
+  /**************
+  header
+  ******************/
+  .header-nav {
+    height: 65px;
+  }
+  .makeStyles-headerRight-3 a {
+    margin: 0;
+  }
+  .makeStyles-headerRight-3 a button {
+    margin: 0;
+  }
+  .makeStyles-bookMark-6 {
+    margin-right: 8px !important;
+  }
+  .drawer_menu-wrapper {
+    display: block;
+  }
+  /**************
+  home
+  ******************/
+  .home-wrapper .home-aside {
+    display: none !important;
+  }
+  .home-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .home-card-head .home-card-head-feed {
+    display: flex;
+    min-width: 130px;
+  }
+  /**************
+  post
+  ******************/
+  .post-title {
+    max-height: 1.5em;
+    overflow: hidden;
+  }
+  /**************
+  postform
+  ******************/
+  .card-maxWith .post-form-card,
+  .card-maxWith .post-edit-card {
+    width: 100%;
+    padding: 15px;
+  }
+  .card-maxWith .select-category,
+  .card-maxWith .post-form,
+  .card-maxWith .post-edit-form,
+  .profile-edit {
+    width: 100%;
+  }
+
+  .profile_card {
+    min-height: 250px;
+    margin-top: 130px;
+    margin-bottom: 25px;
+  }
+  .content_wrapper {
+    width: 100%;
+  }
+  .profile_avatar-lg {
+    transform: scale(2.5);
+    margin: auto 28px;
+  }
+  .content_inner {
+    flex-flow: column;
+  }
+  .content_txt-wrapper {
+    margin-left: 0;
+    justify-content: unset;
+  }
+
+  .home-cardWith {
+    width: 100%;
+  }
 }

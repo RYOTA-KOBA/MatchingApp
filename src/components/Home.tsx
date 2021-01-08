@@ -3,9 +3,12 @@ import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 import Post from "./Post";
 import Tags from "./Tags";
+import FeedSelector from "./FeedSelector";
+import TimeLineLink from "./TimeLineLink";
+
+// material ui
 import { red } from "@material-ui/core/colors";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
-import TimeLineLink from "./TimeLineLink";
 
 const Home = () => {
   const [currentPost, setCurrentPost] = useState([]);
@@ -58,15 +61,8 @@ const Home = () => {
   };
 
   return (
-    <div
-      style={{
-        marginTop: "110px",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-evenly",
-      }}
-    >
-      <div style={{ width: "25%" }}>
+    <div className="home-wrapper">
+      <div className="home-aside">
         <h5 style={{ marginTop: "15px" }}>
           <LocalOfferIcon style={{ color: red[500] }} />
           &nbsp; Tags
@@ -75,7 +71,10 @@ const Home = () => {
         <TimeLineLink />
       </div>
       <div className="home-cardWith">
-        <h3>Posts</h3>
+        <div className="home-card-head">
+          <h3>Posts</h3>
+          <FeedSelector />
+        </div>
         {currentPost.map((post: any) => (
           <Post
             key={post.id}
