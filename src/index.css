@@ -331,4 +331,8 @@ comment
     margin-left: 0;
     justify-content: unset;
   }
+
+  .home-cardWith {
+    width: 100%;
+  }
 }
