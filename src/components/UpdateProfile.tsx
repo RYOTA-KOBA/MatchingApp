@@ -58,10 +58,13 @@ export default function UpdateProfile() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    if (introRef.current.value.length > 160) {
+      return setError("自己紹介文は160字以内で入力してください");
+    }
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("パスワードが一致しません");
     }
-
     if (passwordRef.current.value !== "") {
       updatePassword(passwordRef.current.value);
     }
