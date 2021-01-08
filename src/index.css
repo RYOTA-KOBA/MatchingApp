@@ -86,6 +86,20 @@ profile
 .home-cardWith {
   width: 507px;
 }
+.profile_card {
+  display: flex;
+  min-height: 165px;
+  justify-content: space-between;
+}
+.content_wrapper {
+  display: flex;
+  justify-content: space-between;
+  min-height: 165px;
+}
+.profile_avatar-lg {
+  transform: scale(3);
+  margin: auto 40px;
+}
 .userProfile-name {
   color: #000000;
 }
@@ -289,5 +303,25 @@ comment
   .card-maxWith .post-form,
   .card-maxWith .post-edit-form {
     width: 100%;
+  }
+
+  .profile_card {
+    min-height: 250px;
+    margin-top: 130px;
+    margin-bottom: 25px;
+  }
+  .content_wrapper {
+    width: 100%;
+  }
+  .profile_avatar-lg {
+    transform: scale(2.5);
+    margin: auto 28px;
+  }
+  .content_inner {
+    flex-flow: column;
+  }
+  .content_txt-wrapper {
+    margin-left: 0;
+    justify-content: unset;
   }
 }

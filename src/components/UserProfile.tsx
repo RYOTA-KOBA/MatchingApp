@@ -28,19 +28,10 @@ const useStyles = makeStyles({
     marginTop: "130px",
     borderRadius: "12px",
   },
-  content_wrapper: {
-    display: "flex",
-    justifyContent: "space-between",
-    minHeight: "165px",
-  },
   bullet: {
     display: "inline-block",
     margin: "0 2px",
     transform: "scale(0.8)",
-  },
-  avatar: {
-    transform: "scale(3)",
-    margin: "auto 40px",
   },
   followers: {
     display: "flex",
@@ -166,17 +157,17 @@ export default function UserProfile() {
 
   return (
     <div className="card-maxWith" style={{ maxWidth: "800px" }}>
-      <Card className={classes.root} variant="outlined">
-        <CardContent className={classes.content_wrapper}>
+      <Card className="profile_card" variant="outlined">
+        <CardContent className="content_wrapper">
           <div className="content_inner">
             {user.images ? (
               <Avatar
                 src={user.images[0].path}
-                className={classes.avatar}
+                className="profile_avatar-lg"
                 alt="User Profile Pic"
               />
             ) : (
-              <Avatar className={classes.avatar}>
+              <Avatar className="profile_avatar-lg">
                 <PersonIcon />
               </Avatar>
             )}
