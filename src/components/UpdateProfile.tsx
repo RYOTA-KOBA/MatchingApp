@@ -108,7 +108,7 @@ export default function UpdateProfile() {
 
   return (
     <>
-      <Card className={classes.card} variant="outlined">
+      <Card className="profile-edit" variant="outlined">
         {error && <Alert severity="error">{error}</Alert>}
         <CardContent>
           <h2 className="text-center mb-4 update-profile-header">
