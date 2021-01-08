@@ -202,7 +202,9 @@ const Post = ({
       .get()
       .then((snapshot): any => {
         const data: any = snapshot.data();
-        if (data.images !== undefined) setImages(data.images[0].path);
+        if (data.images) {
+          if (data.images.length !== 0) setImages(data.images[0].path);
+        }
       });
   }, []);
 
