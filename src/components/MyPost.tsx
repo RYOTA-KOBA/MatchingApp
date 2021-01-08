@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     minWidth: 275,
     marginTop: 15,
     marginBottom: "15px !important",
-    maxHeight: "200px",
+    maxHeight: "230px",
     position: "relative",
     borderRadius: "12px",
   },

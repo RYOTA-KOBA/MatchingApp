@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     marginTop: 15,
-    maxHeight: "200px",
+    maxHeight: "230px",
     position: "relative",
     borderRadius: "12px",
   },

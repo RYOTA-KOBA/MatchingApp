@@ -111,6 +111,7 @@ export default function PostEdit() {
   return (
     <div className="card-maxWith">
       <Card className="post-edit-card" key={post_id}>
+        {error && <Alert severity="error">{error}</Alert>}
         <CardContent>
           <h2 className={classes.header}>投稿を編集</h2>
           {currentPost.map((post: postType) => (
