@@ -10,6 +10,10 @@ service cloud.firestore {
       return isAnyAuthenticated() && userId == request.auth.uid;
     }
 
+    function validateString(text, min, max) {
+      return text is string && min <= text.size() && text.size() <= max;
+    }
+
     function isValidUserCreate(user, targetUserId) {
       return user.size() >= 3
       && 'email' in user && user.email is string
@@ -24,7 +28,7 @@ service cloud.firestore {
       && 'username' in user && user.username is string
       && 'uid' in user && user.uid is string && user.uid == targetUserId
       || 'images' in user 
-      || ('intro' in user && user.intro is string && user.intro.size() <= 160)
+      || ('intro' in user && validateString(user.intro, 1, 160))
     }
 
     function isValidBookmarkAdd(bookmark) {
@@ -57,7 +61,7 @@ service cloud.firestore {
       && 'createdAt' in post && post.createdAt is timestamp
       && 'category' in post && post.category is string
       && 'uid' in post && post.uid is string
-      && 'title' in post && post.title is string && post.title.size() > 0 && post.title.size() <= 42
+      && 'title' in post &&  validateString(post.title, 1, 42)
     }
 
     function isValidPostUpdate(post) {
@@ -68,13 +72,13 @@ service cloud.firestore {
       && 'category' in post && post.category is string
       && 'id' in post && post.id is string
       && 'uid' in post && post.uid is string
-      && 'title' in post && post.title is string && post.title.size() > 0 && post.title.size() <= 42
+      && 'title' in post &&  validateString(post.title, 1, 42)
     }
 
     function isValidCommentCreate(comment) {
       return comment.size() == 3
       && "uid" in comment && comment.uid is string
-      && "content" in comment && comment.content is string && comment.content.size() <= 200
+      && "content" in comment && validateString(comment.content, 1, 200)
       && "createdAt" in comment && comment.createdAt is timestamp
     }
 
@@ -82,7 +86,7 @@ service cloud.firestore {
       return comment.size() == 4
       && "id" in comment && comment.id is string
       && "uid" in comment && comment.uid is string
-      && "content" in comment && comment.content is string && comment.content.size() <= 200
+      && "content" in comment && validateString(comment.content, 1, 200)
       && "createdAt" in comment && comment.createdAt is timestamp
     }
 
