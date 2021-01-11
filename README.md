@@ -6,6 +6,9 @@ Readmeにはアプリのスクショを載せる！！Readmeにはアプリの�
 ## License
 This project is licensed under the terms of the [MIT license](https://github.com/RYOTA-KOBA/MatchingApp/blob/master/LICENSE.txt).
 
+## インフラ構成図
+![ErYUcbTVcAIgaYu](https://user-images.githubusercontent.com/57514343/104149761-d25b1700-541a-11eb-857d-cd6155017b4b.jpeg)
+
 ## Available Scripts
 
 In the project directory, you can run:
