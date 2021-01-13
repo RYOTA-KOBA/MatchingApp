@@ -222,6 +222,17 @@ post
   margin-bottom: 20px;
   width: 60%;
 }
+.category-txt-wrapper {
+  padding-bottom: 0 !important;
+}
+.category-txt-wrapper a {
+  color: #444444;
+}
+.category-txt-wrapper a:hover {
+  text-decoration: none;
+  cursor: pointer;
+  color: #000000;
+}
 /**************
 comment
 ******************/
