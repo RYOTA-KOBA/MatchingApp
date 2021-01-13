@@ -53,6 +53,7 @@ const Home = () => {
           title: data.title,
           id: doc.id,
           uid: data.uid,
+          category: data.category,
         });
       });
 
@@ -84,6 +85,7 @@ const Home = () => {
             title={post.title}
             id={post.id}
             uid={post.uid}
+            category={post.category}
           />
         ))}
       </div>
