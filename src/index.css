@@ -270,7 +270,22 @@ comment
 .comment-submit:focus {
   outline: none;
 }
-
+.detail-category {
+  color: #444444;
+}
+.detail-category-link {
+  color: #444444;
+  border: 1px solid #555555;
+  border-radius: 12px;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 14px;
+}
+.detail-category-link:hover {
+  cursor: pointer;
+  color: #000000;
+  text-decoration: none;
+}
 @media screen and (max-width: 430px) {
   /**************
   header
