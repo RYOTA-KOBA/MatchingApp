@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { db } from "../firebase";
 import CommentForm from "./CommentForm";
 
@@ -50,12 +50,13 @@ const useStyles = makeStyles({
     },
   },
   title: {
-    fontSize: 20,
+    fontSize: 22,
     color: "#000",
     marginTop: "8px",
   },
   pos: {
     marginBottom: 12,
+    marginTop: 12,
   },
   useername: {
     color: "#0000008A",
@@ -80,13 +81,16 @@ type P = Partial<{
   title: string;
   id: string;
   uid: string;
+  category: string;
 }>;
 
 export default function Detail() {
   const classes = useStyles();
+  const history = useHistory();
   const path = window.location.href;
   const id = path.split("/detail/")[1];
   const [postDetail, setPostDetail] = useState([]);
+  const [categoryJP, setCategoryJP] = useState("");
   const { currentUser }: any = useAuth();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -98,6 +102,29 @@ export default function Detail() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const categoryToJPString = (category: string) => {
+    switch (category) {
+      case "backend":
+        setCategoryJP("#バックエンド");
+        break;
+      case "frontend":
+        setCategoryJP("#フロントエンド");
+        break;
+      case "infra":
+        setCategoryJP("#インフラエンジニア");
+        break;
+      case "designer":
+        setCategoryJP("#デザイナー");
+        break;
+      default:
+        break;
+    }
+  };
+
+  const isSelected = (category: string) => {
+    history.push(`/?category=${category}`);
   };
 
   const deletePost = () => {
@@ -131,7 +158,9 @@ export default function Detail() {
           createdAt: Day + " " + Time,
           uid: data.uid,
           id: doc.id,
+          category: data.category,
         });
+        if (data.category !== undefined) categoryToJPString(data.category);
       });
     setPostDetail(post);
   };
@@ -189,6 +218,16 @@ export default function Detail() {
                 gutterBottom
               >
                 {post.title}
+              </Typography>
+              <Typography className="detail-category">
+                <a
+                  className={
+                    post.category ? "detail-category-link" : "display-none"
+                  }
+                  onClick={() => isSelected(`${post.category}`)}
+                >
+                  {categoryJP}
+                </a>
               </Typography>
               <Typography className={classes.pos} color="textSecondary">
                 <Link
