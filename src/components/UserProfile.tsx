@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 import { db } from "../firebase";
@@ -17,6 +17,7 @@ import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import SettingsIcon from "@material-ui/icons/Settings";
 import Avatar from "@material-ui/core/Avatar";
 import PersonIcon from "@material-ui/icons/Person";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -61,6 +62,11 @@ const useStyles = makeStyles({
 });
 
 export default function UserProfile() {
+  const [docOflatest, setDocOflatest] = useState(null);
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const LoadBtnRef: any = useRef();
+  const WrapperRef: any = useRef();
   const classes = useStyles();
   const { currentUser }: any = useAuth();
   const [error, setError] = useState("");
@@ -102,31 +108,61 @@ export default function UserProfile() {
       });
   }, []);
 
-  useEffect(() => {
-    let posts: any = [];
-    db.collection("posts")
+  let latestDoc: any = null;
+  const f = async () => {
+    let posts: any = post;
+    const ref = db
+      .collection("posts")
       .where("uid", "==", uid)
-      .get()
-      .then((snapshot: any) => {
-        snapshot.docs.forEach((doc: any) => {
-          const data = doc.data();
+      .orderBy("createdAt", "desc")
+      .startAfter(docOflatest || [])
+      .limit(4);
+    const data = await ref.get();
+    data.docs.forEach((doc: any) => {
+      const data = doc.data();
 
-          const date = new Date(data.createdAt.seconds * 1000);
-          const Day = date.toLocaleDateString("ja-JP");
-          const Time = date.toLocaleTimeString("ja-JP");
+      const date = new Date(data.createdAt.seconds * 1000);
+      const Day = date.toLocaleDateString("ja-JP");
+      const Time = date.toLocaleTimeString("ja-JP");
 
-          posts.push({
-            authorName: data.authorName,
-            content: data.content,
-            createdAt: Day + " " + Time,
-            title: data.title,
-            id: doc.id,
-            uid: data.uid,
-          });
-        });
-        setPost(posts);
+      posts.push({
+        authorName: data.authorName,
+        content: data.content,
+        createdAt: Day + " " + Time,
+        title: data.title,
+        id: doc.id,
+        uid: data.uid,
       });
-  }, []);
+    });
+    setPost(posts);
+
+    latestDoc = data.docs[data.docs.length - 1];
+    setDocOflatest(latestDoc);
+    setLoading(false);
+    if (data.empty) {
+      setIsEmpty(true);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    f();
+  }, [setPost]);
+
+  const handleLoadClick = () => {
+    f();
+  };
+
+  const handleLoadScroll = () => {
+    let triggerHeight =
+      WrapperRef.current.scrollTop + WrapperRef.current.offsetHeight;
+    if (triggerHeight >= WrapperRef.current.scrollHeight) {
+      if (isEmpty !== true) {
+        setLoading(true);
+        f();
+      }
+    }
+  };
 
   useEffect(() => {
     const followingData: any = [];
@@ -156,7 +192,12 @@ export default function UserProfile() {
   }, [followers]);
 
   return (
-    <div className="card-maxWith profile_card-wrapper">
+    <div
+      className="card-maxWith profile_card-wrapper"
+      onScroll={handleLoadScroll}
+      style={{ overflowY: "auto", maxHeight: "100%", boxSizing: "border-box" }}
+      ref={WrapperRef}
+    >
       <Card className="profile_card" variant="outlined">
         <CardContent className="content_wrapper">
           <div className="content_inner">
@@ -172,9 +213,7 @@ export default function UserProfile() {
               </Avatar>
             )}
             <div className="content_txt-wrapper">
-              <Typography color="textSecondary">
-                <h4 className="userProfile-name">{user.username}</h4>
-              </Typography>
+              <h4 className="userProfile-name">{user.username}</h4>
               <Typography>
                 <p className="userProfile-intro">{user.intro}</p>
               </Typography>
@@ -228,6 +267,19 @@ export default function UserProfile() {
           />
         ))}
       </div>
+      <div>
+        <button
+          style={{ display: "none" }}
+          ref={LoadBtnRef}
+          className="loadMore"
+          onClick={handleLoadClick}
+        >
+          Load More
+        </button>
+      </div>
+      <p className={loading ? "text-center loading-message" : "display-none"}>
+        Loading...
+      </p>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error">
           {error}

@@ -86,6 +86,9 @@ profile
   max-width: 800px;
   margin-top: 130px;
 }
+.profile_card-wrapper::-webkit-scrollbar {
+  display: none;
+}
 .home-cardWith {
   width: 507px;
 }
@@ -186,7 +189,10 @@ profile
 .p-userprofile__images__edit {
   font-size: 0.8em;
 }
-
+.loading-message {
+  font-size: 1.5em;
+  font-weight: 600;
+}
 /**************
 post
 ******************/
