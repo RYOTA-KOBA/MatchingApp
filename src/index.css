@@ -363,7 +363,7 @@ comment
   }
   .profile_avatar-lg {
     transform: scale(2.5);
-    margin: auto 28px;
+    margin: 30px 28px 15px 30px;
   }
   .content_inner {
     flex-flow: column;
