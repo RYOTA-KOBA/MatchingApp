@@ -32,7 +32,7 @@ service cloud.firestore {
     }
 
     function isValidBookmarkAdd(bookmark) {
-      return bookmark.size() == 7
+      return bookmark.size() == 8
       && 'authorName' in bookmark && bookmark.authorName is string && bookmark.authorName.size() > 0
       && 'content' in bookmark && bookmark.content is string && bookmark.content.size() > 0
       && 'createdAt' in bookmark && bookmark.createdAt is string
@@ -40,6 +40,7 @@ service cloud.firestore {
       && 'saveId' in bookmark && bookmark.saveId is string
       && 'title' in bookmark && bookmark.title is string && bookmark.title.size() > 0
       && 'uid' in bookmark && bookmark.uid is string
+      && 'category' in bookmark && bookmark.category is string
     }
 
     function isValidBookmarkUpdate(bookmark) {

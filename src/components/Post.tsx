@@ -164,6 +164,7 @@ const Post = ({
       title,
       id,
       uid,
+      category,
     };
     await savePostToBookmark(savedPosts);
   };

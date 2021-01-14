@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
 
@@ -107,6 +107,7 @@ type BookmarkListProps = Partial<{
   post_id: string;
   id: string;
   uid: string;
+  category: string;
 }>;
 
 export default function BookmarkListItem({
@@ -117,15 +118,41 @@ export default function BookmarkListItem({
   post_id,
   uid,
   id,
+  category,
 }: BookmarkListProps) {
   const classes = useStyles();
+  const history = useHistory();
   const { removePostFromBookmark }: any = useAuth();
   const [saved, setSaved] = useState(true);
   const [images, setImages] = useState("");
+  const [categoryJP, setCategoryJP] = useState("");
 
   const removeBookmark = async () => {
     setSaved(false);
     await removePostFromBookmark(id);
+  };
+
+  const categoryToJPString = (category: string) => {
+    switch (category) {
+      case "backend":
+        setCategoryJP("#バックエンド");
+        break;
+      case "frontend":
+        setCategoryJP("#フロントエンド");
+        break;
+      case "infra":
+        setCategoryJP("#インフラエンジニア");
+        break;
+      case "designer":
+        setCategoryJP("#デザイナー");
+        break;
+      default:
+        break;
+    }
+  };
+
+  const isSelected = (category: string) => {
+    history.push(`/?category=${category}`);
   };
 
   useEffect(() => {
@@ -138,6 +165,10 @@ export default function BookmarkListItem({
           setImages(data.images[0].path);
         }
       });
+  }, []);
+
+  useEffect(() => {
+    if (category !== undefined) categoryToJPString(category);
   }, []);
 
   return (
@@ -172,26 +203,30 @@ export default function BookmarkListItem({
             </div>
           </div>
           <Link to={"/detail/" + post_id} className={classes.cardWrapLink}>
-            <CardContent style={{ paddingBottom: "0", paddingTop: "0" }}>
-              <Typography className="post-title" variant="h5" component="h3">
-                {title}
-              </Typography>
-              <Typography
-                className={classes.contentText}
-                variant="body2"
-                component="p"
-              >
-                {content}
-              </Typography>
-            </CardContent>
-            <CardActions className={classes.detailBtnWrap}>
-              <Link to={"/detail/" + post_id} className={classes.detailLink}>
-                <Button className={classes.detailButton} size="small">
-                  詳細を表示
-                </Button>
-              </Link>
-            </CardActions>
+            <Typography
+              className="post-title detail-title"
+              variant="h5"
+              component="h3"
+              style={{ paddingRight: "16px" }}
+            >
+              {title}
+            </Typography>
           </Link>
+          <Typography className="detail-category bookmark-category-wrapper">
+            <a
+              className={category ? "detail-category-link" : "display-none"}
+              onClick={() => isSelected(`${category}`)}
+            >
+              {categoryJP}
+            </a>
+          </Typography>
+          <CardActions className={classes.detailBtnWrap}>
+            <Link to={"/detail/" + post_id} className={classes.detailLink}>
+              <Button className={classes.detailButton} size="small">
+                詳細を表示
+              </Button>
+            </Link>
+          </CardActions>
           <IconButton
             className={classes.likeBtn}
             onClick={() => removeBookmark()}
