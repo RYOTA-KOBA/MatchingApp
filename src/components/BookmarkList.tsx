@@ -12,6 +12,7 @@ type BookmarkProps = Partial<{
   id: string;
   uid: string;
   saveId: string;
+  category: string;
 }>;
 
 export default function BookmarkList() {
@@ -37,6 +38,7 @@ export default function BookmarkList() {
             saveId: doc.id,
             uid: data.uid,
             post_id: data.id,
+            category: data.category,
           });
         });
         setBookmarks(posts);
@@ -58,6 +60,7 @@ export default function BookmarkList() {
             id={bookmark.saveId}
             uid={bookmark.uid}
             post_id={bookmark.post_id}
+            category={bookmark.category}
           />
         ))}
       </div>
