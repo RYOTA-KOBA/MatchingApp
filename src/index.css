@@ -270,6 +270,10 @@ comment
 .comment-submit:focus {
   outline: none;
 }
+.bookmark-category-wrapper {
+  padding-left: 16px;
+  padding-top: 10px;
+}
 .detail-category {
   color: #444444;
 }
@@ -286,6 +290,13 @@ comment
   color: #000000;
   text-decoration: none;
 }
+.detail-title {
+  padding-left: 16px;
+  padding-right: 16px;
+  max-height: 1.5em;
+  overflow: hidden;
+}
+
 @media screen and (max-width: 430px) {
   /**************
   header
