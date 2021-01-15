@@ -5,6 +5,7 @@ import Post from "./Post";
 import Tags from "./Tags";
 import FeedSelector from "./FeedSelector";
 import TimeLineLink from "./TimeLineLink";
+import ChatbotIcon from "./chatbot/ChatbotIcon";
 
 // material ui
 import { red } from "@material-ui/core/colors";
@@ -62,34 +63,37 @@ const Home = () => {
   };
 
   return (
-    <div className="home-wrapper">
-      <div className="home-aside">
-        <h5 style={{ marginTop: "15px" }}>
-          <LocalOfferIcon style={{ color: red[500] }} />
-          &nbsp; Tags
-        </h5>
-        <Tags />
-        <TimeLineLink />
-      </div>
-      <div className="home-cardWith">
-        <div className="home-card-head">
-          <h3>Posts</h3>
-          <FeedSelector />
+    <>
+      <div className="home-wrapper">
+        <div className="home-aside">
+          <h5 style={{ marginTop: "15px" }}>
+            <LocalOfferIcon style={{ color: red[500] }} />
+            &nbsp; Tags
+          </h5>
+          <Tags />
+          <TimeLineLink />
         </div>
-        {currentPost.map((post: any) => (
-          <Post
-            key={post.id}
-            authorName={post.authorName}
-            content={post.content}
-            createdAt={post.createdAt}
-            title={post.title}
-            id={post.id}
-            uid={post.uid}
-            category={post.category}
-          />
-        ))}
+        <div className="home-cardWith">
+          <div className="home-card-head">
+            <h3>Posts</h3>
+            <FeedSelector />
+          </div>
+          {currentPost.map((post: any) => (
+            <Post
+              key={post.id}
+              authorName={post.authorName}
+              content={post.content}
+              createdAt={post.createdAt}
+              title={post.title}
+              id={post.id}
+              uid={post.uid}
+              category={post.category}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+      <ChatbotIcon />
+    </>
   );
 };
 export default Home;
