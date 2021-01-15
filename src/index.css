@@ -70,6 +70,24 @@ home
   display: none;
 }
 /**************
+chatbot
+******************/
+.chatbot-icon-wrapper {
+  position: fixed;
+  right: 5%;
+  bottom: 5%;
+  z-index: 100;
+  transform: scale(1.5);
+  background-color: #1976d2;
+  border-radius: 50%;
+}
+.chatbot-icon-btn:focus {
+  outline: none;
+}
+.chatbot-icon {
+  color: #ffffff;
+}
+/**************
 profile
 ******************/
 
