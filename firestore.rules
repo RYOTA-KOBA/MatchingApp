@@ -117,6 +117,10 @@ service cloud.firestore {
       }
     }
 
+    match /questions/{questionId} {  
+      allow read: if isUserAuthenticated(request.auth.uid);
+    }
+
     match /posts/{postId} {
       allow read: if isUserAuthenticated(request.auth.uid);
       allow create: if isUserAuthenticated(request.auth.uid) && isValidPostCreate(request.resource.data);
