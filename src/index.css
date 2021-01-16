@@ -87,6 +87,18 @@ chatbot
 .chatbot-icon {
   color: #ffffff;
 }
+.dialog-wrapper {
+  max-width: 600px;
+  inset: auto 9% 2% auto !important;
+  height: 95%;
+}
+.dialog-content-inner {
+  width: 400px;
+  padding: 0 !important;
+}
+#customized-dialog-title > button:focus {
+  outline: none;
+}
 /**************
 profile
 ******************/
@@ -393,5 +405,11 @@ comment
 
   .home-cardWith {
     width: 100%;
+  }
+  /**************
+  chatbot
+  ******************/
+  .dialog-wrapper {
+    inset: auto -6% 2% auto !important;
   }
 }

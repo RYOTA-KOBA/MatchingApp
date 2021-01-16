@@ -61,13 +61,6 @@ const DialogContent = withStyles((theme: Theme) => ({
   },
 }))(MuiDialogContent);
 
-const DialogActions = withStyles((theme: Theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(1),
-  },
-}))(MuiDialogActions);
-
 export default function ChatbotIcon() {
   const [open, setOpen] = React.useState(false);
 
@@ -84,11 +77,11 @@ export default function ChatbotIcon() {
         <ChatIcon className="chatbot-icon" />
       </IconButton>
       <div>
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog className="dialog-wrapper" open={open} onClose={handleClose}>
           <DialogTitle id="customized-dialog-title" onClose={handleClose}>
             何かお困りですか？
           </DialogTitle>
-          <DialogContent dividers>
+          <DialogContent className="dialog-content-inner" dividers>
             <Chatbot />
           </DialogContent>
         </Dialog>

@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { db } from "../../firebase";
+import "./style.css";
 // import {AnswersList, Chats, Loading} from './components/index'
 import FormDialog from "./Forms/FormDialog";
 import Chats from "./Chats";
@@ -117,7 +118,7 @@ const App = () => {
 
   return (
     <section className="c-section">
-      <div className="c-box">
+      <div>
         {Object.keys(dataset).length === 0 ? (
           <Loading />
         ) : (
