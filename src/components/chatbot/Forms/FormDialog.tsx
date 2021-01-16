@@ -5,7 +5,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextInput from "./TextInput";
-// import { WEBHOOK_URL } from "../../webhookConfig";
 
 const FormDialog = (props: any) => {
   const [description, setDescription] = useState("");
@@ -74,17 +73,20 @@ const FormDialog = (props: any) => {
           description,
       };
 
+      const WEBHOOK_URL: any = process.env.REACT_APP_WEBHOOK_URL;
+
       // fetchメソッドでフォームの内容をSlackのIncoming Webhook URL に送信する
-      //   fetch(WEBHOOK_URL, {
-      //     method: "POST",
-      //     body: JSON.stringify(payload),
-      //   }).then(() => {
-      //     alert("送信が完了しました。追ってご連絡いたします🙌");
-      //     setDescription("");
-      //     setEmail("");
-      //     setName("");
-      //     return props.handleClose();
-      //   });
+      fetch(WEBHOOK_URL, {
+        method: "POST",
+        body: JSON.stringify(payload),
+      }).then(() => {
+        console.log("okok");
+        alert("送信が完了しました。追ってご連絡いたします🙌");
+        setDescription("");
+        setEmail("");
+        setName("");
+        return props.handleClose();
+      });
     }
   };
 
