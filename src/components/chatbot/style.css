@@ -1,24 +1,6 @@
 .c-section {
   position: relative;
-  height: 100vh;
   width: 100%;
-}
-
-.c-box {
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
-  box-sizing: border-box;
-  height: 592px;
-  max-width: 432px;
-  padding: 0 1rem;
-  width: 100%;
-
-  /* Vertical and horizontal center alignment */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .c-grid__answer {
@@ -26,6 +8,10 @@
   flex-flow: column;
   justify-content: flex-end;
   height: 192px;
+}
+
+.c-grid__answer > button:focus {
+  outline: none;
 }
 
 .p-chat__bubble {
@@ -45,6 +31,7 @@
   flex-direction: row;
   justify-content: flex-start;
   padding-right: 0 !important;
+  /* padding: 0; */
 }
 
 .p-chat__reverse {

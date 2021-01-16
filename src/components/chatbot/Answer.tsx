@@ -13,6 +13,9 @@ const useStyles = makeStyles(() =>
         backgroundColor: "#FFB549",
         color: "#fff",
       },
+      width: "95%",
+      marginLeft: "auto",
+      marginRight: "auto",
     },
   })
 );
