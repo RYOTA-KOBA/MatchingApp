@@ -9,7 +9,7 @@ Readmeにはアプリのスクショを載せる！！Readmeにはアプリの�
   - TypeScript 4.1.2
   - CSS/BootStrap/Material UI
 - バックエンド
-  - Firebase(Authentication, Firestore, Cloud Storage)
+  - Firebase(Authentication, Firestore, Cloud Storage, Cloud Functions)
 - インフラ
   - GCP(Cloud Storage, App Engine)
   - Github Actions
@@ -35,6 +35,7 @@ Readmeにはアプリのスクショを載せる！！Readmeにはアプリの�
   - フォローしているユーザーの投稿の一覧表示
   - 投稿へのコメント機能
 - 無限スクロール機能
+- チャットボット機能
 - ブックマーク機能、ブックマークの一覧表示機能　
 - プロフィール画像アップロード機能
 - レスポンシブデザイン(SPのみ)
