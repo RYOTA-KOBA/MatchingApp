@@ -96,7 +96,6 @@ const App = () => {
         .then((snapshots): any => {
           snapshots.forEach((doc): any => {
             initDataset[doc.id] = doc.data();
-            console.log(doc.data());
           });
         });
 
