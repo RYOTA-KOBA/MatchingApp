@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -38,8 +38,8 @@ const FormDialog = (props: any) => {
     return regex.test(email);
   };
 
-  const validateRequiredInput = (...args: any) => {
-    let isBlank = false;
+  const validateRequiredInput = (...args: string[]) => {
+    let isBlank: boolean = false;
     for (let i = 0; i < args.length; i = (i + 1) | 0) {
       if (args[i] === "") {
         isBlank = true;
@@ -73,20 +73,21 @@ const FormDialog = (props: any) => {
           description,
       };
 
-      const WEBHOOK_URL: any = process.env.REACT_APP_WEBHOOK_URL;
+      const WEBHOOK_URL: unknown = process.env.REACT_APP_WEBHOOK_URL;
 
       // fetchメソッドでフォームの内容をSlackのIncoming Webhook URL に送信する
-      fetch(WEBHOOK_URL, {
-        method: "POST",
-        body: JSON.stringify(payload),
-      }).then(() => {
-        console.log("okok");
-        alert("送信が完了しました。追ってご連絡いたします🙌");
-        setDescription("");
-        setEmail("");
-        setName("");
-        return props.handleClose();
-      });
+      if (typeof WEBHOOK_URL === "string") {
+        fetch(WEBHOOK_URL, {
+          method: "POST",
+          body: JSON.stringify(payload),
+        }).then(() => {
+          alert("送信が完了しました。追ってご連絡いたします🙌");
+          setDescription("");
+          setEmail("");
+          setName("");
+          return props.handleClose();
+        });
+      }
     }
   };
 

@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { db } from "../../firebase";
 import "./style.css";
-// import {AnswersList, Chats, Loading} from './components/index'
 import FormDialog from "./Forms/FormDialog";
 import Chats from "./Chats";
 import Loading from "./Loading";
@@ -35,7 +34,7 @@ const App = () => {
   );
 
   // 次の質問をチャットエリアに表示する関数
-  const displayNextQuestion = (nextQuestionId: any, nextDataset: any) => {
+  const displayNextQuestion = (nextQuestionId: string, nextDataset: any) => {
     // 選択された回答と次の質問をチャットに追加
     addChats({
       text: nextDataset.question,
@@ -51,7 +50,7 @@ const App = () => {
 
   // 回答が選択された時に呼ばれる関数
   const selectAnswer = useCallback(
-    (selectedAnswer: any, nextQuestionId: any) => {
+    (selectedAnswer: string, nextQuestionId: string) => {
       switch (true) {
         // お問い合わせが選択された場合
         case nextQuestionId === "contact":
@@ -96,7 +95,6 @@ const App = () => {
         .then((snapshots): any => {
           snapshots.forEach((doc): any => {
             initDataset[doc.id] = doc.data();
-            console.log(doc.data());
           });
         });
 
