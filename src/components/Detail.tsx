@@ -145,22 +145,24 @@ export default function Detail() {
       .doc(id)
       .get()
       .then((doc: any) => {
-        const data = doc.data();
+        if (doc.exists) {
+          const data = doc.data();
 
-        const date = new Date(data.createdAt.seconds * 1000);
-        const Day = date.toLocaleDateString("ja-JP");
-        const Time = date.toLocaleTimeString("ja-JP");
+          const date = new Date(data.createdAt.seconds * 1000);
+          const Day = date.toLocaleDateString("ja-JP");
+          const Time = date.toLocaleTimeString("ja-JP");
 
-        post.push({
-          authorName: data.authorName,
-          content: data.content,
-          title: data.title,
-          createdAt: Day + " " + Time,
-          uid: data.uid,
-          id: doc.id,
-          category: data.category,
-        });
-        if (data.category !== undefined) categoryToJPString(data.category);
+          post.push({
+            authorName: data.authorName,
+            content: data.content,
+            title: data.title,
+            createdAt: Day + " " + Time,
+            uid: data.uid,
+            id: doc.id,
+            category: data.category,
+          });
+          if (data.category !== undefined) categoryToJPString(data.category);
+        }
       });
     setPostDetail(post);
   };
