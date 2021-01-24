@@ -11,7 +11,6 @@ const FormDialog = (props: any) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
 
-  // Functions triggered by inputting text value
   const inputDescription = useCallback(
     (event) => {
       setDescription(event.target.value);
@@ -48,7 +47,6 @@ const FormDialog = (props: any) => {
     return isBlank;
   };
 
-  // Slackに問い合わせがあったことを通知する
   const submitForm = () => {
     const isBlank = validateRequiredInput(name, email, description);
     const isValidEmail = validateEmailFormat(email);
@@ -75,7 +73,6 @@ const FormDialog = (props: any) => {
 
       const WEBHOOK_URL: unknown = process.env.REACT_APP_WEBHOOK_URL;
 
-      // fetchメソッドでフォームの内容をSlackのIncoming Webhook URL に送信する
       if (typeof WEBHOOK_URL === "string") {
         fetch(WEBHOOK_URL, {
           method: "POST",
