@@ -132,7 +132,6 @@ export default function CommentForm({ id }: CommentProps) {
           </Button>
         </div>
       </form>
-      {console.log(comment)}
       {comment.map((commentItem: commentItem) => (
         <Comment
           key={commentItem.id}
