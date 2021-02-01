@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 //material ui
 import { makeStyles } from "@material-ui/core/styles";
@@ -124,6 +124,7 @@ export default function MyPost({
   images,
 }: MyPostProps) {
   const classes = useStyles();
+  const history = useHistory();
   const {
     currentUser,
     savePostToBookmark,
@@ -167,7 +168,7 @@ export default function MyPost({
       .delete()
       .then(() => {
         console.log("削除成功！！");
-        window.location.reload();
+        history.push("/");
       })
       .catch(() => console.log("削除失敗!!"));
   };
