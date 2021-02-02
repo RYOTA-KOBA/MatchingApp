@@ -33,6 +33,13 @@
 
 slackのIncoming Webhookを利用して、アプリ内の問い合わせ用モーダルからの問い合わせが開発環境のslackに通知されるようになっています。
 
+#### slackの通知
+以下のようにお問い合わせフォームを送信すると、slackにてお問い合わせの内容が表示されます。
+
+![form](https://user-images.githubusercontent.com/57514343/106553102-00d09b80-655c-11eb-8766-ee144e53f761.png)
+
+![slack](https://user-images.githubusercontent.com/57514343/106553113-029a5f00-655c-11eb-9ad2-edc3d658a781.png)
+
 ## 機能一覧
 - ユーザー関連
   - ユーザー登録機能
