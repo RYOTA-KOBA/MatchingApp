@@ -1,7 +1,10 @@
  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![CI](https://github.com/RYOTA-KOBA/MatchingApp/workflows/CI/badge.svg)](https://github.com/RYOTA-KOBA/MatchingApp/actions)
  
- - アプリのURL
+アプリのURL
  https://start-kokokara.com
+ 
+Qiitaにてアプリの[紹介記事](https://qiita.com/KOBA-RYOTA/items/b005611295b0f2cce4a0)を作成しました。
+
  
  ### このアプリについて
  『start』は経験の浅いエンジニアやデザイナーのために作ったマッチングアプリです。web制作は個人で案件を受注すると案件の単価がかなり低くなってしまいます。そこで制作会社がやっているように、デザイナーとコーダーでチームを組んで案件を受注した方が結果的に一人当たりの単価も高くなると考え作成しました。
