@@ -29,7 +29,7 @@ function App() {
         </Container>
         <Container
           className="d-flex justify-content-center"
-          style={{ height: "100%", marginBottom: "60px" }}
+          style={{ height: "auto", marginBottom: "60px" }}
         >
           <div className="w-100">
             <Switch>
@@ -60,9 +60,9 @@ function App() {
             </Switch>
           </div>
         </Container>
-        {/* <Container style={{ padding: "0", margin: "0" }} >
+        {/* <Container style={{ padding: "0", margin: "0" }}> */}
         <Footer />
-      </Container> */}
+        {/* </Container> */}
       </AuthProvider>
     </Router>
   );
