@@ -24,45 +24,52 @@ function App() {
     <Router>
       <AuthProvider>
         <CssBaseline />
-        <Container>
-          <Header />
-        </Container>
-        <Container
-          className="d-flex justify-content-center"
-          style={{ height: "auto", marginBottom: "60px" }}
-        >
-          <div className="w-100">
-            <Switch>
-              <Route path="/signup" component={Signup} />
-              <Route path="/login" component={Login} />
-              <Route path="/forgot-password" component={ForgotPassword} />
-              <PrivateRoute exact path="/" component={Home} />
-              <PrivateRoute
-                exact
-                path="/bookmarkList"
-                component={BookmarkList}
-              />
-              <PrivateRoute
-                exact
-                path="/bookmarkListItem"
-                component={BookmarkListItem}
-              />
-              <PrivateRoute exact path="/detail/:id" component={Detail} />
-              <PrivateRoute exact path="/dashboard/:id" component={Dashboard} />
-              <PrivateRoute
-                exact
-                path="/userprofile/:id"
-                component={UserProfile}
-              />
-              <PrivateRoute exact path="/postedit/:id" component={PostEdit} />
-              <PrivateRoute path="/postform" component={PostForm} />
-              <PrivateRoute path="/update-profile" component={UpdateProfile} />
-            </Switch>
-          </div>
-        </Container>
-        {/* <Container style={{ padding: "0", margin: "0" }}> */}
+        <div>
+          <Container>
+            <Header />
+          </Container>
+          <Container
+            className="d-flex justify-content-center"
+            style={{ height: "auto", marginBottom: "60px" }}
+          >
+            <div className="w-100">
+              <Switch>
+                <Route path="/signup" component={Signup} />
+                <Route path="/login" component={Login} />
+                <Route path="/forgot-password" component={ForgotPassword} />
+                <PrivateRoute exact path="/" component={Home} />
+                <PrivateRoute
+                  exact
+                  path="/bookmarkList"
+                  component={BookmarkList}
+                />
+                <PrivateRoute
+                  exact
+                  path="/bookmarkListItem"
+                  component={BookmarkListItem}
+                />
+                <PrivateRoute exact path="/detail/:id" component={Detail} />
+                <PrivateRoute
+                  exact
+                  path="/dashboard/:id"
+                  component={Dashboard}
+                />
+                <PrivateRoute
+                  exact
+                  path="/userprofile/:id"
+                  component={UserProfile}
+                />
+                <PrivateRoute exact path="/postedit/:id" component={PostEdit} />
+                <PrivateRoute path="/postform" component={PostForm} />
+                <PrivateRoute
+                  path="/update-profile"
+                  component={UpdateProfile}
+                />
+              </Switch>
+            </div>
+          </Container>
+        </div>
         <Footer />
-        {/* </Container> */}
       </AuthProvider>
     </Router>
   );
