@@ -10,8 +10,11 @@ import ChatbotIcon from "./chatbot/ChatbotIcon";
 // material ui
 import { red } from "@material-ui/core/colors";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
+import Button from "@material-ui/core/Button";
 
 const Home = () => {
+  const [loadIndex, setLoadIndex] = useState(4);
+  const [isEmpty, setIsEmpty] = useState(false);
   const [currentPost, setCurrentPost] = useState([]);
   const { setFollowedUid, followedUid, getFollowedUid }: any = useAuth();
   const query = window.location.search;
@@ -31,7 +34,9 @@ const Home = () => {
   }, [query, setFollowedUid]);
 
   const getPosts = async (category: string, followedUid: any | string) => {
+    let latestDoc: any = null;
     let query = db.collection("posts").orderBy("createdAt", "desc");
+
     query = category !== "" ? query.where("category", "==", category) : query;
     query =
       following_uid !== ""
@@ -39,6 +44,7 @@ const Home = () => {
         : query;
 
     let posts: any = [];
+
     await query.get().then((snapshot: any) => {
       snapshot.docs.forEach((doc: any) => {
         const data = doc.data();
@@ -62,6 +68,14 @@ const Home = () => {
     });
   };
 
+  const displayMore = () => {
+    if (loadIndex > currentPost.length) {
+      setIsEmpty(true);
+    } else {
+      setLoadIndex(loadIndex + 4);
+    }
+  };
+
   return (
     <>
       <div className="home-wrapper">
@@ -78,7 +92,7 @@ const Home = () => {
             <h3>Posts</h3>
             <FeedSelector />
           </div>
-          {currentPost.map((post: any) => (
+          {currentPost.slice(0, loadIndex).map((post: any) => (
             <Post
               key={post.id}
               authorName={post.authorName}
@@ -90,6 +104,15 @@ const Home = () => {
               category={post.category}
             />
           ))}
+          <div style={{ textAlign: "center", marginTop: "30px" }}>
+            <Button
+              disabled={isEmpty ? true : false}
+              onClick={displayMore}
+              variant="contained"
+            >
+              さらに表示
+            </Button>
+          </div>
         </div>
       </div>
       <ChatbotIcon />
