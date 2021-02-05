@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 import Post from "./Post";
@@ -13,10 +13,8 @@ import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import Button from "@material-ui/core/Button";
 
 const Home = () => {
-  const [docOflatest, setDocOflatest] = useState(null);
+  const [loadIndex, setLoadIndex] = useState(4);
   const [isEmpty, setIsEmpty] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const LoadBtnRef: any = useRef();
   const [currentPost, setCurrentPost] = useState([]);
   const { setFollowedUid, followedUid, getFollowedUid }: any = useAuth();
   const query = window.location.search;
@@ -37,11 +35,7 @@ const Home = () => {
 
   const getPosts = async (category: string, followedUid: any | string) => {
     let latestDoc: any = null;
-    let query = db
-      .collection("posts")
-      .orderBy("createdAt", "desc")
-      .startAfter(docOflatest || [])
-      .limit(4);
+    let query = db.collection("posts").orderBy("createdAt", "desc");
 
     query = category !== "" ? query.where("category", "==", category) : query;
     query =
@@ -49,7 +43,7 @@ const Home = () => {
         ? query.where("uid", "in", ["", ...followedUid])
         : query;
 
-    let posts: any = currentPost;
+    let posts: any = [];
 
     await query.get().then((snapshot: any) => {
       snapshot.docs.forEach((doc: any) => {
@@ -71,20 +65,15 @@ const Home = () => {
       });
 
       setCurrentPost(posts);
-
-      console.log(currentPost);
-
-      latestDoc = snapshot.docs[snapshot.docs.length - 1];
-      setDocOflatest(latestDoc);
-      if (snapshot.empty) {
-        setIsEmpty(true);
-        setLoading(false);
-      }
     });
   };
 
-  const handleLoadClick = () => {
-    getPosts(category, followedUid);
+  const displayMore = () => {
+    if (loadIndex > currentPost.length) {
+      setIsEmpty(true);
+    } else {
+      setLoadIndex(loadIndex + 4);
+    }
   };
 
   return (
@@ -103,7 +92,7 @@ const Home = () => {
             <h3>Posts</h3>
             <FeedSelector />
           </div>
-          {currentPost.map((post: any) => (
+          {currentPost.slice(0, loadIndex).map((post: any) => (
             <Post
               key={post.id}
               authorName={post.authorName}
@@ -115,21 +104,15 @@ const Home = () => {
               category={post.category}
             />
           ))}
-          {isEmpty ? (
-            ""
-          ) : (
-            <div style={{ textAlign: "center", marginTop: "30px" }}>
-              <Button
-                disabled={isEmpty ? true : false}
-                ref={LoadBtnRef}
-                className="loadMore"
-                onClick={handleLoadClick}
-                variant="contained"
-              >
-                Load More
-              </Button>
-            </div>
-          )}
+          <div style={{ textAlign: "center", marginTop: "30px" }}>
+            <Button
+              disabled={isEmpty ? true : false}
+              onClick={displayMore}
+              variant="contained"
+            >
+              さらに表示
+            </Button>
+          </div>
         </div>
       </div>
       <ChatbotIcon />
