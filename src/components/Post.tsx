@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     marginTop: 15,
-    maxHeight: "230px",
+    maxHeight: "250px",
     position: "relative",
     borderRadius: "12px",
   },
@@ -75,6 +75,10 @@ const useStyles = makeStyles({
     lineHeight: "1.5",
     maxHeight: "1.5em",
     marginTop: "8px",
+    border: "1px solid #555555",
+    borderRadius: "12px",
+    paddingLeft: "5px",
+    paddingRight: "5px",
   },
   detailBtnWrap: {
     float: "left",

@@ -76,6 +76,10 @@ const useStyles = makeStyles({
     lineHeight: "1.5",
     maxHeight: "1.5em",
     marginTop: "8px",
+    border: "1px solid #555555",
+    borderRadius: "12px",
+    paddingLeft: "5px",
+    paddingRight: "5px",
   },
   detailBtnWrap: {
     float: "left",
@@ -112,6 +116,7 @@ type MyPostProps = Partial<{
   id: string;
   uid: string;
   images: string;
+  category: string;
 }>;
 
 export default function MyPost({
@@ -122,6 +127,7 @@ export default function MyPost({
   id,
   uid,
   images,
+  category,
 }: MyPostProps) {
   const classes = useStyles();
   const history = useHistory();
@@ -130,6 +136,7 @@ export default function MyPost({
     savePostToBookmark,
     removePostFromBookmark,
   }: any = useAuth();
+  const [categoryJP, setCategoryJP] = useState("");
   const [savedId, setSavedId] = useState();
   const [saved, setSaved] = useState(false);
 
@@ -172,6 +179,33 @@ export default function MyPost({
       })
       .catch(() => console.log("削除失敗!!"));
   };
+
+  const isSelected = (category: string) => {
+    history.push(`/?category=${category}`);
+  };
+
+  const categoryToJPString = (category: string) => {
+    switch (category) {
+      case "backend":
+        setCategoryJP("#バックエンド");
+        break;
+      case "frontend":
+        setCategoryJP("#フロントエンド");
+        break;
+      case "infra":
+        setCategoryJP("#インフラエンジニア");
+        break;
+      case "designer":
+        setCategoryJP("#デザイナー");
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    if (category !== undefined) categoryToJPString(category);
+  }, []);
 
   useEffect(() => {
     const uid = currentUser.uid;
@@ -269,22 +303,23 @@ export default function MyPost({
             <Typography className="post-title" variant="h5" component="h3">
               {title}
             </Typography>
-            <Typography
-              className={classes.contentText}
-              variant="body2"
-              component="p"
-            >
-              {content}
-            </Typography>
           </CardContent>
-          <CardActions className={classes.detailBtnWrap}>
-            <Link to={"/detail/" + id} className={classes.detailLink}>
-              <Button className={classes.detailButton} size="small">
-                詳細を表示
-              </Button>
-            </Link>
-          </CardActions>
         </Link>
+        <CardContent className="category-txt-wrapper">
+          <a
+            className={classes.contentText}
+            onClick={() => isSelected(`${category}`)}
+          >
+            {categoryJP}
+          </a>
+        </CardContent>
+        <CardActions className={classes.detailBtnWrap}>
+          <Link to={"/detail/" + id} className={classes.detailLink}>
+            <Button className={classes.detailButton} size="small">
+              詳細を表示
+            </Button>
+          </Link>
+        </CardActions>
         {currentUser.uid !== uid && saved === true ? (
           <IconButton
             className={classes.likeBtn}

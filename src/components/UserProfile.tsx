@@ -122,6 +122,7 @@ export default function UserProfile() {
             title: data.title,
             id: doc.id,
             uid: data.uid,
+            category: data.category,
           });
         });
         setPost(posts);
@@ -225,6 +226,7 @@ export default function UserProfile() {
             id={post.id}
             uid={post.uid}
             images={user.images && user.images[0].path}
+            category={post.category}
           />
         ))}
       </div>
