@@ -65,6 +65,7 @@ const Home = () => {
       });
 
       setCurrentPost(posts);
+      setIsEmpty(false);
     });
   };
 
