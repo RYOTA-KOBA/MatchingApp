@@ -139,6 +139,7 @@ profile
   display: flex;
   min-height: 165px;
   justify-content: space-between;
+  border-radius: 12px !important;
 }
 .content_wrapper {
   display: flex;
