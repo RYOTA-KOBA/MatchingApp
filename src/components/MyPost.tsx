@@ -160,6 +160,7 @@ export default function MyPost({
       title,
       id,
       uid,
+      category,
     };
     await savePostToBookmark(savedPosts);
   };
