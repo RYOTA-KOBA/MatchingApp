@@ -32,6 +32,5 @@ jobs:
       - run: rm -rf node_modules
       - run: sed -i 's/babel-jest//g' package.json
       - run: npm install
-      - run: CI=false npm run build
       - run: npm i jest
       - run: npm test
