@@ -34,4 +34,4 @@ jobs:
       - run: npm install
       - run: CI=false npm run build
       - run: npm i jest
-      - run: npm test
+      - run: npm test --env=node
