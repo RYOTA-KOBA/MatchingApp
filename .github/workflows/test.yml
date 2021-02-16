@@ -33,5 +33,5 @@ jobs:
       - run: sed -i 's/babel-jest//g' package.json
       - run: npm install
       - run: CI=false npm run build
-      - run: npm i @types/jest@26.0.0
+      - run: npm i ts-jest@26.0.0
       - run: npm test
