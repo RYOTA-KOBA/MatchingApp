@@ -306,7 +306,9 @@ export default function MyPost({
             </Typography>
           </CardContent>
         </Link>
-        <CardContent className="category-txt-wrapper">
+        <CardContent
+          className={category ? "category-txt-wrapper" : "display-none"}
+        >
           <a
             className={classes.contentText}
             onClick={() => isSelected(`${category}`)}
