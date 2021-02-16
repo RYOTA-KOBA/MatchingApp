@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import * as React from "react";
 import ReactDOM, * as ReactDom from "react-dom";
 import Tags from "../Tags";
